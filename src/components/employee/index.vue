@@ -1,0 +1,609 @@
+<template>
+  <div class="d-content main-content">
+    <div class="mb10">
+      <el-input v-if="authorityBtn.includes('sys_employee_1004')" size="medium" @keyup.native.13="$refs.employeeTable.reload()" v-model="queryForm.condition" placeholder="请输入姓名/电话/员工编号查询" class="w240"></el-input>
+      <el-button v-if="authorityBtn.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload()" icon="el-icon-search">查询</el-button>
+      <el-button v-if="authorityBtn.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button>
+      <div class="fr mr10">
+      	<span class="d-text-gray">开放注册</span>
+      	<el-switch
+				  @change="openRegistration"
+				  v-model="allowRegister"
+				>
+				</el-switch>
+      </div>
+    </div>
+    <!-- 表格数据 -->
+    <d-table api="bizSystemService.getEmployeeList" :params="queryForm" ref="employeeTable"  style="height:calc(100% - 45px)">
+      <el-table-column type="index" align="center" label="序号" width="50">
+      </el-table-column>
+      <el-table-column prop="employeeName" align="center" label="姓名" width="120">
+      </el-table-column>
+      <el-table-column prop="email" align="center" label="邮箱" width="150" show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column prop="phone" width="120" align="center" label="电话">
+      </el-table-column>
+      <el-table-column prop="deptName" width="120" align="center" label="所属部门" show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column prop="positionName" align="center" label="职位名称">
+      </el-table-column>
+      <el-table-column prop="roleNames" align="center" label="角色" width="150" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="userAccount" align="center" label="用户帐号" width="140">
+      </el-table-column>
+      <el-table-column prop="employeeNo" align="center" label="员工编号" width="100" show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column prop="createTime" align="center" label="修改时间" width="150">
+        <template slot-scope="scope">
+          {{scope.row.createTime | timeToStr('YYYY-MM-DD HH:mm:ss')}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="address" align="center" label="状态" width="80">
+        <template slot-scope="scope">
+          {{scope.row.lockStatus=="0"?"启用":"禁用"}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="remark" width="120" align="center" label="备注" show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column prop="address" align="left" label="操作" width="480">
+        <template slot-scope="scope">
+          <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" title="已经同步过了" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
+
+          <el-button size="mini" type="warning" plain @click="editOrAddHandle('auth',scope.row)">授权</el-button>
+          <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
+          <el-button v-if="authorityBtn.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
+          <el-button v-if="authorityBtn.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
+          <el-button v-if="authorityBtn.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
+
+          <!--增加 锁定用户、解锁用户功能-->
+          <el-button v-if="authorityBtn.includes('sys_employee_1005') && scope.row.lockStatus==0 && scope.row.sourceFrom!=1" size="mini" type="warning" plain @click="lockUser('lock',scope.row)" title="锁定用户">锁定</el-button>
+          <el-button v-if="authorityBtn.includes('sys_employee_1006') && scope.row.lockStatus==1 && scope.row.sourceFrom!=1" size="mini" type="warning" plain @click="unLockUser('unlock',scope.row)" title="解锁用户">解锁</el-button>
+          <!--end -->
+
+        </template>
+      </el-table-column>
+    </d-table>
+    <!-- 新增 / 编辑 / 授权 / 同步弹出框-->
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :width="dialogWidth">
+      <div v-loading="loading">
+          <!-- 新增 / 编辑 -->
+          <el-form label-width="80px" :model="dialogForm" ref="dialogForm" size="small">
+            <div v-if="dialogType=='add' || dialogType=='edit'" >
+                <el-form-item label="姓名" 
+                prop="employeeName" 
+                :rules="[{required: true, message: '请输入姓名'},{min: 1, max: 25, message: '不能超过25个字符' }]">
+                  <el-input v-model="dialogForm.employeeName" placeholder="请输入姓名" :maxlength="25" class="w200"></el-input>
+                </el-form-item>
+
+                <el-form-item label="员工编号" prop="employeeNo" 
+                :rules="[{required: true, message: '请输入员工编号'},{min: 1, max: 25, message: '不能超过25个字符' }]">
+                  <el-input v-model.trim="dialogForm.employeeNo" :disabled="dialogType == 'edit'" placeholder="请输入员工编号" maxlength="25" class="w200"></el-input>
+                </el-form-item>
+
+                <el-form-item label="职位名称" prop="positionName">
+                  <el-input v-model.trim="dialogForm.positionName" placeholder="请输入职位名称" :maxlength="25" class="w200"></el-input>
+                </el-form-item>
+
+                <el-form-item 
+                label="电话"
+                prop="phone" 
+                :rules="[{ required: true, message: '手机号不能为空' },{ min: 11, max: 11, message: '请输入11位手机号' }]">
+                  <el-input v-model="dialogForm.phone" placeholder="请输入电话" class="w200" :disabled="!!dialogForm.userAccount" :maxlength="11" :minlength="11"></el-input>
+                </el-form-item>
+
+                <el-form-item label="Email" prop="email" :rules="{ type: 'email', message: '请输入正确的邮箱地址' }">
+                  <el-input v-model="dialogForm.email" placeholder="请输入email" class="w200"></el-input>
+                </el-form-item>
+
+                <!-- <el-form-item label="状态">
+                    <el-radio-group v-model="dialogForm.lockStatus">
+                      <el-radio label="0">启用</el-radio>
+                      <el-radio label="1">禁用</el-radio>
+                    </el-radio-group>
+                  </el-form-item> -->
+
+                <el-form-item label="所属部门" prop="deptName" :rules="{ required:true, message: '请输入所属部门' }">
+                  <el-input v-model="dialogForm.deptName" placeholder="请选择上级部门" class="w200" disabled></el-input>
+                  <!-- 是新增，或者是编辑未同步的员工， 需要选择按钮 -->
+                  <el-button @click="selHandle()" v-show="chooseIsShow">选择1</el-button>
+                </el-form-item>
+                
+                <el-form-item label="备注" prop="remark">
+                  <el-input :maxlength='140' type="textarea" v-model="dialogForm.remark" class="w200" placeholder="请输入备注"></el-input>
+                </el-form-item>
+            </div>
+          </el-form>
+          <!-- 同步密码 -->
+          <div v-if="dialogType=='sync'">
+            <span>密码:</span>
+            <el-input v-model="syncForm.pwd" size="small" placeholder="请输入密码" :type="asyncType" class="w200">
+              <i @click="viewPassward" slot="suffix" class="el-input__icon el-icon-view" title="显示密码" :class="{'d-text-blue': asyncType == 'text' ,'d-text-blue':asyncType == 'password'}"></i>
+            </el-input>
+          </div>  
+          <!-- 授权内容 -->
+          <div class="role-main" v-if="dialogType=='auth'">
+            <div class="role-list">
+              <el-row :gutter="10">
+                <component size="mini" :is="single ? 'el-radio-group' : 'el-checkbox-group'"
+                    v-model="authdialogForm.roleIds">
+                    <el-col class="d-elip" :span="6" v-for="(item,index) of rolesData"  :key="index">
+                      <component
+                      :title="item.roleName"
+                      :is="single ? 'el-radio' : 'el-checkbox'" 
+                      :label="item.id">
+                        {{item.roleName}}
+                      </component>
+                    </el-col>
+                </component>
+              </el-row>
+            </div>
+            <div class="ac mt10">
+              <el-button type="info" plain size="mini" @click="getMoreRoles()">加载更多</el-button>
+            </div>
+          </div>
+      </div>
+      
+
+      <span slot="footer" class="dialog-footer">
+        <div class="ac">
+          <el-button type="primary" @click="saveHandle('dialogForm')" size="small">确 定</el-button>
+          <el-button @click="dialogVisible = false" size="small">取 消</el-button>
+        </div>
+      </span>
+    </el-dialog>
+
+    <!-- 树部门弹出框 -->
+    <el-dialog title="选择部门" :visible.sync="dialogVisibleTree" width="300px">
+      <div class="d-treeBox">
+        <el-tree :data="deptTreeData" default-expand-all :props="{children: 'children',label: 'deptName'}" @node-click="handleNodeClick"></el-tree>
+      </div>
+    </el-dialog>
+
+    <!--修改密码弹出框-->
+    <el-dialog v-loading="loading" title="修改密码" :visible.sync="dialogVisiblePassword" :width="dialogWidth">
+      <el-form ref="passwordform" :model="passwordform" label-width="80px" size="small">
+        <el-form-item label="新密码">
+          <el-input v-model="passwordform.newPassword" placeholder="请输入新密码"></el-input>
+        </el-form-item>
+
+        <el-form-item label="确认密码">
+          <el-input v-model="passwordform.confirmNewPassword" placeholder="请确认新密码"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button size="small" type="primary" @click="updateSaveHandle('passwordform')">确定</el-button>
+          <el-button size="small" @click="dialogVisiblePassword =false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <!--锁定用户-->
+    <el-dialog v-loading="loading"  title="锁定用户" :visible.sync="dialogVisbleLock" :width="dialogWidth">
+      <el-form ref="lockform" :model="lockform" label-width="80px">
+        <el-form-item label="锁定原因">
+          <el-input type="textarea" placeholder="请输入锁定原因" :rows="2" v-model="lockform.lockReason"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button size="small" type="primary" @click="lockUserFunc('lockform')">确定</el-button>
+          <el-button size="small" @click="dialogVisbleLock =false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+  </div>
+</template>
+<script>
+let employeeSingle  = window.g.employeeSingle                  
+export default {
+  data () {
+    return {
+      single:employeeSingle, //用来判断员工授权是单选还是多选
+      authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
+      loading:false,
+      dialogTitle: '', // 弹出框title
+      dialogType: '', // dialog类型
+      dialogWidth: '420px',
+      dialogVisible: false, // 新增编辑弹出框
+      dialogVisibleTree: false, // 树菜单
+      
+      dialogVisiblePassword: false, // 对应修改密码弹出框是否显示
+      dialogVisbleLock: false, // 初始化默认关闭锁定用户的弹出框
+      
+      rolesData: [], // 角色数据
+      rolePage: 1,
+      // 部门树数据
+      deptTreeData: [],
+      // 查询表单
+      queryForm: {
+        condition: '',
+        page:1,
+        limit:15,
+      },
+      // 弹出框同步内容
+      syncForm: {
+        name: '',
+        id: '',
+        pwd: '',
+        status: '',
+        deptId: '',
+        phone: '',
+        email: '',
+        companyId: '',
+        companyCode: ''
+      },
+
+      // 新增orEdit框内容
+      dialogForm: {
+        employeeNo: '', //员工编号
+        employeeName: '', //员工名称
+        id: '', //主键id
+        positionName: '', //职位名称
+        lockStatus: '0', //是否锁定
+        phone: '', //手机号
+        email: '',//邮箱
+        deptId: '', //部门id
+        deptName: '', //部门名称
+        userAccount:'', //用户帐号
+      },
+
+      // 授权弹出内容
+      authdialogForm: {
+        userId: '',
+        roleIds: []
+      },
+      asyncType: 'password', // 默认type是密码
+
+      passwordform: {
+        // 密码修改表单初始化
+        id: '',
+        newPassword: '',
+        confirmNewPassword: ''
+      },
+			chooseIsShow:true,//选择部门按钮是否显示
+			allowRegister:false,
+      // 锁定用户初始化表单
+      lockform: {
+        id: '', // 用户id
+        lockReason: '' // 锁定原因
+      }
+    }
+  },
+  created () {
+  	this.queryOpenRegistration()
+  },
+  methods: {
+    // 请求角色表格数据方法
+    getLoadRole (params) {
+      this.loading = true
+      this.$api.bizSystemService.getRoleList(params).then(res => {
+        if (res.code == 200) {
+          this.rolePage = res.curr
+          let data = res.data || []
+          if (data.length > 0) {
+            this.rolesData = this.rolesData.concat(data)
+          } else {
+            this.rolePage--
+            this.$message({
+              type: 'warning',
+              showClose: true,
+              message: '没有了'
+            })
+          }
+        }
+      }).finally(()=>{
+        this.loading = false
+      })
+    },
+    // 授权角色加载更多
+    getMoreRoles () {
+      this.rolePage++
+      this.getLoadRole({ limit: 15, page: this.rolePage, state: 0 })
+    },
+    // 修改密码编辑事件
+    editPassWord (type, data) {
+      this.dialogType = type
+      this.dialogVisiblePassword = true
+      this.dialogWidth = '350px'
+      this.passwordform.id = data.id;
+      // 修改页面初始化清空数据
+      (this.passwordform.newPassword = '');
+      (this.passwordform.confirmNewPassword = '')
+    },
+
+    // 锁定
+    lockUser (type, data) {
+      // 判断是否同步
+      if (!data.userId) {
+        this.dialogVisbleLock = false
+        this.$message({
+          type: 'error',
+          message: '这个用户还未同步，不能锁定！'
+        })
+        return
+      }
+
+      this.dialogVisbleLock = true
+      this.lockform.id = data.id 
+      // 清空锁定原因
+      this.lockform.lockReason = ''
+    },
+    //开放注册更改
+    openRegistration(){
+    	this.loading=true
+    	this.$api.bizSystemService.openRegistration({'key': 'allowRegister','value':this.allowRegister})
+      .then(res => {
+//        this.$refs.employeeTable.reload()
+      })
+      .finally(()=>{
+        this.loading = false
+      })
+    },
+    //查询开放注册
+    queryOpenRegistration(){
+    	this.$api.bizSystemService.queryOpenRegistration()
+      .then(res => {
+      	this.allowRegister = res.data
+      	console.log(this.allowRegister)
+      })
+      .finally(()=>{
+      })
+    },
+    unLockUser (type, data) {
+      // 判断是否同步
+      if (!data.userId) {
+        this.$message({
+          type: 'error',
+          message: '这个用户还未同步！'
+        })
+        return
+      }
+      // 直接交互
+      this.$confirm('确定解锁?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.loading = true
+        this.$api.bizSystemService.unlockuser({id: data.id})
+          .then(res => {
+            if (res.code == 200) {
+              // 刷新表格列表
+              this.$refs.employeeTable.reload()
+            }
+          })
+          .finally(()=>{
+            this.loading = false
+          })
+      }).catch(() => {});
+    },
+
+    // 锁定用户
+    lockUserFunc (formName) {
+      // 定义锁定原因的变量
+      let lockReason = ''
+      //* * 增加锁定用户交互方法
+      lockReason = this.lockform.lockReason
+      this.$api.bizSystemService.lockuser({lockReason: lockReason, id: this.lockform.id})
+        .then(res => {
+          if (res.code == 200) {
+            this.dialogVisbleLock = false // 关闭锁定的用户弹出框
+            // 刷新表格列表
+            this.$refs.employeeTable.reload()
+          }
+        })
+    },
+    // 编辑和新增用户
+    editOrAddHandle (type, data) {
+      this.dialogVisible = true
+      this.dialogType = type
+      if (type == 'add') {
+        this.dialogWidth = '420px';
+        this.dialogTitle = '新增用户'
+        this.chooseIsShow = true
+        // 清空form表单
+        this.$nextTick(()=>{
+          this.$refs.dialogForm.resetFields()
+          this.dialogForm.deptName = ''
+          this.dialogForm.userAccount = ''
+        })
+      } else if (type == 'edit') {
+      	//未同步的员工不会有userId，这个时候，可以编辑部门
+      	if(data.userId){
+      		this.chooseIsShow = false
+      	}else{
+      		this.chooseIsShow = true
+      	}
+        this.dialogTitle = '编辑：' + data.employeeName
+        this.dialogWidth = '390px'
+        this.$api.bizSystemService.getEmployeeInfo(data.id).then(res=>{
+          let resData = res.data
+          for(let key in this.dialogForm){
+            this.dialogForm[key] = resData[key]
+          }
+        })
+      } else if (type == 'sync') {
+        this.dialogTitle = '同步：' + data.employeeName
+        this.dialogWidth = '350px'
+        this.syncForm.pwd = ''
+        this.syncForm.name = data.employeeName;
+        this.syncForm.id = data.id
+        this.syncForm.status = data.lockStatus
+        this.syncForm.deptId = data.deptId
+        this.syncForm.phone = data.phone
+        this.syncForm.email = data.email
+        this.syncForm.companyId = data.companyId
+        this.syncForm.companyCode = data.companyCode
+      } else if (type == 'auth') {
+        this.dialogTitle = '授权-当前用户：' + data.employeeName
+        this.dialogWidth = '720px'
+        // 初始化当前授权的角色
+        this.authdialogForm.roleIds = [] 
+        // 获取当前员工授权的角色
+        this.$api.bizSystemService.getEmployeeInfo(data.id).then(res => {
+          if (res.code == 200) {
+            let data = res.data || {}
+            let roles = data.roleList
+            roles.forEach(item => {
+              // 如果授权是单选
+              if(this.single){
+                this.authdialogForm.roleIds = item.id
+                return
+              }else{
+                this.authdialogForm.roleIds.push(item.id)
+              }
+            })
+          }
+        })
+        // 获取用户id
+        this.authdialogForm.userId = data.id
+        // 清空角色数据
+        this.rolesData = []
+        // 加载角色数据
+        this.getLoadRole({ limit: 15, page: 1, state: 0 })
+      }
+    },
+    // 查看密码
+    viewPassward () {
+      if (this.asyncType == 'password') {
+        this.asyncType = 'text'
+      } else {
+        this.asyncType = 'password'
+      }
+    },
+    // 删除部门
+    delHandle (node, data) {
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      })
+        .then(() => {
+          this.$api.bizSystemService.delEmployee({ ids: data.id }).then(res => {
+            if (res.code == 200) {
+              // 重新加载表格数据
+              this.$refs.employeeTable.reload()
+            }
+          })
+        })
+        .catch(() => {})
+    },
+    // 选择部门
+    selHandle () {
+      this.dialogVisibleTree = true
+      this.fnLoadDept() // 加载部门数据
+    },
+    // 点击树节点回掉
+    handleNodeClick (data) {
+      this.dialogVisibleTree = false // 关闭弹出框
+      this.dialogForm.deptId = data.id
+      this.dialogForm.deptName = data.deptName
+    },
+    // 请求部门数据方法
+    fnLoadDept () {
+      this.$api.bizSystemService.getDeptList({type: '0'})
+        .then(res => {
+          if (res.code == 200) {
+            this.deptTreeData = res.data || []
+          }
+        })
+    },
+    // 保存修改密码
+    updateSaveHandle () {
+      if (this.passwordform.newPassword != this.passwordform.confirmNewPassword) {
+        this.$message.error('两次输入的密码不一致')
+        return
+      }
+      this.$api.bizSystemService.updatePassword(this.passwordform)
+        .then(res => {
+          if (res.code == 200) {
+            this.dialogVisiblePassword = false
+          }
+        })
+    },
+    // 保存表单数据
+    saveHandle (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.loading = true
+          // rules 表单验证是否通过
+          let requestMeth = ''
+          delete this.dialogForm.userAccount
+          let paramsForm = this.dialogForm
+          
+          // 新增保存
+          if (this.dialogType == 'add') {
+            paramsForm = this.dialogForm
+            requestMeth = this.$api.bizSystemService.addEmployee(paramsForm)
+            requestMeth.then(res => {
+            if(res.data == 'recover'){
+              this.$confirm(res.msg, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+              })
+              .then(() => {
+                this.loading = true
+                this.$api.bizSystemService.employeeRecover({ phone: paramsForm.phone })
+                  .then(res => {
+                      // 重新加载表格数据
+                      this.$refs.employeeTable.reload()
+                      this.dialogVisible = false
+                  })
+                  .finally(()=>{
+                    this.loading = false
+                  })
+              })
+              .catch(() => {})
+            }else {
+              // 重新加载表格数据
+              this.$refs.employeeTable.reload()
+              // 关闭弹出框
+              this.dialogVisible = false
+              // 已经存在的数据 是否要恢复
+            }
+          })
+          // 编辑保存
+          } else if (this.dialogType == 'edit') {
+            paramsForm = this.dialogForm
+            requestMeth = this.$api.bizSystemService.updateEmployee(paramsForm)
+          // 同步保存
+          } else if (this.dialogType == 'sync') {
+            paramsForm = this.syncForm
+            requestMeth = this.$api.bizSystemService.syncEmployee(paramsForm)
+          //授权保存
+          } else if (this.dialogType == 'auth') {
+            paramsForm = this.authdialogForm
+            requestMeth = this.$api.bizSystemService.authEmployee(paramsForm)
+          }
+          requestMeth.then(res => {
+            if (res.code == 200) {
+              // 重新加载表格数据
+              this.$refs.employeeTable.reload()
+              // 关闭弹出框
+              this.dialogVisible = false
+              // 已经存在的数据 是否要恢复
+            }
+          })
+          .finally(()=>{
+          this.loading = false
+         })
+        }
+      })
+    }
+  }
+}
+</script>
+<style scoped>
+.role-list {
+  border: 1px solid #efefef;
+  padding: 10px;
+  border-radius: 3px;
+  height: 120px;
+  overflow: auto;
+}
+.role-list label{display: block; line-height: 20px;}
+/*.role-list .el-checkbox-group .el-checkbox {float: left; width:30%;padding: 0; }*/
+</style>
