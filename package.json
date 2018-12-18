@@ -13,7 +13,7 @@
     "build:copy": "see-copy-file \"src/**/*.!(js)\" dist",
     "clean": "rimraf node_modules",
     "pub": "npm run build && see-publish",
-    "pub:beta": "npm run build && see-publish beta"
+    "pub:beta": "see-publish"
   },
   "peerDependencies": {
     "see-web-basic": "^1.2.6",
@@ -55,7 +55,7 @@
     "webpack-dev-server": "^2.9.1",
     "aglob": "^3.0.1",
     "html-webpack-plugin": "^2.30.1",
-    "see-web-basic": "^1.2.6",
+    "see-web-basic": "1.2.10-beta1",
     "vue-router": "^3.0.1",
     "vue": "^2.5.11",
     "axios": "^0.18.0",
