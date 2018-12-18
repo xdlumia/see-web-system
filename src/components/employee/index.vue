@@ -104,7 +104,7 @@
                 <el-form-item label="所属部门" prop="deptName" :rules="{ required:true, message: '请输入所属部门' }">
                   <el-input v-model="dialogForm.deptName" placeholder="请选择上级部门" class="w200" disabled></el-input>
                   <!-- 是新增，或者是编辑未同步的员工， 需要选择按钮 -->
-                  <el-button @click="selHandle()" v-show="chooseIsShow">选择1</el-button>
+                  <el-button @click="selHandle()" v-show="chooseIsShow">选择</el-button>
                 </el-form-item>
                 
                 <el-form-item label="备注" prop="remark">
