@@ -194,7 +194,7 @@
 </template>
 <script>
 let employeeSingle  = window.g.employeeSingle
-import { Base64 } from 'js-base64'              
+import { Base64 } from 'js-base64';                
 export default {
   data () {
     return {
@@ -429,7 +429,7 @@ export default {
         let registerPassword = ''
         // 获取注册密码解密后的数据
         try{
-          registerPassword = Base64.decode(data.registerPassword)
+          registerPassword = data.registerPassword?Base64.decode(data.registerPassword):''
         }
         catch(err){
           registerPassword = ''
