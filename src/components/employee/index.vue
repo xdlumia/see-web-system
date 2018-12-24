@@ -115,7 +115,7 @@
           <!-- 同步密码 -->
           <div v-if="dialogType=='sync'">
             <span>密码:</span>
-            <el-input v-model="syncForm.pwd" size="small" placeholder="请输入密码" :type="asyncType" class="w200">
+            <el-input v-model="syncForm.pwd" size="small" :disabled=rowData.registerPassword placeholder="请输入密码" :type="asyncType" class="w200">
               <i @click="viewPassward" slot="suffix" class="el-input__icon el-icon-view" title="显示密码" :class="{'d-text-blue': asyncType == 'text' ,'d-text-blue':asyncType == 'password'}"></i>
             </el-input>
           </div>  
@@ -193,13 +193,15 @@
   </div>
 </template>
 <script>
-let employeeSingle  = window.g.employeeSingle                  
+let employeeSingle  = window.g.employeeSingle
+import { Base64 } from 'js-base64';                
 export default {
   data () {
     return {
-      single:employeeSingle, //用来判断员工授权是单选还是多选
+      single: employeeSingle, //用来判断员工授权是单选还是多选
       authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
       loading:false,
+      rowData:{},
       dialogTitle: '', // 弹出框title
       dialogType: '', // dialog类型
       dialogWidth: '420px',
@@ -395,6 +397,7 @@ export default {
     },
     // 编辑和新增用户
     editOrAddHandle (type, data) {
+      this.rowData = data
       this.dialogVisible = true
       this.dialogType = type
       if (type == 'add') {
@@ -417,15 +420,23 @@ export default {
         this.dialogTitle = '编辑：' + data.employeeName
         this.dialogWidth = '390px'
         this.$api.bizSystemService.getEmployeeInfo(data.id).then(res=>{
-          let resData = res.data
+          let resData = res.data || {}
           for(let key in this.dialogForm){
             this.dialogForm[key] = resData[key]
           }
         })
       } else if (type == 'sync') {
+        let registerPassword = ''
+        // 获取注册密码解密后的数据
+        try{
+          registerPassword = Base64.decode(data.registerPassword)
+        }
+        catch(err){
+          registerPassword = ''
+        }
         this.dialogTitle = '同步：' + data.employeeName
         this.dialogWidth = '350px'
-        this.syncForm.pwd = ''
+        this.syncForm.pwd = registerPassword
         this.syncForm.name = data.employeeName;
         this.syncForm.id = data.id
         this.syncForm.status = data.lockStatus
