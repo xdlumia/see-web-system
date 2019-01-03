@@ -1,3 +1,11 @@
+<!--员工列表
+/**
+* 员工列表
+* @/components/employee/ 员工列表
+* @author web-王晓冬
+* @date 2019年1月2日
+**/
+-->
 <template>
   <div class="d-content main-content">
     <div class="mb10">
@@ -14,7 +22,7 @@
       </div>
     </div>
     <!-- 表格数据 -->
-    <d-table api="bizSystemService.getEmployeeList" :params="queryForm" ref="employeeTable"  style="height:calc(100% - 45px)">
+    <d-table api="bizSystemService.getEmployeeList" :params="queryForm" ref="employeeTable"  style="height:calc(100% - 40px)">
       <el-table-column type="index" align="center" label="序号" width="50">
       </el-table-column>
       <el-table-column prop="employeeName" align="center" label="姓名" width="120">
@@ -48,7 +56,7 @@
         <template slot-scope="scope">
           <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" title="已经同步过了" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
 
-          <el-button size="mini" type="warning" plain @click="editOrAddHandle('auth',scope.row)">授权</el-button>
+          <el-button size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
           <el-button v-if="authorityBtn.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
           <el-button v-if="authorityBtn.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
@@ -62,6 +70,10 @@
         </template>
       </el-table-column>
     </d-table>
+
+    <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width">
+      <components :is="dialogMeta.component" :dialogMeta="dialogMeta" v-if="dialogMeta.visible" @submit="tableReload"></components>
+    </el-dialog>
     <!-- 新增 / 编辑 / 授权 / 同步弹出框-->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :width="dialogWidth">
       <div v-loading="loading">
@@ -118,27 +130,6 @@
             <el-input v-model="syncForm.pwd" size="small" :disabled=rowData.registerPassword placeholder="请输入密码" :type="asyncType" class="w200">
               <i @click="viewPassward" slot="suffix" class="el-input__icon el-icon-view" title="显示密码" :class="{'d-text-blue': asyncType == 'text' ,'d-text-blue':asyncType == 'password'}"></i>
             </el-input>
-          </div>  
-          <!-- 授权内容 -->
-          <div class="role-main" v-if="dialogType=='auth'">
-            <div class="role-list">
-              <el-row :gutter="10">
-                <component size="mini" :is="single ? 'el-radio-group' : 'el-checkbox-group'"
-                    v-model="authdialogForm.roleIds">
-                    <el-col class="d-elip" :span="6" v-for="(item,index) of rolesData"  :key="index">
-                      <component
-                      :title="item.roleName"
-                      :is="single ? 'el-radio' : 'el-checkbox'" 
-                      :label="item.id">
-                        {{item.roleName}}
-                      </component>
-                    </el-col>
-                </component>
-              </el-row>
-            </div>
-            <div class="ac mt10">
-              <el-button type="info" plain size="mini" @click="getMoreRoles()">加载更多</el-button>
-            </div>
           </div>
       </div>
       
@@ -194,13 +185,24 @@
 </template>
 <script>
 let employeeSingle  = window.g.employeeSingle
-import { Base64 } from 'js-base64';                
+import { Base64 } from 'js-base64'; //base 64加密
+import employeeAuth from "./employee-auth"; //授权  
 export default {
+  components: {
+    employeeAuth,
+  },
   data () {
     return {
       single: employeeSingle, //用来判断员工授权是单选还是多选
       authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
+      // dialog弹出框信息
       loading:false,
+      dialogMeta:{
+        title:'', //弹出框标题
+        visible:false,//是否显示
+        component:'',//组件
+        data:'',// 当前行数据
+      },
       rowData:{},
       dialogTitle: '', // 弹出框title
       dialogType: '', // dialog类型
@@ -248,11 +250,6 @@ export default {
         userAccount:'', //用户帐号
       },
 
-      // 授权弹出内容
-      authdialogForm: {
-        userId: '',
-        roleIds: []
-      },
       asyncType: 'password', // 默认type是密码
 
       passwordform: {
@@ -274,32 +271,16 @@ export default {
   	this.queryOpenRegistration()
   },
   methods: {
-    // 请求角色表格数据方法
-    getLoadRole (params) {
-      this.loading = true
-      this.$api.bizSystemService.getRoleList(params).then(res => {
-        if (res.code == 200) {
-          this.rolePage = res.curr
-          let data = res.data || []
-          if (data.length > 0) {
-            this.rolesData = this.rolesData.concat(data)
-          } else {
-            this.rolePage--
-            this.$message({
-              type: 'warning',
-              showClose: true,
-              message: '没有了'
-            })
-          }
-        }
-      }).finally(()=>{
-        this.loading = false
-      })
-    },
-    // 授权角色加载更多
-    getMoreRoles () {
-      this.rolePage++
-      this.getLoadRole({ limit: 15, page: this.rolePage, state: 0 })
+    // 员工操作
+    employeeHandle(component,row){
+      let title = {
+        employeeAuth:{title:'授权-当前用户' + row.employeeName,width:'720px'}
+      }
+      this.dialogMeta.visible = true
+      this.dialogMeta.data = row
+      this.dialogMeta.width = title[component].width
+      this.dialogMeta.title = title[component].title
+      this.dialogMeta.component = component
     },
     // 修改密码编辑事件
     editPassWord (type, data) {
@@ -345,7 +326,6 @@ export default {
     	this.$api.bizSystemService.queryOpenRegistration()
       .then(res => {
       	this.allowRegister = res.data
-      	console.log(this.allowRegister)
       })
       .finally(()=>{
       })
@@ -445,34 +425,11 @@ export default {
         this.syncForm.email = data.email
         this.syncForm.companyId = data.companyId
         this.syncForm.companyCode = data.companyCode
-      } else if (type == 'auth') {
-        this.dialogTitle = '授权-当前用户：' + data.employeeName
-        this.dialogWidth = '720px'
-        // 初始化当前授权的角色
-        this.authdialogForm.roleIds = [] 
-        // 获取当前员工授权的角色
-        this.$api.bizSystemService.getEmployeeInfo(data.id).then(res => {
-          if (res.code == 200) {
-            let data = res.data || {}
-            let roles = data.roleList
-            roles.forEach(item => {
-              // 如果授权是单选
-              if(this.single){
-                this.authdialogForm.roleIds = item.id
-                return
-              }else{
-                this.authdialogForm.roleIds.push(item.id)
-              }
-            })
-          }
-        })
-        // 获取用户id
-        this.authdialogForm.userId = data.id
-        // 清空角色数据
-        this.rolesData = []
-        // 加载角色数据
-        this.getLoadRole({ limit: 15, page: 1, state: 0 })
       }
+    },
+    // 重新加载列表数据
+    tableReload(){
+      this.$refs.employeeTable.reload()
     },
     // 查看密码
     viewPassward () {
@@ -584,10 +541,6 @@ export default {
           } else if (this.dialogType == 'sync') {
             paramsForm = this.syncForm
             requestMeth = this.$api.bizSystemService.syncEmployee(paramsForm)
-          //授权保存
-          } else if (this.dialogType == 'auth') {
-            paramsForm = this.authdialogForm
-            requestMeth = this.$api.bizSystemService.authEmployee(paramsForm)
           }
           requestMeth.then(res => {
             if (res.code == 200) {

@@ -1,6 +1,7 @@
-import {apiConfig} from 'see-web-basic'
+import { apiConfig } from 'see-web-basic';
 
-import bizSystemService from './bizSystemService'
-import seeDictionaryService from './seeDictionaryService'
+import bizSystemService from './bizSystemService';
+import resourceService from './resourceService';
+import seeDictionaryService from './seeDictionaryService';
 
-apiConfig.registry({bizSystemService, seeDictionaryService}, false)
+apiConfig.registry({ bizSystemService: bizSystemService,resourceService: resourceService, seeDictionaryService: seeDictionaryService }, false);
