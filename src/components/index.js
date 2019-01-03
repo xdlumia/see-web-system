@@ -50,5 +50,5 @@ export default {
       parent: '系统管理',
       title: '角色管理'
     }
-  }
+  },
 };
