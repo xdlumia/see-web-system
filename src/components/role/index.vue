@@ -24,7 +24,11 @@
               </el-select>
           </div>
           <el-button v-if="authorityBtn.includes('sys_role_1004')" type="primary" @click="tableReload()" icon="el-icon-search">查询</el-button>
+<<<<<<< HEAD
           <el-button v-if="authorityBtn.includes('sys_role_1001') && activeRole=='bizSystemService.getRoleList'" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button>
+=======
+          <el-button v-if="authorityBtn.includes('sys_role_1001')" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button>
+>>>>>>> 9f506365be2a8cec6d02edc6400be71f61fe1c56
         </el-form-item>
       </el-form>
     <!-- 表格数据 -->

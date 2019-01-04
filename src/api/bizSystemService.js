@@ -116,7 +116,11 @@ export default (_getUserDetail$getUse = {
     return Api.get(baseURL.bizSystemService + apiURL.getsyslist, params);
   },
   getRoleType: function getRoleType(params) {
+<<<<<<< HEAD
     return Api.get(baseURL.bizSystemService + '/rmrole/roleTypeList', params);
+=======
+    return Api.get(baseURL.bizSystemService + apiURL.getRoleType, params);
+>>>>>>> 9f506365be2a8cec6d02edc6400be71f61fe1c56
   },
 
 
