@@ -1,7 +1,7 @@
-import {Api} from 'see-web-basic'
-let baseURL = window.g.ApiUrl
+import { Api } from 'see-web-basic';
+var baseURL = window.g.ApiUrl;
 
-const apiURL = {
+var apiURL = {
   /**
    * @description  业务字典管理
    */
@@ -22,32 +22,33 @@ const apiURL = {
   getDicCommonInfo: '/dicCommon/info/',
   // 根据数据字典code查询值列表
   getDicCommonValueList: '/dicCommon/valueList/'
-}
+};
 
 export default {
   /**
    * @description  业务字典
    */
 
-  getDictionaryList (params) {
-    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDictionaryList, params)
+  getDictionaryList: function getDictionaryList(params) {
+    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDictionaryList, params);
   },
-  getDictionaryValueList (params) {
-    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDictionaryValueList, params)
+  getDictionaryValueList: function getDictionaryValueList(params) {
+    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDictionaryValueList, params);
   },
-  delDictionary (params) {
-    return Api.del(baseURL.seeDataDictionaryService + apiURL.delDictionary + params)
+  delDictionary: function delDictionary(params) {
+    return Api.del(baseURL.seeDataDictionaryService + apiURL.delDictionary + params);
   },
-  editDictionary (params) {
-    return Api.post(baseURL.seeDataDictionaryService + apiURL.editDictionary, params)
+  editDictionary: function editDictionary(params) {
+    return Api.post(baseURL.seeDataDictionaryService + apiURL.editDictionary, params);
   },
+
   /**
    * @description  数据字典公共接口
    */
-  getDicCommonInfo (params) {
-    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDicCommonInfo + params)
+  getDicCommonInfo: function getDicCommonInfo(params) {
+    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDicCommonInfo + params);
   },
-  getDicCommonValueList (params) {
-    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDicCommonValueList + params)
+  getDicCommonValueList: function getDicCommonValueList(params) {
+    return Api.get(baseURL.seeDataDictionaryService + apiURL.getDicCommonValueList + params);
   }
-}
+};
