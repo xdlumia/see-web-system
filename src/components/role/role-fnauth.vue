@@ -15,7 +15,6 @@
     :data="treeData"
     show-checkbox
     node-key="id"
-    v-loading="loading"
     :default-expanded-keys="treeexpanded"
     :default-checked-keys="treeexpanded"
     :props="{label: 'name'}">
