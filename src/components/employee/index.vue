@@ -406,6 +406,14 @@ export default {
           }
         })
       } else if (type == 'sync') {
+        if(!data.deptName){
+          this.$message({
+            type:'warning',
+            message:'请先在修改里增加所属部门',
+            showClose:true,
+          }),
+          this.dialogVisible = false
+        }
         let registerPassword = ''
         // 获取注册密码解密后的数据
         try{
