@@ -360,6 +360,7 @@ export default {
           item.fieldValue = this.userArr.map(item => {return item.userId}).join(",");
         }
       });
+			this.rmDataAuthForm.roleId = this.dialogMeta.data.id
       this.loading = true;
       this.$api.bizSystemService.saveRmDataAuth(this.rmDataAuthForm)
         .then(res => {
