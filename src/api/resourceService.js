@@ -42,9 +42,4 @@ export default {
   getDefaultRoleList(params) {
     return Api.get(baseURL.resourceService + '/rmdefaultrole/defaultRoleList', params)
   },
-
-  //根据公司code获取默认角色
-  getCompanyDefaultRole(params) {
-    return Api.get(baseURL.resourceService + '/rmdefaultrole/initDefaultRole', params)
-  },
 }

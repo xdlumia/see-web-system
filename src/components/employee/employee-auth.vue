@@ -77,7 +77,7 @@ export default {
   },
   created () {
     this.getCustomRole() //获取自定义角色
-    this.getCompanyDefaultRole() // 获取默认角色
+    this.getDefaultRoleList() // 获取默认角色
     this.initSelectRole()
   },
   methods: {
@@ -121,9 +121,16 @@ export default {
       })
     },
     // 获取默认角色
-    getCompanyDefaultRole () {
+    getDefaultRoleList () {
       this.loading = true
-      this.$api.resourceService.getCompanyDefaultRole({ companyCode:this.$local.fetch('userInfo').companyCode })
+      let userInfo = this.$local.fetch('userInfo')
+      let params = {
+        limit:999,
+        page:1,
+        companyCode:userInfo.companyCode, //公司编码  自定义角色不传此参数
+        subsysCode:userInfo.syscode, //子系统编码 自定义角色不传此参数
+      }
+      this.$api.resourceService.getDefaultRoleList(params)
       .then(res => {
           this.defaultRolesData  = res.data || []
       }).finally(()=>{

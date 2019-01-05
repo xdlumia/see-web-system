@@ -29,11 +29,11 @@
       </el-table-column>
       <el-table-column prop="email" align="center" label="邮箱" width="150" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column prop="phone" width="120" align="center" label="电话">
+      <el-table-column prop="phone" min-width="120" align="center" label="电话">
       </el-table-column>
-      <el-table-column prop="deptName" width="120" align="center" label="所属部门" show-overflow-tooltip>
+      <el-table-column prop="deptName" min-width="120" align="center" label="所属部门" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column prop="positionName" align="center" label="职位名称">
+      <el-table-column prop="positionName" show-overflow-tooltip min-width="120" align="center" label="职位名称">
       </el-table-column>
       <el-table-column prop="roleNames" align="center" label="角色" width="150" show-overflow-tooltip></el-table-column>
       <el-table-column prop="userAccount" align="center" label="用户帐号" width="140">
