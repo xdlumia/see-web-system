@@ -120,7 +120,7 @@
     </el-form>
     <div class="ac">
       <el-button @click="dialogMeta.visible = false" size="small">取 消</el-button>
-      <el-button type="primary" @click="saveHandle" size="small">确 定</el-button>
+      <el-button type="primary" @click="saveHandle" size="small" v-if="dialogMeta.roleSource == 'custom'">确 定</el-button>
     </div>
 
     <!-- 树部门弹出框 -->

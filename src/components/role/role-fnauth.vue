@@ -21,7 +21,7 @@
     </el-tree>
     <div class="ac">
       <el-button @click="dialogMeta.visible = false" size="small">取 消</el-button>
-      <el-button type="primary" @click="saveFnauth" size="small">确 定</el-button>
+      <el-button type="primary" @click="saveFnauth" size="small" v-if="dialogMeta.roleSource == 'custom'">确 定</el-button>
     </div>
   </div>
 </template>
