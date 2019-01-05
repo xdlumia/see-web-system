@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     initRole(){
-      if(this.dialogMeta.type == 'add'){
+      if(this.dialogMeta.type == 'update'){
           // 清空form表单
           this.$nextTick(()=>{
             this.$refs.addForm.resetFields()
