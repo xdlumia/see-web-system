@@ -258,7 +258,7 @@ export default {
             this.modalOptions = data;
             // 选中第一个模板
             this.modalSelected = data[0] || "";
-            this.rmDataAuthForm.code = data.code || "";
+            this.rmDataAuthForm.code = data[0].code || "";
             this.rmDataAuthForm.pageDatasourceId = data[0].id || "";
             this.rmDataAuthForm.pageDatasourceName = data[0].name || "";
             // 根据id获取数据源列表
@@ -290,7 +290,6 @@ export default {
       // 根据id获取数据源列表
       this.getAuthFieldList({ dataSourceId: item.id });
       // 根据id获取数据源详情
-      console.log(item);
       this.getInfoRmDataAuth({
         dataSourceId: item.id,
         roleId: this.dialogMeta.data.id
