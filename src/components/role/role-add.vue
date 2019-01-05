@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     initRole(){
-      if(this.dialogMeta.type == 'update'){
+      if(this.dialogMeta.type == 'add'){
           // 清空form表单
           this.$nextTick(()=>{
             this.$refs.addForm.resetFields()
@@ -114,7 +114,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let api = "addRole";
-          if (this.dialogMeta.type == "edit") {
+          if (this.dialogMeta.type == "update") {
             api = "updateRole";
           }
           this.loading = true
