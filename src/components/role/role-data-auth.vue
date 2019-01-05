@@ -273,7 +273,6 @@ export default {
     },
     // 数据权限 选择模板
     modalSelChange(item) {
-      let roleId = this.rmDataAuthForm.roleId;
       // 清空form
       this.colSetting = [];
       this.rowSettingList = [];
@@ -287,13 +286,14 @@ export default {
       this.rmDataAuthForm.code = item.code || "";
       this.rmDataAuthForm.pageDatasourceId = item.id || "";
       this.rmDataAuthForm.pageDatasourceName = item.name || "";
-      this.rmDataAuthForm.roleId = roleId;
+      this.rmDataAuthForm.roleId = this.dialogMeta.data.id;
       // 根据id获取数据源列表
       this.getAuthFieldList({ dataSourceId: item.id });
       // 根据id获取数据源详情
+      console.log(item);
       this.getInfoRmDataAuth({
         dataSourceId: item.id,
-        roleId: this.rmDataAuthForm.roleId
+        roleId: this.dialogMeta.data.id
       });
     },
     // 获取字段权限列表
