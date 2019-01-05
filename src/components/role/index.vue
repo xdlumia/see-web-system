@@ -73,7 +73,7 @@
        min-width="360">
         <template slot-scope="scope">
           <el-button v-if="authorityBtn.includes('sys_role_1005')" size="mini" type="warning" plain @click="roleHandle('fnAuth',scope.row)">功能授权</el-button>
-          <el-button v-if="authorityBtn.includes('sys_role_1006')" size="mini" type="warning" plain @click="roleHandle('dataAuth',scope.row)">数据授权</el-button>
+          <el-button v-if="authorityBtn.includes('sys_role_1006') && activeRole=='bizSystemService.getRoleList'" size="mini" type="warning" plain @click="roleHandle('dataAuth',scope.row)">数据授权</el-button>
           <el-button v-if="authorityBtn.includes('sys_role_1002') && activeRole=='bizSystemService.getRoleList'" size="mini" type="primary" plain @click="roleHandle('update',scope.row)"  >修改</el-button>
           <el-button v-if="authorityBtn.includes('sys_role_1003') && activeRole=='bizSystemService.getRoleList'" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)"  >删除</el-button>
         </template>
