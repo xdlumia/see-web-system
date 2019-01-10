@@ -50,7 +50,7 @@
             prop="content">
           </el-table-column>
           <el-table-column
-            label="code"
+            label="编码"
             width="240"
             prop="code">
           </el-table-column>

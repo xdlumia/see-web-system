@@ -3,7 +3,8 @@ import Employee from './employee/index'; // 员工
 import Dept from './dept/index'; // 部门
 import Role from './role/index'; // 角色
 import Org from './org/index'; //组织类型
-import BusinessDictionary from './businessDictionary/index';
+const BusinessDictionary = () => import('./businessDictionary/index') // 业务字典
+const CategoryManagement = () => import('./categoryManagement/index') // 类目管理
 
 export default {
   BusinessDictionary: {
@@ -51,4 +52,13 @@ export default {
       title: '角色管理'
     }
   },
+  CategoryManagement: {
+    path: '/asistant/categoryManagement', // 类目管理
+    name: '/asistant/categoryManagement',
+    component: CategoryManagement,
+    meta: {
+      parent: '辅助管理',
+      title: '物品类目'
+    }
+  }
 };
