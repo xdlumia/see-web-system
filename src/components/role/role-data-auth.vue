@@ -1,4 +1,4 @@
-<!--私有组件：抄录账单列表
+<!--私有组件：数据权限
 /**
 * 默认角色管理
 * @system 组件存放位置
@@ -86,7 +86,7 @@
               <el-radio :label="1" name="type">本部门（包含下级部门）</el-radio>
               <el-radio :label="2" name="type">本部门（不含下级部门）</el-radio>
               <el-radio :label="3" name="type">本公司</el-radio>
-              <el-radio :label="4" name="type">自定义部门</el-radio>
+              <el-radio :label="4" name="type" v-if="dialogMeta.roleSource == 'custom'">自定义部门</el-radio>
             </el-radio-group>
             <el-button size="mini" @click="deptSel(item)" v-show="item.deptCondType==4">选择</el-button>
             <span v-show="item.deptCondType==4">
@@ -101,7 +101,7 @@
           <div class="d-hidden mb10" v-else-if="item.condType==3">
             <el-radio-group v-model="item.empCondType" class="fl mr15" style="margin-top:9px;">
               <el-radio :label="0" name="type">本人</el-radio>
-              <el-radio :label="1" name="type">指定人</el-radio>
+              <el-radio :label="1" name="type" v-if="dialogMeta.roleSource == 'custom'">指定人</el-radio>
             </el-radio-group>
             <employees-chosen v-show="item.empCondType==1" v-model="userArr">
               <el-button size="mini" class="ba d-text-blue ml10 d-pointer">选择</el-button>
@@ -374,7 +374,11 @@ export default {
     },
     //  获取权限数据源详情
     getInfoRmDataAuth(params) {
-      this.$api.bizSystemService.getInfoRmDataAuth(params).then(res => {
+      let api = this.$api.resourceService.getDefaultRoleInfo(params)
+      if(this.dialogMeta.roleSource == 'custom'){
+        api = this.$api.bizSystemService.getInfoRmDataAuth(params)
+      }
+      api.then(res => {
         if (res.code == 200) {
           // 回写表单
           if (res.data != null) {

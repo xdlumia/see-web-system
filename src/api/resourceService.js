@@ -5,34 +5,35 @@
  * @host 8013
  */
 
-import {Api} from 'see-web-basic'
-let baseURL = window.g.ApiUrl
-
+import { Api } from 'see-web-basic';
+var baseURL = window.g.ApiUrl;
 
 export default {
-   /**
-   * @description 数据权限 数据源
-   */
-  getDataSourceList (params) {
-    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/list', params)
+  /**
+  * @description 数据权限 数据源
+  */
+  getDataSourceList: function getDataSourceList(params) {
+    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/list', params);
   },
-  getDataSourcePageList(params) {
-    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/page', params)
+  getDataSourcePageList: function getDataSourcePageList(params) {
+    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/page', params);
   },
 
 
-   /**
-   * @description 数据权限 字段明细
-   */
+  /**
+  * @description 数据权限 字段明细
+  */
 
   //获取数据权限字段源列表
-  getAuthFieldList (params) {
-    return Api.get(baseURL.resourceService + '/dataauthField/list', params)
+  getAuthFieldList: function getAuthFieldList(params) {
+    return Api.get(baseURL.resourceService + '/dataauthField/list', params);
   },
+
   //数据源权限字段分页列表
-  getAuthFieldPageList(params) {
-    return Api.get(baseURL.resourceService + '/dataauthField/page', params)
+  getAuthFieldPageList: function getAuthFieldPageList(params) {
+    return Api.get(baseURL.resourceService + '/dataauthField/page', params);
   },
+
 
   /**
    * @desc 数据权限 角色管理 默认角色
@@ -40,6 +41,10 @@ export default {
 
   //获取角色列表
   getDefaultRoleList(params) {
-    return Api.get(baseURL.resourceService + '/rmdefaultrole/defaultRoleList', params)
+    return Api.get(baseURL.resourceService + '/rmdefaultrole/defaultRoleList', params);
   },
-}
+  //获取默认角色默认数据权限详情
+  getDefaultRoleInfo(params) {
+    return Api.get(baseURL.resourceService + '/rmdataauth/info', params);
+  }
+};
