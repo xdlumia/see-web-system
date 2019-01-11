@@ -10,7 +10,7 @@
    <div v-loading='loading'>
        <div class="cate" style="min-width:1256px;">
            <div class="cate-top">
-               <el-button  v-if="buttonsCode.includes('decorate_goods_classmgr_1001')" @click="fcateadd" type="primary" icon="el-icon-plus" size="medium ">新增</el-button>
+               <el-button  v-if="authorityButtons.includes('decorate_goods_classmgr_1001')" @click="fcateadd" type="primary" icon="el-icon-plus" size="medium ">新增</el-button>
            </div>
            <div class="jianTree" style="overflow-x:auto;">
             <div class="custom-tree-node mt20">
@@ -18,7 +18,7 @@
               <div class="tree-node">
                 <!--<span class="d-inline b">地市(2位)</span>-->
                 <span class="b" style="display:inline-block;width:300px;">创建时间</span>
-                <span v-if="buttonsCode.includes('decorate_goods_classmgr_1006')" class="b" style="display:inline-block;width:200px;">是否有效</span>
+                <span v-if="authorityButtons.includes('decorate_goods_classmgr_1006')" class="b" style="display:inline-block;width:200px;">是否有效</span>
                 <span class="b ac" style="display:inline-block;width:400px;">操作</span>
               </div>
             </div>
@@ -43,7 +43,7 @@
                             <span class="d-elip" style="width:300px;display:inline-block;">
                                <span>{{node.data.createTime | timeToStr('YYYY-MM-DD HH:MM:SS')}}</span>
                             </span>
-                            <span v-if="buttonsCode.includes('decorate_goods_classmgr_1006')" class="d-elip" style="width:200px;display:inline-block;">
+                            <span v-if="authorityButtons.includes('decorate_goods_classmgr_1006')" class="d-elip" style="width:200px;display:inline-block;">
                                 <el-switch
                                     v-model="node.data.isEnable"
                                     active-value="1"
@@ -54,10 +54,10 @@
                                 </el-switch>
                             </span>
                             <span class="d-elip" style="width:400px;display:inline-block;">
-                                <el-button v-if="buttonsCode.includes('decorate_goods_classmgr_1002')" :disabled="(node.data.parentId == null ? false : true) || (node.data.isEnable != 1)" class="ml40" type="text" size="mini" icon="el-icon-plus" @click="() => faddchild(data,'child',node)">新增子类</el-button>
-                                <el-button v-if="buttonsCode.includes('decorate_goods_classmgr_1003')" class="ml40" type="text" size="mini" icon="el-icon-edit" @click="() => fcatehandel(data,'itself',node)"> 修改 </el-button>
-                                <el-button v-if="buttonsCode.includes('decorate_goods_classmgr_1005')" :disabled="node.data.isEnable != 1" class="ml40" type="text" size="mini" icon="el-icon-upload2" @click="() => fcatetop(data,node)"> 置顶 </el-button>
-                                <el-button v-if="buttonsCode.includes('decorate_goods_classmgr_1004')" class="ml40" type="text" size="mini" icon="el-icon-delete" @click="() => fcatedelete(node, data)"> 删除</el-button>
+                                <el-button v-if="authorityButtons.includes('decorate_goods_classmgr_1002')" :disabled="(node.data.parentId == null ? false : true) || (node.data.isEnable != 1)" class="ml40" type="text" size="mini" icon="el-icon-plus" @click="() => faddchild(data,'child',node)">新增子类</el-button>
+                                <el-button v-if="authorityButtons.includes('decorate_goods_classmgr_1003')" class="ml40" type="text" size="mini" icon="el-icon-edit" @click="() => fcatehandel(data,'itself',node)"> 修改 </el-button>
+                                <el-button v-if="authorityButtons.includes('decorate_goods_classmgr_1005')" :disabled="node.data.isEnable != 1" class="ml40" type="text" size="mini" icon="el-icon-upload2" @click="() => fcatetop(data,node)"> 置顶 </el-button>
+                                <el-button v-if="authorityButtons.includes('decorate_goods_classmgr_1004')" class="ml40" type="text" size="mini" icon="el-icon-delete" @click="() => fcatedelete(node, data)"> 删除</el-button>
                             </span>
                         </div>
                     </span>
@@ -112,16 +112,12 @@ export default {
         label: 'className',
         isLeaf: 'leaf'
       },
-      tableCount: 1000,
-      tableLimit: 5,
-      tableCur: 1,
-      buttonsCode: [],
+      tableCount: 0,
       dialogVisible: false,
       form: {
         handelClassName: '',
         parentid: ''
       },
-      buttonsCode: this.$local.fetch('authorityBtn').asystem_assist_goodsclass || [],
       rules: {
         handelClassName: [
           { required: true, message: '请输入分类名称', trigger: 'blur' }
