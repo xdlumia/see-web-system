@@ -81,7 +81,7 @@
         	<div class="b ml30" style="height:30px;line-height:30px;"><span class="el-icon-warning f30 fl" style="color:#e6a23c;"></span><span class="ml10 fl">分类新增成功后，不可更改及删除，请仔细核实分类信息！</span></div>
             <el-form ref="form" :model="form" label-width="80px" :rules="rules" class="mt20">
                 <el-form-item size="small" label="分类名称" prop="handelClassName">
-                    <el-input placeholder="请输入分类名称" v-model="form.handelClassName"></el-input>
+                    <el-input placeholder="请输入分类名称" v-model="form.handelClassName" maxlength="20"></el-input>
                 </el-form-item>
                  <!-- <el-form-item label="上级分类" prop="parentid" v-if="handel">
                     <el-select size="small" style="width:100%;" v-model="form.parentid" placeholder="请选择">
