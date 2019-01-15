@@ -29,7 +29,7 @@
           <el-form-item>
             <el-button  
             type="primary" 
-            @click="$refs.table.reload()" 
+            @click="$refs.table.reload(1)" 
             icon="el-icon-search"
             class="ml10">查询
             </el-button>
@@ -213,7 +213,7 @@ export default {
       this.queryForm.content = "";
       this.queryForm.state = "";
       // 刷新数据
-      this.$refs.table.reload()
+      this.$refs.table.reload(1)
     },
     // 恢复默认色
     recoverHandle(){
@@ -252,7 +252,7 @@ export default {
               if (res.code == 200) {
                 // 关闭弹框
                 this.dicDialogVisible = false; 
-                this.$refs.table.reload()
+                this.$refs.table.reload(1)
               }
             })
             .finally(res => {
@@ -273,7 +273,7 @@ export default {
       this.queryForm.dicCode = data.code;
       // 刷新数据
       this.$nextTick(()=>{
-        this.$refs.table.reload()
+        this.$refs.table.reload(1)
       })
     },
     // 改变颜色
@@ -304,7 +304,7 @@ export default {
             this.addOrEditForm.dicCode = this.dicData[0].code || " ";
             // 加载字典表格数据
             this.$nextTick(()=>{
-              this.$refs.table.reload()
+              this.$refs.table.reload(1)
             })
           }
         })

@@ -10,7 +10,7 @@
   <div class="d-content main-content">
     <div class="mb10">
       <el-input v-if="authorityBtn.includes('sys_employee_1004')" size="medium" @keyup.native.13="$refs.employeeTable.reload()" v-model="queryForm.condition" placeholder="请输入姓名/电话/员工编号查询" class="w240"></el-input>
-      <el-button v-if="authorityBtn.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload()" icon="el-icon-search">查询</el-button>
+      <el-button v-if="authorityBtn.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload(1)" icon="el-icon-search">查询</el-button>
       <el-button v-if="authorityBtn.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button>
       <div class="fr mr10">
       	<span class="d-text-gray">开放注册</span>

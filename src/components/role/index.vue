@@ -15,7 +15,7 @@
       </el-tabs>
       <el-form :model="queryForm" size="medium" @submit.native.prevent>
         <el-form-item inline class="d-inline mr30 mb10" >
-          <el-input  v-if="authorityBtn.includes('sys_role_1004')" @keyup.native.13="tableReload" v-model.trim="queryForm.name" placeholder="请输入角色名称" class="w200"></el-input>
+          <el-input  v-if="authorityBtn.includes('sys_role_1004')" @keyup.native.13="$refs.roleTable.reload(1)" v-model.trim="queryForm.name" placeholder="请输入角色名称" class="w200"></el-input>
           <div  v-if="authorityBtn.includes('sys_role_1004')" class="d-inline mt0">
               <el-select v-model="queryForm.state" slot="prepend" placeholder="请选择" size="medium">
                 <el-option label="请选择" value=""></el-option>
@@ -23,7 +23,7 @@
                 <el-option label="禁用" value="1"></el-option>
               </el-select>
           </div>
-          <el-button v-if="authorityBtn.includes('sys_role_1004')" type="primary" @click="tableReload()" icon="el-icon-search">查询</el-button>
+          <el-button v-if="authorityBtn.includes('sys_role_1004')" type="primary" @click="$refs.roleTable.reload(1)" icon="el-icon-search">查询</el-button>
           <el-button v-if="authorityBtn.includes('sys_role_1001') && activeRole=='bizSystemService.getRoleList'" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button>
         </el-form-item>
       </el-form>
@@ -138,8 +138,7 @@ export default {
     },
     // 角色类型切换台
     tabHandle(){
-
-      this.$refs.roleTable.reload()
+      this.$refs.roleTable.reload(1)
     },
     // 重新加载表格数据
     tableReload: function () {
