@@ -60,8 +60,6 @@ var apiURL = {
   * @description  角色
   */
 
-  //获取角色列表
-  getRoleList: '/rmrole/list',
   //获取授权角色列表
   getAuthRoleList: '/rmrole/sourceRoleList',
   // 删除角色
@@ -74,7 +72,7 @@ var apiURL = {
   syncRole: '/rmrole/updateRoleResource'
 };
 
-export default {
+export default (_getUserDetail$getUse = {
   /**
   * @description  用户
   */
@@ -170,12 +168,29 @@ export default {
   /**
   * @description  角色
   */
-
-  getRoleList: function getRoleList(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getRoleList, params);
+  //获取角色列表
+  getRoleList(params) {
+    return Api.get(baseURL.bizSystemService + '/rmrole/list', params);
   },
-  getAuthRoleList: function getAuthRoleList(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getAuthRoleList, params);
+  //获取授权角色列表
+  getAuthRoleList(params) {
+    return Api.get(baseURL.bizSystemService + '/rmrole/sourceRoleList', params);
+  },
+  //删除角色
+  delRole(params) {
+    return Api.del(baseURL.bizSystemService + '/rmrole/delete', params);
+  },
+  //新增角色
+  addRole(params) {
+    return Api.post(baseURL.bizSystemService + '/rmrole/save', params);
+  },
+  //更新角色
+  updateRole(params) {
+    return Api.post(baseURL.bizSystemService + '/rmrole/update', params);
+  },
+  //给角色授权
+  syncRole(params) {
+    return Api.get(baseURL.bizSystemService + '/rmrole/updateRoleResource', params);
   },
   /**
   * @description  版本更新
@@ -184,4 +199,36 @@ export default {
   getVersionList(params) {
     return Api.get(baseURL.bizSystemService + '/versionupdating/list', params)
   },
-}
+}, _defineProperty(_getUserDetail$getUse, 'getRoleList', function getRoleList(params) {
+  return Api.get(baseURL.bizSystemService + apiURL.getRoleList, params);
+}), _defineProperty(_getUserDetail$getUse, 'delRole', function delRole(params) {
+  return Api.del(baseURL.bizSystemService + apiURL.delRole, params);
+}), _defineProperty(_getUserDetail$getUse, 'addRole', function addRole(params) {
+  return Api.post(baseURL.bizSystemService + apiURL.addRole, params);
+}), _defineProperty(_getUserDetail$getUse, 'updateRole', function updateRole(params) {
+  return Api.post(baseURL.bizSystemService + apiURL.updateRole, params);
+}), _defineProperty(_getUserDetail$getUse, 'syncRole', function syncRole(params) {
+  return Api.post(baseURL.bizSystemService + apiURL.syncRole, params);
+}), _defineProperty(_getUserDetail$getUse, 'getInfoRmDataAuth', function getInfoRmDataAuth(params) {
+  return Api.get(baseURL.bizSystemService + '/rmdataauth/info', params);
+}), _defineProperty(_getUserDetail$getUse, 'saveRmDataAuth', function saveRmDataAuth(params) {
+  return Api.post(baseURL.bizSystemService + '/rmdataauth/save', params);
+}), _defineProperty(_getUserDetail$getUse, 'getAllEmployees', function getAllEmployees(params) {
+  return Api.get(baseURL.bizSystemService + '/rmemployee/getAllEmployees', params);
+}), _defineProperty(_getUserDetail$getUse, 'getOrganaList', function getOrganaList(params) {
+  return Api.get(baseURL.bizSystemService + '/rmorgtype/orgTypeTreeList', params);
+}), _defineProperty(_getUserDetail$getUse, 'saveOrgType', function saveOrgType(params) {
+  return Api.post(baseURL.bizSystemService + '/rmorgtype/save', params);
+}), _defineProperty(_getUserDetail$getUse, 'updateOrgType', function updateOrgType(params) {
+  return Api.post(baseURL.bizSystemService + '/rmorgtype/update', params);
+}), _defineProperty(_getUserDetail$getUse, 'delOrgType', function delOrgType(params) {
+  return Api.del(baseURL.bizSystemService + '/rmorgtype/delete', params);
+}), _defineProperty(_getUserDetail$getUse, 'getNotReadMsg', function getNotReadMsg(params) {
+  return Api.get(baseURL.bizSystemService + '/message/getNotReadMsg', params);
+}), _defineProperty(_getUserDetail$getUse, 'getMsgList', function getMsgList(params) {
+  return Api.get(baseURL.bizSystemService + '/message/list', params);
+}), _defineProperty(_getUserDetail$getUse, 'sendMsg', function sendMsg(params) {
+  return Api.post(baseURL.bizSystemService + '/message/sendMsg', params);
+}), _defineProperty(_getUserDetail$getUse, 'updateMsg', function updateMsg(params) {
+  return Api.post(baseURL.bizSystemService + '/message/updateMsg', params);
+}), _getUserDetail$getUse);
