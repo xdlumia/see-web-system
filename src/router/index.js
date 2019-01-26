@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import systemRoute from '../components';
+import { version } from 'moment';
 
 var Employee = systemRoute.Employee,
     Dept = systemRoute.Dept,
     Role = systemRoute.Role,
-    BusinessDictionary = systemRoute.BusinessDictionary;
+    BusinessDictionary = systemRoute.BusinessDictionary,
     CategoryManagement = systemRoute.CategoryManagement
+    Version = systemRoute.Version
 
 var getPage = function getPage(path) {
   return function () {

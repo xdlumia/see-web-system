@@ -119,7 +119,6 @@ export default (_getUserDetail$getUse = {
     return Api.get(baseURL.bizSystemService + '/rmrole/roleTypeList', params);
   },
 
-
   /**
   * @description  员工
   */
@@ -176,7 +175,15 @@ export default (_getUserDetail$getUse = {
   },
   getAuthRoleList: function getAuthRoleList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getAuthRoleList, params);
-  }
+  },
+  /**
+  * @description  版本更新
+  */
+  // 获取更新列表
+  getVersionList(params) {
+    return Api.get(baseURL.bizSystemService + '/versionupdating/list', params)
+  },
+
 }, _defineProperty(_getUserDetail$getUse, 'getRoleList', function getRoleList(params) {
   return Api.get(baseURL.bizSystemService + apiURL.getRoleList, params);
 }), _defineProperty(_getUserDetail$getUse, 'delRole', function delRole(params) {
@@ -210,3 +217,7 @@ export default (_getUserDetail$getUse = {
 }), _defineProperty(_getUserDetail$getUse, 'updateMsg', function updateMsg(params) {
   return Api.post(baseURL.bizSystemService + '/message/updateMsg', params);
 }), _getUserDetail$getUse);
+
+function newFunction(params) {
+  return Api.get(baseURL.codingService + apiURL.getRoleList, params);
+}
