@@ -37,7 +37,8 @@ var apiURL = {
   /**
    * @description  员工
    */
-
+  //获取员工树列表
+  fetchEmployeeList: '/rmemployee/employeeList',
   //获取员工树列表
   getEmployeeList: '/rmemployee/list',
   //获取员工信息
@@ -122,7 +123,9 @@ export default (_getUserDetail$getUse = {
   /**
   * @description  员工
   */
-
+  fetchEmployeeList: function(params) {
+    return Api.get(baseURL.bizSystemService + apiURL.fetchEmployeeList, params);
+  },
   getEmployeeList: function getEmployeeList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getEmployeeList, params);
   },
@@ -217,7 +220,10 @@ export default (_getUserDetail$getUse = {
 }), _defineProperty(_getUserDetail$getUse, 'updateMsg', function updateMsg(params) {
   return Api.post(baseURL.bizSystemService + '/message/updateMsg', params);
 }), _getUserDetail$getUse);
+<<<<<<< HEAD
 
 function newFunction(params) {
   return Api.get(baseURL.codingService + apiURL.getRoleList, params);
 }
+=======
+>>>>>>> 1c7896493995b7748c0e5f325f92d1575d75987c

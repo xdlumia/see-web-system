@@ -1,7 +1,7 @@
 {
   "name": "see-web-system",
   "description": "see-web-system project",
-  "version": "1.2.22",
+  "version": "1.2.24",
   "author": "xd",
   "license": "MIT",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
     "build:copy": "see-copy-file \"src/**/*.!(js)\" dist",
     "clean": "rimraf node_modules",
     "pub": "npm run build && see-publish",
-    "pub:beta": "see-publish"
+    "pub:beta": "npm run build && see-publish beta"
   },
   "peerDependencies": {
     "see-web-basic": "^1.2.6",

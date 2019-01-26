@@ -27,9 +27,9 @@
             </el-select>
           </el-form-item> -->
           <el-form-item>
-            <el-button  
-            type="primary" 
-            @click="$refs.table.reload(1)" 
+            <el-button
+            type="primary"
+            @click="$refs.table.reload(1)"
             icon="el-icon-search"
             class="ml10">查询
             </el-button>
@@ -118,8 +118,8 @@
             ref="addOrEditForm"
             :model="addOrEditForm"
             label-width="100px">
-          <el-form-item 
-          label="数据项名称:" 
+          <el-form-item
+          label="数据项名称:"
           prop="content" :rules="[{required:true,message:'请输入数据项名称'},{ min: 1, max: 7, message: '不能超过7个字符' }]">
             <el-input :maxlength="8" class="w320" placeholder="请输入数据项" v-model.trim="addOrEditForm.content"></el-input>
           </el-form-item>
@@ -136,9 +136,9 @@
             <template slot-scope="scope">
               <div class="block">
                 <span class="demonstration"></span>
-                <el-color-picker 
+                <el-color-picker
                 :predefine="predefineColors"
-                v-model="addOrEditForm.updateColor" 
+                v-model="addOrEditForm.updateColor"
                 color-format="hex"
                 :show-alpha="false"></el-color-picker>
               </div>
@@ -154,6 +154,8 @@
 </template>
 
 <script>
+import dictionary from 'see-web-basic/dist/utils/dictionary'
+
 export default {
   name: "business-tag",
   data() {
@@ -189,7 +191,7 @@ export default {
       addOrEditForm: {
         code: "", //"字典值id（新增时没有，修改时必传）",
         content: "", //字典内容
-        isEnable: 1, 
+        isEnable: 1,
         dicCode: "", //字典code
         updateColor: "" //修改颜色
       },
@@ -240,7 +242,7 @@ export default {
     },
     // 字典数量改变
     handleChange() {
-      
+
     },
     // 保存数据字典
     saveDic() {
@@ -251,17 +253,20 @@ export default {
             .then(res => {
               if (res.code == 200) {
                 // 关闭弹框
-                this.dicDialogVisible = false; 
+                this.dicDialogVisible = false;
                 this.$refs.table.reload(1)
+
+                // 字典表有改动时，刷新下缓存
+                dictionary.refreshCache(this.addOrEditForm.dicCode)
               }
             })
             .finally(res => {
-              this.addLoading = false; 
+              this.addLoading = false;
             });
         }
       });
     },
-    // 保存方法 
+    // 保存方法
     saveDictionary(params){
       this.$api.seeDictionaryService.editDictionary(params)
     },
@@ -324,6 +329,9 @@ export default {
           .then(res => {
             if (res.code == 200) {
               this.$refs.table.reload()
+
+              // 字典表有改动时，刷新下缓存
+              dictionary.refreshCache(this.addOrEditForm.dicCode)
             }
           })
         }).catch(() => {});
