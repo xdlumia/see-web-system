@@ -37,7 +37,8 @@ var apiURL = {
   /**
    * @description  员工
    */
-
+  //获取员工树列表
+  fetchEmployeeList: '/rmemployee/employeeList',
   //获取员工树列表
   getEmployeeList: '/rmemployee/list',
   //获取员工信息
@@ -123,7 +124,9 @@ export default (_getUserDetail$getUse = {
   /**
   * @description  员工
   */
-
+  fetchEmployeeList: function(params) {
+    return Api.get(baseURL.bizSystemService + apiURL.fetchEmployeeList, params);
+  },
   getEmployeeList: function getEmployeeList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getEmployeeList, params);
   },
