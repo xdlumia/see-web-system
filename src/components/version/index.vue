@@ -16,7 +16,7 @@
           <li v-for="(item,index) of versionList" :key="index">
             <div class="content">
               <h3>{{item.title}} <time>{{item.updatedDate | timeToStr('YYYY-MM-DD H:mm:ss')}}</time></h3>
-              <div class="details" v-html="item.details || '-'"></div>
+              <div class="version-details" v-html="item.details || '-'"></div>
             </div>
           </li>
         </view-pic>
@@ -92,8 +92,8 @@ export default {
     }
   .version-content li{ display: flex; border-bottom: 1px solid #efefef; padding-bottom: 10px; padding-left:20px;}
   .version-content li:not(:first-child){ margin-top:20px}
-  .version-content .details{ font-size: 14px;}
-  .version-content .details img{display: inline-block;  margin-right:2px; width:240px;}
+  .version-content .version-details{ font-size: 14px;}
+  .version-content .version-details img{display: inline-block;  margin-right:2px; width:120px;}
   .version-content h3 {font-size: 16px; margin-bottom:15px;}
   .version-content h3 time {font-size: 13px; color:#666; margin-left:30px;}
 </style>
