@@ -5,6 +5,7 @@ import Role from './role/index'; // 角色
 import Org from './org/index'; //组织类型
 const BusinessDictionary = () => import('./businessDictionary/index') // 业务字典
 const CategoryManagement = () => import('./categoryManagement/index') // 类目管理
+const Version = () => import('./version/index') // 版本更新
 
 export default {
   BusinessDictionary: {
@@ -59,6 +60,15 @@ export default {
     meta: {
       parent: '辅助管理',
       title: '物品类目'
+    }
+  },
+  Version: {
+    path: '/version', // 版本更新
+    name: '/version',
+    component: Version,
+    meta: {
+      parent: '辅助管理',
+      title: '版本更新'
     }
   }
 };
