@@ -32,6 +32,10 @@
       <el-table-column prop="phone" min-width="120" align="center" label="电话">
       </el-table-column>
       <el-table-column prop="deptName" min-width="120" align="center" label="所属部门" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span v-if="syscode == 'asystem'" class="d-text-blue d-pointer" @click="viewTransferLog(scope.row)"> {{scope.row.deptName}} </span>
+          <span v-else> {{scope.row.deptName}} </span>
+        </template>
       </el-table-column>
       <el-table-column prop="positionName" show-overflow-tooltip min-width="120" align="center" label="职位名称">
       </el-table-column>
@@ -52,13 +56,15 @@
       </el-table-column>
       <el-table-column prop="remark" width="120" align="center" label="备注" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column prop="address" align="left" label="操作" width="480">
+      <el-table-column prop="address" align="left" label="操作" width="580">
         <template slot-scope="scope">
           <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" title="已经同步过了" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
 
           <el-button size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
           <el-button v-if="authorityBtn.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
+          <!-- 人员调动功能仅α使用 -->
+          <el-button v-if="syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
           <el-button v-if="authorityBtn.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
           <el-button v-if="authorityBtn.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
 
@@ -71,7 +77,7 @@
       </el-table-column>
     </d-table>
 
-    <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width">
+    <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width" top="20px">
       <components :is="dialogMeta.component" :dialogMeta="dialogMeta" v-if="dialogMeta.visible" @submit="tableReload"></components>
     </el-dialog>
     <!-- 新增 / 编辑 / 授权 / 同步弹出框-->
@@ -143,10 +149,8 @@
     </el-dialog>
 
     <!-- 树部门弹出框 -->
-    <el-dialog title="选择部门" :visible.sync="dialogVisibleTree" width="300px">
-      <div class="d-treeBox">
-        <el-tree :data="deptTreeData" default-expand-all :props="{children: 'children',label: 'deptName'}" @node-click="handleNodeClick"></el-tree>
-      </div>
+    <el-dialog title="选择部门" :visible.sync="dialogVisibleTree" width="300px" top="20px">
+        <el-tree class="d-treeBox" :data="deptTreeData" default-expand-all :props="{children: 'children',label: 'deptName'}" @node-click="handleNodeClick"></el-tree>
     </el-dialog>
 
     <!--修改密码弹出框-->
@@ -187,13 +191,19 @@
 let employeeSingle  = window.g.employeeSingle
 import { Base64 } from 'js-base64'; //base 64加密
 import employeeAuth from "./employee-auth"; //授权  
+import employeeTransfer from "./employee-transfer"; //人员调动
+import employeeTransferLog from "./employee-transfer-log"; //人员调动记录
 export default {
   components: {
     employeeAuth,
+    employeeTransfer,
+    employeeTransferLog
   },
   data () {
     return {
       single: employeeSingle, //用来判断员工授权是单选还是多选
+      syscode:this.$local.fetch('userInfo').syscode, //系统code
+      currentRow:{}, //当前行数据
       authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
       // dialog弹出框信息
       loading:false,
@@ -292,7 +302,29 @@ export default {
       (this.passwordform.newPassword = '');
       (this.passwordform.confirmNewPassword = '')
     },
-
+    // 人员调动
+    employeeTransfer(item){
+      this.dialogType = 'transfer'
+      this.dialogVisibleTree = true
+      this.currentRow = item
+      this.fnLoadDept() // 加载部门数据
+    },
+    // 查看调动记录
+    viewTransferLog(row){
+      if(!row.userId){
+        this.$message({
+          type: 'error',
+          showClose: true,
+          message: '此用户暂时没有交接记录！'
+        })
+        return
+      }
+      this.dialogMeta.visible = true
+      this.dialogMeta.data = row
+      this.dialogMeta.width = "720px"
+      this.dialogMeta.title = "人员调动记录"
+      this.dialogMeta.component = 'employeeTransferLog'
+    },
     // 锁定
     lockUser (type, data) {
       // 判断是否同步
@@ -300,6 +332,7 @@ export default {
         this.dialogVisbleLock = false
         this.$message({
           type: 'error',
+          showClose: true,
           message: '这个用户还未同步，不能锁定！'
         })
         return
@@ -467,14 +500,28 @@ export default {
     },
     // 选择部门
     selHandle () {
+      this.dialogType = 'add'
       this.dialogVisibleTree = true
       this.fnLoadDept() // 加载部门数据
     },
     // 点击树节点回掉
     handleNodeClick (data) {
       this.dialogVisibleTree = false // 关闭弹出框
-      this.dialogForm.deptId = data.id
-      this.dialogForm.deptName = data.deptName
+      // 如果是新增部门选择
+      if(this.dialogType == 'add'){
+        this.dialogForm.deptId = data.id
+        this.dialogForm.deptName = data.deptName
+      }
+      // 如果当前是人员调动部门选择
+      else if(this.dialogType == 'transfer'){
+        this.dialogMeta.visible = true
+        this.dialogMeta.deptId = data.id
+        this.dialogMeta.width = "720px"
+        this.dialogMeta.title = "人员调动交接"
+        this.dialogMeta.data = this.currentRow
+        this.dialogMeta.component = 'employeeTransfer'
+      }
+      
     },
     // 请求部门数据方法
     fnLoadDept () {
@@ -569,13 +616,5 @@ export default {
 }
 </script>
 <style scoped>
-.role-list {
-  border: 1px solid #efefef;
-  padding: 10px;
-  border-radius: 3px;
-  height: 120px;
-  overflow: auto;
-}
-.role-list label{display: block; line-height: 20px;}
-/*.role-list .el-checkbox-group .el-checkbox {float: left; width:30%;padding: 0; }*/
+.d-treeBox{height: calc(100vh - 125px); overflow-y: auto;}
 </style>

@@ -17,23 +17,7 @@ var apiURL = {
    * @description  角色
    */
 
-  //获取部门树列表
-  getDeptList: '/rmdept/treeList',
-  //获取某部门信息
-  getDeptInfo: '/rmdept/info/',
-  // 删除部门
-  delDept: '/rmdept/delete',
-  // 新增部门
-  addDept: '/rmdept/save',
-  // 更新部门
-  updateDept: '/rmdept/update',
-  //获取部门下的人员
-  getEmployeePop: '/rmdept/getEmployeesByDeptId',
-  // 获取当前用户可操作的系统/平台列表
-  getsyslist: '/rmuserrole/syslist',
-  //获取部门下的人员
-  getRoleType: '/rmrole/roleTypeList',
-
+  
   /**
    * @description  员工
    */
@@ -64,8 +48,6 @@ var apiURL = {
   * @description  角色
   */
 
-  //获取角色列表
-  getRoleList: '/rmrole/list',
   //获取授权角色列表
   getAuthRoleList: '/rmrole/sourceRoleList',
   // 删除角色
@@ -78,7 +60,7 @@ var apiURL = {
   syncRole: '/rmrole/updateRoleResource'
 };
 
-export default (_getUserDetail$getUse = {
+export default {
   /**
   * @description  用户
   */
@@ -95,91 +77,187 @@ export default (_getUserDetail$getUse = {
   /**
   * @description  部门
   */
-  getDeptList: function getDeptList(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getDeptList, params);
+ // 获取部门树列表
+  getDeptList(params) {
+    return Api.get(baseURL.bizSystemService + '/rmdept/treeList', params);
   },
-  getDeptInfo: function getDeptInfo(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getDeptInfo + params);
+  //获取某部门信息
+  getDeptInfo(params) {
+    return Api.get(baseURL.bizSystemService + '/rmdept/info/' + params);
   },
-  delDept: function delDept(params) {
-    return Api.del(baseURL.bizSystemService + apiURL.delDept, params);
+  // 删除部门
+  delDept(params) {
+    return Api.del(baseURL.bizSystemService + ''/rmdept/delete'', params);
   },
-  addDept: function addDept(params) {
-    return Api.post(baseURL.bizSystemService + apiURL.addDept, params);
+  // 新增部门
+  addDept(params) {
+    return Api.post(baseURL.bizSystemService + '/rmdept/save', params);
   },
-  updateDept: function updateDept(params) {
-    return Api.post(baseURL.bizSystemService + apiURL.updateDept, params);
+  // 更新部门
+  updateDept(params) {
+    return Api.post(baseURL.bizSystemService + '/rmdept/update', params);
   },
-  getEmployeePop: function getEmployeePop(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getEmployeePop, params);
+  //获取部门下的人员
+  getEmployeePop(params) {
+    return Api.get(baseURL.bizSystemService + '/rmdept/getEmployeesByDeptId', params);
   },
-  getsyslist: function getsyslist(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getsyslist, params);
+  // 获取当前用户可操作的系统/平台列表
+  getsyslist(params) {
+    return Api.get(baseURL.bizSystemService + '/rmuserrole/syslist', params);
   },
-  getRoleType: function getRoleType(params) {
+  getRoleType(params) {
     return Api.get(baseURL.bizSystemService + '/rmrole/roleTypeList', params);
   },
-
 
   /**
   * @description  员工
   */
-  fetchEmployeeList: function(params) {
+  fetchEmployeeList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.fetchEmployeeList, params);
   },
-  getEmployeeList: function getEmployeeList(params) {
+  getEmployeeList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getEmployeeList, params);
   },
-  getEmployeeInfo: function getEmployeeInfo(params) {
+  getEmployeeInfo(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getEmployeeInfo + params);
   },
-  delEmployee: function delEmployee(params) {
+  delEmployee(params) {
     return Api.del(baseURL.bizSystemService + apiURL.delEmployee, params);
   },
-  authEmployee: function authEmployee(params) {
+  authEmployee(params) {
     return Api.post(baseURL.bizSystemService + '/rmemployee/newAuthorize', params);
   },
-  addEmployee: function addEmployee(params) {
+  addEmployee(params) {
     return Api.post(baseURL.bizSystemService + apiURL.addEmployee, params);
   },
-  syncEmployee: function syncEmployee(params) {
+  syncEmployee(params) {
     return Api.post(baseURL.bizSystemService + apiURL.syncEmployee, params);
   },
-  updateEmployee: function updateEmployee(params) {
+  updateEmployee(params) {
     return Api.post(baseURL.bizSystemService + apiURL.updateEmployee, params);
   },
-  employeeRecover: function employeeRecover(params) {
+  employeeRecover(params) {
     return Api.post(baseURL.bizSystemService + apiURL.employeeRecover + '?phone=' + params.phone);
   },
-  unlockuser: function unlockuser(params) {
+  unlockuser(params) {
     return Api.get(baseURL.bizSystemService + apiURL.unlockuser, params);
   },
-  lockuser: function lockuser(params) {
+  lockuser(params) {
     return Api.get(baseURL.bizSystemService + apiURL.lockuser, params);
   },
-  updatePassword: function updatePassword(params) {
+  updatePassword(params) {
     return Api.post(baseURL.bizSystemService + apiURL.updatePassword, params);
   },
 
   //开放注册
-  openRegistration: function openRegistration(params) {
+  openRegistration(params) {
     return Api.post(baseURL.bizSystemService + '/rmemployee/openRegistration', params);
   },
   //查询开放注册
-  queryOpenRegistration: function queryOpenRegistration(params) {
+  queryOpenRegistration(params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/queryOpenRegistration', params);
   },
 
   /**
+  * @description  人员调动记录
+  */
+  // 保存人员调动记录
+  saveTransfer(params) {
+    return Api.post(baseURL.bizSystemService + '/rmemployeeransferrecord/save', params);
+  },
+
+  // 根据用户id获取人员调动记录
+  getTransferLog(params) {
+    return Api.get(baseURL.bizSystemService + '/rmemployeeransferrecord/list', params);
+  },
+
+
+  /**
   * @description  角色
   */
-
-  getRoleList: function getRoleList(params) {
-    return Api.get(baseURL.bizSystemService + apiURL.getRoleList, params);
+  //获取角色列表
+  getRoleList(params) {
+    return Api.get(baseURL.bizSystemService + '/rmrole/list', params);
   },
-  getAuthRoleList: function getAuthRoleList(params) {
+  getAuthRoleList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getAuthRoleList, params);
-  }
+  },
+<<<<<<< HEAD
+  delRole(params) {
+    return Api.del(baseURL.bizSystemService + apiURL.delRole, params)
+  },
+  addRole(params) {
+    return Api.post(baseURL.bizSystemService + apiURL.addRole, params)
+  },
+  updateRole(params) {
+    return Api.post(baseURL.bizSystemService + apiURL.updateRole, params)
+  },
+  syncRole(params) {
+    return Api.post(baseURL.bizSystemService + apiURL.syncRole, params)
+  },
+
+  /**
+   * @description 角色授权数据权限
+   */
+  getInfoRmDataAuth (params) {
+    return Api.get(baseURL.bizSystemService + '/rmdataauth/info', params)
+  },
+  saveRmDataAuth (params) {
+    return Api.post(baseURL.bizSystemService + '/rmdataauth/save', params)
+  },
+  getAllEmployees (params) {
+    return Api.get(baseURL.bizSystemService + '/rmemployee/getAllEmployees', params)
+  },
+
+  /**
+   * @description 组织类型管理
+   */
+  // 组织类型树列表
+  getOrganaList(params) {
+    return Api.get(baseURL.bizSystemService + '/rmorgtype/orgTypeTreeList', params)
+  },
+  //保存组织类型
+  saveOrgType (params) {
+    return Api.post(baseURL.bizSystemService + '/rmorgtype/save', params)
+  },
+  // 更新组织类型
+  updateOrgType (params) {
+    return Api.post(baseURL.bizSystemService + '/rmorgtype/update', params)
+  },
+  delOrgType (params) {
+    return Api.del(baseURL.bizSystemService + '/rmorgtype/delete', params)
+  },
+
+  /**
+   * 系统消息
+   */
+  // 定时任务获取未读消息数量
+  getNotReadMsg: function getNotReadMsg (params) {
+    return Api.get(baseURL.bizSystemService + '/message/getNotReadMsg', params)
+  },
+  // 查询消息列表
+  getMsgList: function getMsgList (params) {
+    return Api.get(baseURL.bizSystemService + '/message/list', params)
+  },
+  // 发送系统消息
+  sendMsg: function sendMsg (params) {
+    return Api.post(baseURL.bizSystemService + '/message/sendMsg', params)
+  },
+  // 读消息或者解决待办消息
+  updateMsg: function updateMsg (params) {
+    return Api.post(baseURL.bizSystemService + '/message/updateMsg', params)
+  },
+
+}
+=======
+  /**
+  * @description  版本更新
+  */
+  // 获取更新列表
+  getVersionList(params) {
+    return Api.get(baseURL.bizSystemService + '/versionupdating/list', params)
+  },
+
 }, _defineProperty(_getUserDetail$getUse, 'getRoleList', function getRoleList(params) {
   return Api.get(baseURL.bizSystemService + apiURL.getRoleList, params);
 }), _defineProperty(_getUserDetail$getUse, 'delRole', function delRole(params) {
@@ -213,3 +291,8 @@ export default (_getUserDetail$getUse = {
 }), _defineProperty(_getUserDetail$getUse, 'updateMsg', function updateMsg(params) {
   return Api.post(baseURL.bizSystemService + '/message/updateMsg', params);
 }), _getUserDetail$getUse);
+
+function newFunction(params) {
+  return Api.get(baseURL.codingService + apiURL.getRoleList, params);
+}
+>>>>>>> 添加版本更新模板
