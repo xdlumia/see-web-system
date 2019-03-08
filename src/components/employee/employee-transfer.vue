@@ -23,7 +23,7 @@
             </div>
         </article>
         <article v-if="managerTotal">
-            <h3 class="f14">房源管家 <span class="d-text-blue ml10">{{responserTotal}}</span></h3>
+            <h3 class="f14">房源管家 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
             <div style="height:40px">
                 <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">

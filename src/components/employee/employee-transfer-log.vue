@@ -36,7 +36,7 @@
                 </el-tab-pane>
                 <el-tab-pane label="房管家" name="manager" v-if="managerTotal">
                   <el-table :data="managerList" border size="mini" height="320px">
-                      <el-table-column prop="buildingName" width="50%" align="left" label="楼盘名称" show-overflow-tooltip>
+                      <el-table-column prop="communityName" min-width="120" align="left" label="楼盘名称" show-overflow-tooltip>
                       </el-table-column>
                   </el-table>
                 </el-tab-pane>
