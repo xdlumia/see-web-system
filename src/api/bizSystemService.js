@@ -65,12 +65,12 @@ export default {
   * @description  用户
   */
   // 获取用户详情
-  getUserDetail: function getUserDetail(params) {
+  getUserDetail(params) {
     return Api.get(baseURL.bizSystemService + '/rmuserrole/getUserDetail', params);
   },
 
   // 获取用户权限
-  getUserAuth: function getUserAuth(params) {
+  getUserAuth(params) {
     return Api.get(baseURL.bizSystemService + '/rmuserrole/list/' + params);
   },
 
@@ -87,7 +87,7 @@ export default {
   },
   // 删除部门
   delDept(params) {
-    return Api.del(baseURL.bizSystemService + ''/rmdept/delete'', params);
+    return Api.del(baseURL.bizSystemService + '/rmdept/delete', params);
   },
   // 新增部门
   addDept(params) {
@@ -182,7 +182,6 @@ export default {
   getAuthRoleList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getAuthRoleList, params);
   },
-<<<<<<< HEAD
   delRole(params) {
     return Api.del(baseURL.bizSystemService + apiURL.delRole, params)
   },
@@ -249,50 +248,3 @@ export default {
   },
 
 }
-=======
-  /**
-  * @description  版本更新
-  */
-  // 获取更新列表
-  getVersionList(params) {
-    return Api.get(baseURL.bizSystemService + '/versionupdating/list', params)
-  },
-
-}, _defineProperty(_getUserDetail$getUse, 'getRoleList', function getRoleList(params) {
-  return Api.get(baseURL.bizSystemService + apiURL.getRoleList, params);
-}), _defineProperty(_getUserDetail$getUse, 'delRole', function delRole(params) {
-  return Api.del(baseURL.bizSystemService + apiURL.delRole, params);
-}), _defineProperty(_getUserDetail$getUse, 'addRole', function addRole(params) {
-  return Api.post(baseURL.bizSystemService + apiURL.addRole, params);
-}), _defineProperty(_getUserDetail$getUse, 'updateRole', function updateRole(params) {
-  return Api.post(baseURL.bizSystemService + apiURL.updateRole, params);
-}), _defineProperty(_getUserDetail$getUse, 'syncRole', function syncRole(params) {
-  return Api.post(baseURL.bizSystemService + apiURL.syncRole, params);
-}), _defineProperty(_getUserDetail$getUse, 'getInfoRmDataAuth', function getInfoRmDataAuth(params) {
-  return Api.get(baseURL.bizSystemService + '/rmdataauth/info', params);
-}), _defineProperty(_getUserDetail$getUse, 'saveRmDataAuth', function saveRmDataAuth(params) {
-  return Api.post(baseURL.bizSystemService + '/rmdataauth/save', params);
-}), _defineProperty(_getUserDetail$getUse, 'getAllEmployees', function getAllEmployees(params) {
-  return Api.get(baseURL.bizSystemService + '/rmemployee/getAllEmployees', params);
-}), _defineProperty(_getUserDetail$getUse, 'getOrganaList', function getOrganaList(params) {
-  return Api.get(baseURL.bizSystemService + '/rmorgtype/orgTypeTreeList', params);
-}), _defineProperty(_getUserDetail$getUse, 'saveOrgType', function saveOrgType(params) {
-  return Api.post(baseURL.bizSystemService + '/rmorgtype/save', params);
-}), _defineProperty(_getUserDetail$getUse, 'updateOrgType', function updateOrgType(params) {
-  return Api.post(baseURL.bizSystemService + '/rmorgtype/update', params);
-}), _defineProperty(_getUserDetail$getUse, 'delOrgType', function delOrgType(params) {
-  return Api.del(baseURL.bizSystemService + '/rmorgtype/delete', params);
-}), _defineProperty(_getUserDetail$getUse, 'getNotReadMsg', function getNotReadMsg(params) {
-  return Api.get(baseURL.bizSystemService + '/message/getNotReadMsg', params);
-}), _defineProperty(_getUserDetail$getUse, 'getMsgList', function getMsgList(params) {
-  return Api.get(baseURL.bizSystemService + '/message/list', params);
-}), _defineProperty(_getUserDetail$getUse, 'sendMsg', function sendMsg(params) {
-  return Api.post(baseURL.bizSystemService + '/message/sendMsg', params);
-}), _defineProperty(_getUserDetail$getUse, 'updateMsg', function updateMsg(params) {
-  return Api.post(baseURL.bizSystemService + '/message/updateMsg', params);
-}), _getUserDetail$getUse);
-
-function newFunction(params) {
-  return Api.get(baseURL.codingService + apiURL.getRoleList, params);
-}
->>>>>>> 添加版本更新模板
