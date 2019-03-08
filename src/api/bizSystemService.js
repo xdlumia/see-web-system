@@ -65,12 +65,12 @@ export default {
   * @description  用户
   */
   // 获取用户详情
-  getUserDetail: function getUserDetail(params) {
+  getUserDetail(params) {
     return Api.get(baseURL.bizSystemService + '/rmuserrole/getUserDetail', params);
   },
 
   // 获取用户权限
-  getUserAuth: function getUserAuth(params) {
+  getUserAuth(params) {
     return Api.get(baseURL.bizSystemService + '/rmuserrole/list/' + params);
   },
 
@@ -87,7 +87,7 @@ export default {
   },
   // 删除部门
   delDept(params) {
-    return Api.del(baseURL.bizSystemService + ''/rmdept/delete'', params);
+    return Api.del(baseURL.bizSystemService + '/rmdept/delete', params);
   },
   // 新增部门
   addDept(params) {

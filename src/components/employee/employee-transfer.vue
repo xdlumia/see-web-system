@@ -36,7 +36,7 @@
       </el-form>
     <div class="ac mt5">
       <el-button size="small" @click="dialogMeta.visible = false">取 消</el-button>
-      <el-button type="primary" size="small" @click="saveTransfer">保 存</el-button>
+      <el-button type="primary" size="small" v-if="responserTotal || managerTotal" @click="saveTransfer">保 存</el-button>
     </div>
   </div>
 </template>
@@ -54,10 +54,10 @@ export default {
       // 授权弹出内容
       transferForm: {
         ransferDeptId: '', // 转部门id
-        responseType: '0', // 责任盘交接类型
+        responseType: '', // 责任盘交接类型
         responseName: '', // 责任盘交接员工名称
         responsePersonId: '', // 责任盘交接人员id
-        houseType: '0', //房源管家交接类型
+        houseType: '', //房源管家交接类型
         housePersonId: '', // 房源管家交接人员id
         houseName: '', // 房源管家交接人员名称
         userId: '' // 当前用户id
