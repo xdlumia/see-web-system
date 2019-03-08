@@ -89,7 +89,7 @@ export default {
     getCommunityManagerTotal(){
       this.$api.seeTenementService.getCommunityManagerTotal({userId:this.dialogMeta.data.userId})
       .then(res=>{
-        this.managerTotal = res.data.employeeSingle || ''
+        this.managerTotal = res.data.totalCount || ''
         this.managerList = res.data.communityEntityList || ''
       })
     },
