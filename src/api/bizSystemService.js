@@ -17,7 +17,7 @@ var apiURL = {
    * @description  角色
    */
 
-  
+
   /**
    * @description  员工
    */
@@ -112,6 +112,10 @@ export default {
   /**
   * @description  员工
   */
+  //获取部门下的员工
+  getEmployeesUserByDeptId(params) {
+    return Api.get(baseURL.bizSystemService + '/rmdept/getEmployeesUserByDeptId', params);
+  },
   fetchEmployeeList(params) {
     return Api.get(baseURL.bizSystemService + apiURL.fetchEmployeeList, params);
   },
