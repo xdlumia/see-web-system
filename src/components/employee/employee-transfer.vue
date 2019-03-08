@@ -36,7 +36,7 @@
       </el-form>
     <div class="ac mt5">
       <el-button size="small" @click="dialogMeta.visible = false">取 消</el-button>
-      <el-button type="primary" size="small" @click="saveTransfer">保 存</el-button>
+      <el-button type="primary" size="small" v-if="responserTotal || managerTotal" @click="saveTransfer">保 存</el-button>
     </div>
   </div>
 </template>
