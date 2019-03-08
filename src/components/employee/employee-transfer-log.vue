@@ -63,18 +63,18 @@ export default {
   },
   methods: {
     // 查看记录详情
-    viewLogDetail(){
+    viewLogDetail(row){
         this.isTransfer = 'detail'
-        this.getBuildingInfoByResponserId()
-        this.getCommunityManagerTotal()
+        this.getBuildingInfoByResponserId(row.houseUserId)
+        this.getCommunityManagerTotal(row.houseUserId)
     },
     // 返回调动记录
     backTransferLog(){
         this.isTransfer = 'log'
     },
     // 获取某责任人负责的栋座信息 责任盘
-    getBuildingInfoByResponserId(){
-      this.$api.seeBaseHouseService.getBuildingInfoByResponserId(this.dialogMeta.data.userId)
+    getBuildingInfoByResponserId(userId){
+      this.$api.seeBaseHouseService.getBuildingInfoByResponserId(userId)
       .then(res=>{
         this.responserTotal = res.data.num || ''
         this.responserList = res.data.info || []
@@ -86,10 +86,10 @@ export default {
       })
     },
     // 根据员工id,查询员工负责的楼盘数 房源管理
-    getCommunityManagerTotal(){
-      this.$api.seeTenementService.getCommunityManagerTotal({userId:this.dialogMeta.data.userId})
+    getCommunityManagerTotal(userId){
+      this.$api.seeTenementService.getCommunityManagerTotal({userId:userId})
       .then(res=>{
-        this.managerTotal = res.data.employeeSingle || ''
+        this.managerTotal = res.data.totalCount || ''
         this.managerList = res.data.communityEntityList || ''
       })
     },
