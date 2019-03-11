@@ -112,7 +112,6 @@ export default {
     
     // 保存人员调动
     saveTransfer () {
-      
       this.$refs.transferForm.validate((valid) => {
           if (valid) {
             if(this.transferForm.responseType === '0' && !this.transferForm.responsePersonId){

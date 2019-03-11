@@ -12,13 +12,13 @@
         <!-- 人员调动记录 -->
         <article v-if="isTransfer == 'log'" class="hfull">
             <d-table v-if="queryForm.userId" api="bizSystemService.getTransferLog" :params="queryForm" size="mini" class="hfull" :paging="false">
-                <el-table-column prop="handoverRecord" width="160" align="center" label="调动记录" show-overflow-tooltip>
+                <el-table-column prop="ransferRecord" width="160" align="center" label="调动记录" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column width="120" align="center" label="调动时间" show-overflow-tooltip>
                     <template slot-scope="scope"><span> {{scope.row.ransferTime | timeToStr}} </span></template>
                 </el-table-column>
                 <el-table-column align="center"  label="交接记录" show-overflow-tooltip>
-                    <template slot-scope="scope"><span class="d-text-blue d-pointer" @click="viewLogDetail(scope.row)"> {{scope.row.ransferRecord}} </span></template>
+                    <template slot-scope="scope"><span class="d-text-blue d-pointer" @click="viewLogDetail(scope.row)"> {{scope.row.handoverRecord}} </span></template>
                 </el-table-column>
             </d-table>
         </article>
