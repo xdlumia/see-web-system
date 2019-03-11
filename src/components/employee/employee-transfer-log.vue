@@ -65,7 +65,7 @@ export default {
     // 查看记录详情
     viewLogDetail(row){
         this.isTransfer = 'detail'
-        this.getBuildingInfoByResponserId(row.houseUserId)
+        this.getBuildingInfoByResponserId(row.responseUserId)
         this.getCommunityManagerTotal(row.houseUserId)
     },
     // 返回调动记录
