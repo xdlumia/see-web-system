@@ -101,6 +101,10 @@ export default {
       .then(res=>{
         this.managerTotal = res.data.totalCount || ''
         this.managerList = res.data.communityEntityList || ''
+        // 如果责任盘没有数据 默认显示楼管家
+        if(!this.responserTotal){
+          this.activeName = 'manager'
+        }
       })
     },
   }
