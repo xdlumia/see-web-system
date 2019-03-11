@@ -76,7 +76,7 @@ export default {
     // 责任盘人员选择
     selResponse:{
       get (user) {
-          return user
+          return user.userId
       },
       set (user) {
           this.transferForm.responsePersonId = user.userId
@@ -86,7 +86,7 @@ export default {
     // 楼盘管家人员选择
     selHousePerson:{
       get (user) {
-          return user
+          return user.userId
       },
       set (user) {
           this.transferForm.housePersonId = user.userId
@@ -112,13 +112,14 @@ export default {
     
     // 保存人员调动
     saveTransfer () {
+      
       this.$refs.transferForm.validate((valid) => {
           if (valid) {
-            if(this.transferForm.responseType == 0 && !this.transferForm.responsePersonId){
-               this.$message.error('请选择指定人员')
+            if(this.transferForm.responseType === '0' && !this.transferForm.responsePersonId){
+               this.$message.error('请选择指定责任人')
                return
             }
-            if(this.transferForm.houseType == 0 && !this.transferForm.housePersonId){
+            if(this.transferForm.houseType === '0' && !this.transferForm.housePersonId){
                this.$message.error('请选择指定人员')
                return
             }
