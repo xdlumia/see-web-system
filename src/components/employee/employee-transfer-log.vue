@@ -67,12 +67,15 @@ export default {
     // 查看记录详情
     viewLogDetail(row){
         this.isTransfer = 'detail'
-        this.getBuildingInfoByResponserId(row.responseUserId)
-        this.getCommunityManagerTotal(row.houseUserId)
+        if(row.responseUserId){
+          this.getBuildingInfoByResponserId(row.responseUserId)
+        }
+        if(row.houseUserId){
+          this.getCommunityManagerTotal(row.houseUserId)
+        }
     },
     // 格式化栋座
     formatBuilding(builds){
-      console.log(111);
       return builds.map(item => item.buildingName).join(',')
     },
     // 返回调动记录
