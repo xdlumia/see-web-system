@@ -9,29 +9,29 @@
 <template>
   <!-- 授权内容 -->
   <div v-loading="loading">
-      <el-form label-width="110px" ref="dialogForm" :model="transferForm" class="pr20 mt10" size="small">
+      <el-form ref="transferForm" :model="transferForm" class="pr20 mt10" size="small">
         <div v-show="!responserTotal && !managerTotal">没有任何操作</div>
         <article v-if="responserTotal">
             <h3 class="f14">责任盘 <span class="d-text-blue ml10">{{responserTotal}}</span></h3>
-            <div style="height:40px">
+            <el-form-item prop="responseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.responseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.responseType==0" v-model="selResponse" :multiple="false">
                     <el-input size="mini" v-model="transferForm.responseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
                 </employees-chosen>
                 <el-radio v-model="transferForm.responseType" label="1">取消责任盘</el-radio>
                 <el-radio v-model="transferForm.responseType" label="2">不交接</el-radio>
-            </div>
+            </el-form-item>
         </article>
         <article v-if="managerTotal">
             <h3 class="f14">房源管家 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
-            <div style="height:40px">
+            <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
                     <el-input size="mini" v-model="transferForm.houseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
                 </employees-chosen>
                 <el-radio v-model="transferForm.houseType" label="1">取消责任盘</el-radio>
                 <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
-            </div>
+            </el-form-item>
         </article>
       </el-form>
     <div class="ac mt5">
@@ -112,19 +112,32 @@ export default {
     
     // 保存人员调动
     saveTransfer () {
-      this.loading = true
-      this.$api.bizSystemService.saveTransfer(this.transferForm)
-      .then(res => {
-        if (res.code == 200) {
-          // 重新加载表格数据
-          this.$emit('submit','success')
-          // 关闭弹出框
-          this.dialogMeta.visible = false
-        }
+      this.$refs.transferForm.validate((valid) => {
+          if (valid) {
+            if(this.transferForm.responseType == 0 && !this.transferForm.responsePersonId){
+               this.$message.error('请选择指定人员')
+               return
+            }
+            if(this.transferForm.houseType == 0 && !this.transferForm.housePersonId){
+               this.$message.error('请选择指定人员')
+               return
+            }
+            this.loading = true
+            this.$api.bizSystemService.saveTransfer(this.transferForm)
+            .then(res => {
+              if (res.code == 200) {
+                // 重新加载表格数据
+                this.$emit('submit','success')
+                // 关闭弹出框
+                this.dialogMeta.visible = false
+              }
+            })
+            .finally(()=>{
+              this.loading = false
+            })
+          }
       })
-      .finally(()=>{
-        this.loading = false
-      })
+      
     }
   }
 }

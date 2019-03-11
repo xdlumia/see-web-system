@@ -1,4 +1,5 @@
 <!--员工列表
+
 /**
 * 员工列表
 * @/components/employee/ 员工调整
@@ -30,13 +31,14 @@
                   <el-table :data="responserList" border size="mini" height="320px">
                       <el-table-column prop="communityName" min-width="120" align="left" label="楼盘名称" show-overflow-tooltip>
                       </el-table-column>
-                      <el-table-column prop="phone" min-width="120" align="left" label="栋座名称" show-overflow-tooltip>
+                      <el-table-column min-width="120" align="left" label="栋座名称" show-overflow-tooltip>
+                          <template slot-scope="scope"><span> {{ formatBuilding(scope.row.buildings)}} </span></template>
                       </el-table-column>
                   </el-table>
                 </el-tab-pane>
                 <el-tab-pane label="房管家" name="manager" v-if="managerTotal">
                   <el-table :data="managerList" border size="mini" height="320px">
-                      <el-table-column prop="communityName" min-width="120" align="left" label="楼盘名称" show-overflow-tooltip>
+                      <el-table-column prop="communityName" align="left" label="楼盘名称" show-overflow-tooltip>
                       </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -67,6 +69,11 @@ export default {
         this.isTransfer = 'detail'
         this.getBuildingInfoByResponserId(row.responseUserId)
         this.getCommunityManagerTotal(row.houseUserId)
+    },
+    // 格式化栋座
+    formatBuilding(builds){
+      console.log(111);
+      return builds.map(item => item.buildingName).join(',')
     },
     // 返回调动记录
     backTransferLog(){
