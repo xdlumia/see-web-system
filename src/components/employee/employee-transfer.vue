@@ -29,7 +29,7 @@
                 <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
                     <el-input size="mini" v-model="transferForm.houseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
                 </employees-chosen>
-                <el-radio v-model="transferForm.houseType" label="1">取消责任盘</el-radio>
+                <el-radio v-model="transferForm.houseType" label="1">取消房源管家</el-radio>
                 <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
