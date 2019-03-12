@@ -64,7 +64,7 @@
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
           <el-button v-if="authorityBtn.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
           <!-- 人员调动功能仅α使用 -->
-          <el-button v-if="syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
+          <el-button v-if="authorityBtn.includes('sys_employee_1010') && syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
           <el-button v-if="authorityBtn.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
           <el-button v-if="authorityBtn.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
 
