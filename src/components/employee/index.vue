@@ -515,7 +515,7 @@ export default {
       // 如果当前是人员调动部门选择
       else if(this.dialogType == 'transfer'){
         this.dialogMeta.visible = true
-        this.dialogMeta.deptId = data.id
+        this.dialogMeta.dept = data
         this.dialogMeta.width = "720px"
         this.dialogMeta.title = "人员调动交接"
         this.dialogMeta.data = this.currentRow

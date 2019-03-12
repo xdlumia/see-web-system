@@ -10,6 +10,7 @@
   <!-- 授权内容 -->
   <div v-loading="loading">
       <el-form ref="transferForm" :model="transferForm" class="pr20 mt10" size="small">
+        人员"{{dialogMeta.data.employeeName}}",从"{{dialogMeta.data.deptName}}"调动到"{{dialogMeta.dept.deptName}}"
         <div v-show="!responserTotal && !managerTotal">没有任何操作</div>
         <article v-if="responserTotal">
             <h3 class="f14">责任盘 <span class="d-text-blue ml10">{{responserTotal}}</span></h3>
@@ -36,7 +37,7 @@
       </el-form>
     <div class="ac mt5">
       <el-button size="small" @click="dialogMeta.visible = false">取 消</el-button>
-      <el-button type="primary" size="small" v-if="responserTotal || managerTotal" @click="saveTransfer">保 存</el-button>
+      <el-button type="primary" size="small" @click="saveTransfer">确 定</el-button>
     </div>
   </div>
 </template>
@@ -69,7 +70,7 @@ export default {
       this.getBuildingInfoByResponserId()      
       this.getCommunityManagerTotal()
       this.transferForm.userId = this.dialogMeta.data.userId
-      this.transferForm.ransferDeptId = this.dialogMeta.deptId
+      this.transferForm.ransferDeptId = this.dialogMeta.dept.deptId
     }
   },
   computed:{
