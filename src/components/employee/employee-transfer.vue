@@ -70,7 +70,7 @@ export default {
       this.getBuildingInfoByResponserId()      
       this.getCommunityManagerTotal()
       this.transferForm.userId = this.dialogMeta.data.userId
-      this.transferForm.ransferDeptId = this.dialogMeta.dept.deptId
+      this.transferForm.ransferDeptId = this.dialogMeta.dept.id
     }
   },
   computed:{
