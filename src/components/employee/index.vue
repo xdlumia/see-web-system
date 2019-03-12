@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column prop="address" align="left" label="操作" width="580">
         <template slot-scope="scope">
-          <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" title="已经同步过了" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
+          <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
 
           <el-button size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
