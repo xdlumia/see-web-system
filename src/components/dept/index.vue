@@ -51,7 +51,7 @@
         width="400px">
         <el-form label-width="80px" :rules="rules" ref="dilogForm" :model="dilogForm" size="small">
           <el-form-item label="部门名称" prop="deptName">
-            <el-input v-model="dilogForm.deptName" :maxlength="15"  placeholder="请输入部门名称" class="w200"></el-input>
+            <el-input v-model="dilogForm.deptName" :maxlength="25"  placeholder="请输入部门名称" class="w200"></el-input>
           </el-form-item>
           <el-form-item label="上级部门"  >
             <el-input v-model="parentName" placeholder="请选择上级部门" class="w200" disabled></el-input>
