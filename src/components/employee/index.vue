@@ -507,19 +507,17 @@ export default {
     // 点击树节点回掉
     handleNodeClick (data) {
       this.dialogVisibleTree = false // 关闭弹出框
-      // 如果是新增部门选择
-      if(this.dialogType == 'add'){
-        this.dialogForm.deptId = data.id
-        this.dialogForm.deptName = data.deptName
-      }
       // 如果当前是人员调动部门选择
-      else if(this.dialogType == 'transfer'){
+      if(this.dialogType == 'transfer'){
         this.dialogMeta.visible = true
         this.dialogMeta.dept = data
         this.dialogMeta.width = "720px"
         this.dialogMeta.title = "人员调动交接"
         this.dialogMeta.data = this.currentRow
         this.dialogMeta.component = 'employeeTransfer'
+      } else{
+        this.dialogForm.deptId = data.id
+        this.dialogForm.deptName = data.deptName
       }
       
     },
