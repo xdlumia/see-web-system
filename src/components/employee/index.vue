@@ -94,7 +94,7 @@
 
                 <el-form-item label="员工编号" prop="employeeNo" 
                 :rules="[{required: true, message: '请输入员工编号'},{min: 1, max: 25, message: '不能超过25个字符' }]">
-                  <el-input v-model.trim="dialogForm.employeeNo" :disabled="dialogType == 'edit'" placeholder="请输入员工编号" maxlength="25" class="w200"></el-input>
+                  <el-input v-model.trim="dialogForm.employeeNo" placeholder="请输入员工编号" maxlength="25" class="w200"></el-input>
                 </el-form-item>
 
                 <el-form-item label="职位名称" prop="positionName">
@@ -500,7 +500,7 @@ export default {
     },
     // 选择部门
     selHandle () {
-      this.dialogType = 'add'
+      // this.dialogType = 'add'
       this.dialogVisibleTree = true
       this.fnLoadDept() // 加载部门数据
     },
