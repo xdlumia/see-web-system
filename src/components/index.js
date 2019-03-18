@@ -3,9 +3,10 @@ import Employee from './employee/index'; // 员工
 import Dept from './dept/index'; // 部门
 import Role from './role/index'; // 角色
 import Org from './org/index'; //组织类型
-const BusinessDictionary = () => import('./businessDictionary/index') // 业务字典
-const CategoryManagement = () => import('./categoryManagement/index') // 类目管理
-const Version = () => import('./version/index') // 版本更新
+var BusinessDictionary = () => import('./businessDictionary/index'); // 业务字典
+var CategoryManagement = () => import('./categoryManagement/index'); // 类目管理
+var Version = () => import('./version/index'); // 版本更新
+var Attendance = () => import('./attendance/index'); // 考勤管理
 
 export default {
   BusinessDictionary: {
@@ -69,6 +70,15 @@ export default {
     meta: {
       parent: '辅助管理',
       title: '版本更新'
+    }
+  },
+  Attendance: {
+    path: '/attendance', // 考勤管理
+    name: '/attendance',
+    component: Attendance,
+    meta: {
+      parent: '更多应用',
+      title: '考勤管理'
     }
   }
 };
