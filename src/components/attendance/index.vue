@@ -18,7 +18,7 @@
       <el-table-column type="index" align="center" label="序号" width="50"></el-table-column>
       <el-table-column prop="attendanceName" min-width="120" align="center" label="姓名" width="140">
         <template slot-scope="scope">
-          <span class="d-text-blue" @click='viewInfo'> {{scope.row.userName}} </span>
+          <span class="d-text-blue d-pointer" @click='viewInfo(scope.row)'> {{scope.row.userName}} </span>
         </template>
       </el-table-column>
       <el-table-column prop="deptName" align="center" label="所属部门" width="150" show-overflow-tooltip></el-table-column>
@@ -33,15 +33,15 @@
     </d-table>
 
     <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width" top="20px">
-      <components :is="dialogMeta.component" :dialogMeta="dialogMeta" v-if="dialogMeta.visible" @submit="tableReload"></components>
+      <components :is="dialogMeta.component" :dialogMeta="dialogMeta" v-if="dialogMeta.visible"></components>
     </el-dialog>
   </div>
 </template>
 <script>
-// import attendanceChart from "./attendance-chart"; // 图表
+import attendanceChart from "./attendance-chart"; // 图表
 export default {
   components: {
-    // attendanceChart,
+    attendanceChart,
   },
   data () {
     return {
@@ -73,8 +73,8 @@ export default {
     viewInfo(row){
       this.dialogMeta.visible = true
       this.dialogMeta.data = row
-      this.dialogMeta.width = "720px"
-      this.dialogMeta.title = "人员调动记录"
+      this.dialogMeta.width = "820px"
+      this.dialogMeta.title = "数据统计"
       this.dialogMeta.component = 'attendanceChart'
     },
   }
