@@ -60,7 +60,7 @@
           prop="typeName"
           :rules="[
             { required: true, message: '请输入组织类型名称', trigger: 'blur' },
-            { min: 1, max: 15, message: '长度在 1 到 15 个字符', trigger: 'blur' }
+            { min: 1, max: 25, message: '长度在 1 到 25 个字符', trigger: 'blur' }
             ]">
             <el-input v-model="dialogForm.typeName" :disabled="dialogForm.isBuiltIn==1" :maxlength="15"  placeholder="请输入组织类型名称"></el-input>
           </el-form-item>

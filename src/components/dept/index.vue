@@ -117,7 +117,7 @@ export default {
       rules: {
         deptName: [
           { required: true, message: "请输入部门名称", trigger: "blur" },
-          { min: 1, max: 15, message: "长度在 1 到 15 个字符", trigger: "blur" }
+          { min: 1, max: 25, message: "长度在 1 到 25 个字符", trigger: "blur" }
         ],
         typeName: [
           { required: true, message: "请输入组织类型", trigger: "blur" }
