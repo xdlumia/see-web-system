@@ -79,8 +79,8 @@ export default {
       this.$api.bizSystemService.getTransferDetail(id)
       .then(res=>{
         let data = res.data || {}
-        this.responserList = JSON.parse(data.houseDetail || '{}').info || []
-        this.managerList = JSON.parse(data.responseDetail || '{}').info || []
+        this.responserList = JSON.parse(data.responseDetail || '{}').info || []
+        this.managerList = JSON.parse(data.houseDetail || '{}').communityEntityList || []
       })
     },
   }
