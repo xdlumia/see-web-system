@@ -169,10 +169,18 @@ export default {
   saveTransfer(params) {
     return Api.post(baseURL.bizSystemService + '/rmemployeeransferrecord/save', params);
   },
+  // 保存人员调动记录
+  saveTransfer(params) {
+    return Api.post(baseURL.bizSystemService + '/rmemployeeransferrecord/save', params);
+  },
 
   // 根据用户id获取人员调动记录
   getTransferLog(params) {
     return Api.get(baseURL.bizSystemService + '/rmemployeeransferrecord/list', params);
+  },
+  // 根据人员记录id查询人员交接详情
+  getTransferDetail(params) {
+    return Api.get(baseURL.bizSystemService + '/rmemployeeransferrecord/detailInfo/'+ params);
   },
 
 

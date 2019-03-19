@@ -25,9 +25,8 @@
         <!-- 人员调动记录详情 -->
         <article v-if="isTransfer == 'detail'" class="hfull">
             <el-button size="mini" icon="el-icon-back" @click="backTransferLog">返回</el-button>
-            <div v-if="!responserTotal && !managerTotal">暂无数据</div>
             <el-tabs v-model="activeName">
-                <el-tab-pane label="责任盘" name="responser" v-if="responserTotal">
+                <el-tab-pane label="责任盘" name="responser">
                   <el-table :data="responserList" border size="mini" height="320px">
                       <el-table-column prop="communityName" min-width="120" align="left" label="楼盘名称" show-overflow-tooltip>
                       </el-table-column>
@@ -36,7 +35,7 @@
                       </el-table-column>
                   </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="房管家" name="manager" v-if="managerTotal">
+                <el-tab-pane label="房管家" name="manager">
                   <el-table :data="managerList" border size="mini" height="320px">
                       <el-table-column prop="communityName" align="left" label="楼盘名称" show-overflow-tooltip>
                       </el-table-column>
@@ -52,10 +51,8 @@ export default {
   props: ["dialogMeta"],
   data () {
     return {
-      responserTotal:'', //责任盘总数
-      responserList:'', //责任盘列表
-      managerTotal:'', //房源管家总数
-      managerList:'', //房源管家列表
+      responserList:[], //责任盘列表
+      managerList:[], //房源管家列表
       queryForm:{userId:this.dialogMeta.data.userId},
       isTransfer:'log',
       activeName:'responser',
@@ -67,12 +64,7 @@ export default {
     // 查看记录详情
     viewLogDetail(row){
         this.isTransfer = 'detail'
-        if(row.responseUserId){
-          this.getBuildingInfoByResponserId(row.responseUserId)
-        }
-        if(row.houseUserId){
-          this.getCommunityManagerTotal(row.houseUserId)
-        }
+        this.getTransferDetail(row.id)
     },
     // 格式化栋座
     formatBuilding(builds){
@@ -82,29 +74,13 @@ export default {
     backTransferLog(){
         this.isTransfer = 'log'
     },
-    // 获取某责任人负责的栋座信息 责任盘
-    getBuildingInfoByResponserId(userId){
-      this.$api.seeBaseHouseService.getBuildingInfoByResponserId(userId)
+    // 根据人员记录id查询人员交接详情
+    getTransferDetail(id){
+      this.$api.bizSystemService.getTransferDetail(id)
       .then(res=>{
-        this.responserTotal = res.data.num || ''
-        this.responserList = res.data.info || []
-        // 如果责任盘没有数据 默认显示楼管家
-        if(!this.responserTotal){
-          this.activeName = 'manager'
-        }
-        
-      })
-    },
-    // 根据员工id,查询员工负责的楼盘数 房源管理
-    getCommunityManagerTotal(userId){
-      this.$api.seeTenementService.getCommunityManagerTotal({userId:userId})
-      .then(res=>{
-        this.managerTotal = res.data.totalCount || ''
-        this.managerList = res.data.communityEntityList || ''
-        // 如果责任盘没有数据 默认显示楼管家
-        if(!this.responserTotal){
-          this.activeName = 'manager'
-        }
+        let data = res.data || {}
+        this.responserList = JSON.parse(data.houseDetail || '{}').info || []
+        this.managerList = JSON.parse(data.responseDetail || '{}').info || []
       })
     },
   }
