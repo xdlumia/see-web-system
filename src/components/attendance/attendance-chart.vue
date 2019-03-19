@@ -7,11 +7,11 @@
 
 
 <script>
-import ECharts from 'ECharts'
-import 'echarts/lib/chart/bar' //bar图
-import 'echarts/lib/component/tooltip' //提示
-import 'echarts/lib/component/legend'  //类型
-import 'echarts/lib/component/dataZoom'//滚动条
+// import ECharts from 'ECharts'
+// import 'echarts/lib/chart/bar' //bar图
+// import 'echarts/lib/component/tooltip' //提示
+// import 'echarts/lib/component/legend'  //类型
+// import 'echarts/lib/component/dataZoom'//滚动条
 export default {
   components:{
    ECharts,

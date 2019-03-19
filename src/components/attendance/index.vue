@@ -38,10 +38,10 @@
   </div>
 </template>
 <script>
-import attendanceChart from "./attendance-chart"; // 图表
+// import attendanceChart from "./attendance-chart"; // 图表
 export default {
   components: {
-    attendanceChart,
+    // attendanceChart,
   },
   data () {
     return {
