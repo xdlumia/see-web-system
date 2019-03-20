@@ -9,9 +9,9 @@
 <template>
   <div class="d-content main-content">
     <div class="mb10">
-      <el-input v-if="authorityBtn.includes('sys_attendance_1004')" size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
-      <el-input v-if="authorityBtn.includes('sys_attendance_1004')" size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.condition" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
-      <el-button v-if="authorityBtn.includes('sys_attendance_1004')" size="medium" type="primary" @click="$refs.attendanceTable.reload(1)" icon="el-icon-search">查询</el-button>
+      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
+      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.condition" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
+      <el-button size="medium" type="primary" @click="$refs.attendanceTable.reload(1)" icon="el-icon-search">查询</el-button>
     </div>
     <!-- 表格数据 -->
     <d-table api="systemService.getLoginfoList" :params="queryForm" ref="attendanceTable"  style="height:calc(100% - 40px)">
