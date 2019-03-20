@@ -9,16 +9,16 @@
 <template>
   <div class="d-content main-content">
     <div class="mb10">
-      <el-input v-if="authorityBtn.includes('sys_attendance_1004')" size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
-      <el-input v-if="authorityBtn.includes('sys_attendance_1004')" size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.condition" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
-      <el-button v-if="authorityBtn.includes('sys_attendance_1004')" size="medium" type="primary" @click="$refs.attendanceTable.reload(1)" icon="el-icon-search">查询</el-button>
+      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
+      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.condition" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
+      <el-button size="medium" type="primary" @click="$refs.attendanceTable.reload(1)" icon="el-icon-search">查询</el-button>
     </div>
     <!-- 表格数据 -->
     <d-table api="systemService.getLoginfoList" :params="queryForm" ref="attendanceTable"  style="height:calc(100% - 40px)">
       <el-table-column type="index" align="center" label="序号" width="50"></el-table-column>
       <el-table-column prop="attendanceName" min-width="120" align="center" label="姓名" width="140">
         <template slot-scope="scope">
-          <span class="d-text-blue" @click='viewInfo'> {{scope.row.userName}} </span>
+          <span class="d-text-blue d-pointer" @click='viewInfo(scope.row)'> {{scope.row.userName}} </span>
         </template>
       </el-table-column>
       <el-table-column prop="deptName" align="center" label="所属部门" width="150" show-overflow-tooltip></el-table-column>
@@ -33,15 +33,15 @@
     </d-table>
 
     <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width" top="20px">
-      <components :is="dialogMeta.component" :dialogMeta="dialogMeta" v-if="dialogMeta.visible" @submit="tableReload"></components>
+      <components :is="dialogMeta.component" :dialogMeta="dialogMeta" v-if="dialogMeta.visible"></components>
     </el-dialog>
   </div>
 </template>
 <script>
-// import attendanceChart from "./attendance-chart"; // 图表
+import attendanceChart from "./attendance-chart"; // 图表
 export default {
   components: {
-    // attendanceChart,
+    attendanceChart,
   },
   data () {
     return {
@@ -73,8 +73,8 @@ export default {
     viewInfo(row){
       this.dialogMeta.visible = true
       this.dialogMeta.data = row
-      this.dialogMeta.width = "720px"
-      this.dialogMeta.title = "人员调动记录"
+      this.dialogMeta.width = "820px"
+      this.dialogMeta.title = "数据统计"
       this.dialogMeta.component = 'attendanceChart'
     },
   }

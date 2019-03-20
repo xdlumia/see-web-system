@@ -24,6 +24,10 @@ export default {
     updatePassword(params) {
         return Api.post(baseURL.systemService + '/rmUser/updateUserPwdAfterLogin', params)
     },
+    //  登出
+    logout (params) {
+        return Api.get(baseURL.systemService + '/login/logout', params,{isShowMessage:false})
+    },
 
     /**
     * @description 业务平台
