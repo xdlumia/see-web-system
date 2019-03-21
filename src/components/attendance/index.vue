@@ -10,7 +10,13 @@
   <div class="d-content main-content">
     <div class="mb10">
       <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
-      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.condition" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
+      <tree-select 
+      size="medium"
+      defaultExpandAll
+      v-model="queryForm.deptId"
+      :data="deptTreeData"
+      :props="{label:'deptName'}"
+      ></tree-select>
       <el-button size="medium" type="primary" @click="$refs.attendanceTable.reload(1)" icon="el-icon-search">查询</el-button>
     </div>
     <!-- 表格数据 -->
@@ -54,6 +60,7 @@ export default {
         component:'',//组件
         data:'',// 当前行数据
       },
+      deptTreeData:[],
 
       // 搜索框
       queryForm: {
@@ -66,9 +73,16 @@ export default {
     }
   },
   created () {
+    this.getDeptList()
   },
   methods: {
-
+    // 请求部门数据方法
+    getDeptList () {
+      this.$api.bizSystemService.getDeptList({type: '0'})
+        .then(res => {
+            this.deptTreeData = res.data || []
+        })
+    },
     // 查看记录
     viewInfo(row){
       this.dialogMeta.visible = true
