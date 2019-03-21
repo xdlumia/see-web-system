@@ -64,8 +64,8 @@
     "fingerprintjs2": "^1.8.1"
   },
   "publishConfig": {
-    "set": "cnpm config set registry http://10.167.2.204:8889/repository/npm-internal/",
-    "revert": "cnpm config set registry http://10.167.2.204:8889/repository/npm-see/",
-    "registry": "http://10.167.2.204:8889/repository/npm-internal/"
+    "set": "npm config set registry http://39.96.212.175:8889/repository/npm-internal/",
+    "revert": "npm config set registry http://39.96.212.175:8889/repository/npm-see/",
+    "registry": "http://39.96.212.175:8889/repository/npm-internal/"
   }
 }
