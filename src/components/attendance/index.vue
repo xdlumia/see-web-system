@@ -65,7 +65,7 @@ export default {
       // 搜索框
       queryForm: {
         userName:'',
-        orderRules:'online_duration DESC',
+        orderRules:'login_time DESC',
         page:1,
         limit:20,
         deptId:'',
