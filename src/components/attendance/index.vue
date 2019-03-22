@@ -35,7 +35,7 @@
           <span> {{scope.row.loginTime | timeToStr}} </span>
         </template>
       </el-table-column>
-      <el-table-column prop="onlineDuration" align="center" label="累计登陆时长" width="140"></el-table-column>
+      <el-table-column prop="onlineDuration" align="center" label="累计登陆时长(分钟)" width="140"></el-table-column>
     </d-table>
 
     <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width" top="20px">
