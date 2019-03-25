@@ -108,6 +108,10 @@ export default {
   getRoleType(params) {
     return Api.get(baseURL.bizSystemService + '/rmrole/roleTypeList', params);
   },
+  // 根据一组部门id查询部门信息
+  getDeptListDyDeptIds (params) {
+    return Api.get(baseURL.bizSystemService + '/rmdept/deptList', params)
+  },
 
   /**
   * @description  员工
@@ -152,7 +156,6 @@ export default {
   updatePassword(params) {
     return Api.post(baseURL.bizSystemService + apiURL.updatePassword, params);
   },
-
   //开放注册
   openRegistration(params) {
     return Api.post(baseURL.bizSystemService + '/rmemployee/openRegistration', params);
@@ -160,6 +163,10 @@ export default {
   //查询开放注册
   queryOpenRegistration(params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/queryOpenRegistration', params);
+  },
+  // 根据一组用户ID查询用户信息
+  getEmpListByUserIds(params) {
+    return Api.get(baseURL.bizSystemService + '/rmemployee/empList', params);
   },
 
   /**
