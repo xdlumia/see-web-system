@@ -69,6 +69,7 @@ export default {
         page:1,
         limit:20,
         deptId:'',
+        companyCode:this.$local.fetch('userInfo').companyCode
       },
     }
   },
