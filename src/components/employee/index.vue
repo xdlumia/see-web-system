@@ -258,6 +258,7 @@ export default {
         deptId: '', //部门id
         deptName: '', //部门名称
         userAccount:'', //用户帐号
+        remark:'',
       },
 
       asyncType: 'password', // 默认type是密码
