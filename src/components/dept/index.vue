@@ -3,7 +3,7 @@
       <el-row>
         <el-col :span="12">
           <span class="mr5">部门名称:</span>
-          <el-input size="medium" v-model="filterDeptName" placeholder="请输入部门名称查询" style="width:240px"></el-input>
+          <el-input size="medium" autocomplete="off" v-model="filterDeptName" placeholder="请输入部门名称查询" style="width:240px"></el-input>
         </el-col>
         <el-col :span="12" class="ar">
           <el-button v-if="authorityBtn.includes('sys_dept_1001')" type="primary" size="medium" icon="el-icon-plus"  @click="editOrAddHandle('add')">新增部门</el-button>
