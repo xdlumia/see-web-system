@@ -35,6 +35,7 @@
           <span> {{scope.row.loginTime | timeToStr}} </span>
         </template>
       </el-table-column>
+      <el-table-column prop="logNum" align="center" label="累计登陆天数(天)" width="140"></el-table-column>
       <el-table-column prop="onlineDuration" align="center" label="累计登陆时长(分钟)" width="140"></el-table-column>
     </d-table>
 
@@ -69,7 +70,6 @@ export default {
         page:1,
         limit:20,
         deptId:'',
-        companyCode:this.$local.fetch('userInfo').companyCode
       },
     }
   },
