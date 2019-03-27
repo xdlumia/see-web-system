@@ -1,7 +1,5 @@
 import _defineProperty from 'babel-runtime/helpers/defineProperty';
 
-var _getUserDetail$getUse;
-
 /**
  * @author 吴森
  * @description bizSystemService的url
@@ -81,6 +79,11 @@ export default {
   getDeptList(params) {
     return Api.get(baseURL.bizSystemService + '/rmdept/treeList', params);
   },
+  // 获取固定人员下部门树列表
+  getChildrenDept(params) {
+    return Api.get(baseURL.bizSystemService + '/rmdept/getChildrenDept', params);
+  },
+  
   //获取某部门信息
   getDeptInfo(params) {
     return Api.get(baseURL.bizSystemService + '/rmdept/info/' + params);
@@ -265,5 +268,20 @@ export default {
   updateMsg: function updateMsg (params) {
     return Api.post(baseURL.bizSystemService + '/message/updateMsg', params)
   },
+  // 查询最近提醒接收人(最近的5个人)
+  getRecentlyRemind(params) {
+    return Api.get(baseURL.bizSystemService + '/message/getRecentlyRemind', params)
+  },
 
+   /**
+   * 页面查询条件筛选项
+   */
+  // 根据页面编码查询筛选条件
+  getFilterInfo (params) {
+    return Api.get(baseURL.bizSystemService + '/rmpagequerycondition/info', params)
+  },
+  // 保存筛选条件
+  saveFilter (params) {
+    return Api.post(baseURL.bizSystemService + '/rmpagequerycondition/save', params)
+  },
 }
