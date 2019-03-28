@@ -214,8 +214,6 @@ export default {
   created() {
     // 执行请求部门树数据方法
     this.fnLoadDeptTree();
-    // 加载树数据
-    this.getCategoryTree();
     // 初始化数据
     this.initRoleDataAuth();
   },
@@ -291,6 +289,8 @@ export default {
               dataSourceId: data[0].id,
               roleId: this.dialogMeta.data.id
             });
+            // 加载树数据
+            this.getCategoryTree();
           }
         });
     },

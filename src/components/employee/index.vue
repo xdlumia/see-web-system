@@ -10,6 +10,30 @@
   <div class="d-content main-content">
     <div class="mb10">
       <el-input v-if="authorityBtn.includes('sys_employee_1004')" size="medium" @keyup.native.13="$refs.employeeTable.reload()" v-model="queryForm.condition" placeholder="请输入姓名/电话/员工编号查询" class="w240"></el-input>
+      <tree-select 
+      v-if="authorityBtn.includes('sys_employee_1004')" size="medium" 
+      v-model="queryForm.deptIdList"
+      multiple
+      collapse-tags
+      defaultExpandAll
+      :props="{label:'deptName'}"
+      api="bizSystemService.getDeptList"
+      :params="{ type: 0 }"
+      placeholder="请选择部门"
+      class="w240"></tree-select>
+      <el-select
+      v-model="queryForm.roleIdList"
+      multiple
+      collapse-tags
+      placeholder="请选择角色">
+      <el-option
+        v-for="(item,index) of this.roleLists"
+        :key="index"
+        :label="item.roleName"
+        :value="item.id">
+      </el-option>
+    </el-select>
+
       <el-button v-if="authorityBtn.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload(1)" icon="el-icon-search">查询</el-button>
       <el-button v-if="authorityBtn.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button>
       <div class="fr mr10">
@@ -203,6 +227,7 @@ export default {
     return {
       single: employeeSingle, //用来判断员工授权是单选还是多选
       syscode:this.$local.fetch('userInfo').syscode, //系统code
+      roleLists:[], //所有角色列表
       currentRow:{}, //当前行数据
       authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
       // dialog弹出框信息
@@ -232,6 +257,16 @@ export default {
         condition: '',
         page:1,
         limit:15,
+        deptIdList:[],
+        roleIdList:[],
+      },
+      queryRoleParams: {
+        limit:999,
+        page:1,
+        name: '',
+        state: '',
+        companyCode:this.$local.fetch('userInfo').companyCode, //公司编码  自定义角色不传此参数
+        subsysCode:this.$local.fetch('userInfo').syscode, //子系统编码 自定义角色不传此参数
       },
       // 弹出框同步内容
       syncForm: {
@@ -279,7 +314,10 @@ export default {
     }
   },
   created () {
-  	this.queryOpenRegistration()
+    this.queryOpenRegistration()
+    Promise.all([this.getDefaultRoleList(), this.getRoleList(),]).then((res) => {
+      this.roleLists = [...res[0],...res[1]]
+    })
   },
   methods: {
     // 员工操作
@@ -544,6 +582,19 @@ export default {
             this.dialogVisiblePassword = false
           }
         })
+    },
+    
+    getDefaultRoleList(){
+      return this.$api.resourceService.getDefaultRoleList(this.queryRoleParams)
+      .then(res=>{
+        return res.data || []
+      })
+    },
+    getRoleList(){
+      return this.$api.bizSystemService.getRoleList(this.queryRoleParams)
+      .then(res=>{
+          return res.data || []
+      })
     },
     // 保存表单数据
     saveHandle (formName) {
