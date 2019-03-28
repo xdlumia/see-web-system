@@ -524,7 +524,8 @@ export default {
     },
     // 请求部门数据方法
     fnLoadDept () {
-      this.$api.bizSystemService.getDeptList({type: '0'})
+      let deptId = this.$local.fetch('userInfo').deptId
+      this.$api.bizSystemService.getChildrenDept({id: deptId})
         .then(res => {
           if (res.code == 200) {
             this.deptTreeData = res.data || []

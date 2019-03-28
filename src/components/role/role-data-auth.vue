@@ -115,6 +115,17 @@
               :key="index"
             >{{item.employeeName}}</el-tag>
           </div>
+          <div class="d-hidden mb10" v-else-if="item.condType==4">
+            <tree-select 
+            size="medium"
+            node-key="key"
+            multiple
+            defaultExpandAll
+            v-model="courseKeys"
+            :data="courseTreeData"
+            :props="{label:'value',children:'subCategoryList'}"
+            ></tree-select>
+          </div>
         </div>
       </el-form-item>
     </el-form>
@@ -158,11 +169,13 @@ export default {
   data() {
     return {
       loading: true, // loading动画
+      courseKeys:[], // 自定义课程选中的数组
       userArr: [],
       // 数据授权
       dialogVisibleTree: false, // 选择部门弹出框
       deptTreeCheck: [], // 数据权限部门数选择
       DEPTSELITEM: {}, // 选择部门的时候保存的数据
+      courseTreeData:[], //课程数据
       deptData: [], // 部门数据
       //  数据源模板
       modalOptions: [],
@@ -201,6 +214,8 @@ export default {
   created() {
     // 执行请求部门树数据方法
     this.fnLoadDeptTree();
+    // 加载树数据
+    this.getCategoryTree();
     // 初始化数据
     this.initRoleDataAuth();
   },
@@ -211,6 +226,14 @@ export default {
       this.$api.bizSystemService.getDeptList(params).then(res => {
         if (res.code == 200) {
           this.deptData = res.data || [];
+        }
+      });
+    },
+    // 请求部门树数据方法
+    getCategoryTree() {
+      this.$api.seeTrainingService.getCategoryTree().then(res => {
+        if (res.code == 200) {
+          this.courseTreeData = res.data || [];
         }
       });
     },
@@ -335,7 +358,11 @@ export default {
         } else if (item.fieldType == 7) {
           // 7=指定人
           condType = 3;
+        } else if (item.fieldType == 8) {
+          // 8=课程分类
+          condType = 4;
         } else {
+          // 其他 字符串
           condType = 2;
         }
         this.rmDataAuthForm.rowSettingList.push({
@@ -345,7 +372,7 @@ export default {
           // deptCondType:item.deptCondType||'',
           fieldCode: item.fieldCode,
           fieldName: item.fieldName,
-          fieldValue: item.fieldValue,
+          fieldValue: item.fieldValue || condType==4?[]:'',
           id: item.id,
           specifyDays: item.specifyDays
         });
@@ -357,6 +384,9 @@ export default {
       this.rmDataAuthForm.rowSettingList.forEach(item => {
         if (item.condType == 3) {
           item.fieldValue = this.userArr.map(item => {return item.userId}).join(",");
+        }
+        else if (item.condType == 4) {
+          item.fieldValue = this.courseKeys.join(",");
         }
       });
 			this.rmDataAuthForm.roleId = this.dialogMeta.data.id
@@ -410,6 +440,10 @@ export default {
                 delete item.empId;
                 return item;
               });
+            }
+            // 回写课程分类
+            else if(item.condType == 4){
+                this.courseKeys = (item.fieldValue || '').split(',').map(n=>Number(n))
             }
           });
         }
