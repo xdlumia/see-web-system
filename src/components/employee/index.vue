@@ -24,14 +24,21 @@
       <el-select
       v-model="queryForm.roleIdList"
       multiple
+      size="medium"
       collapse-tags
       placeholder="请选择角色">
+      <el-option-group
+      v-for="(group,index) of roleLists"
+      :key="index"
+      :label="group.label">
       <el-option
-        v-for="(item,index) of this.roleLists"
-        :key="index"
+        v-for="item in group.options"
+        :key="item.id"
         :label="item.roleName"
         :value="item.id">
       </el-option>
+    </el-option-group>
+
     </el-select>
 
       <el-button v-if="authorityBtn.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload(1)" icon="el-icon-search">查询</el-button>
@@ -316,7 +323,11 @@ export default {
   created () {
     this.queryOpenRegistration()
     Promise.all([this.getDefaultRoleList(), this.getRoleList(),]).then((res) => {
-      this.roleLists = [...res[0],...res[1]]
+      this.roleLists = [
+        {label:'默认角色',options:res[0]},
+        {label:'自定义角色',options:res[1]}
+        ]
+      // this.roleLists = [...res[0],...res[1]]
     })
   },
   methods: {
