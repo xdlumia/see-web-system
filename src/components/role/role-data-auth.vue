@@ -278,10 +278,15 @@ export default {
             let data = res.data || [];
             this.modalOptions = data;
             // 选中第一个模板
-            this.modalSelected = data[0] || "";
+            this.modalSelected = data[0] || {};
             this.rmDataAuthForm.code = data[0].code || "";
             this.rmDataAuthForm.pageDatasourceId = data[0].id || "";
             this.rmDataAuthForm.pageDatasourceName = data[0].name || "";
+            console.log(this.modalSelected);
+            // 如果当前选择是课堂.则加载课程数据
+            if(this.modalSelected.fieldType == 8){
+              this.getCategoryTree()
+            }
             // 根据id获取数据源列表
             this.getAuthFieldList({ dataSourceId: data[0].id });
             // 根据id获取数据源详情
@@ -300,6 +305,9 @@ export default {
     },
     // 数据权限 选择模板
     modalSelChange(item) {
+      if(item.fieldType == 8){
+        this.getCategoryTree()
+      }
       // 清空form
       this.colSetting = [];
       this.rowSettingList = [];
