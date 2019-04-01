@@ -290,7 +290,10 @@ export default {
               roleId: this.dialogMeta.data.id
             });
             // 加载树数据
-            this.getCategoryTree();
+            let syscode = this.$local.fetch("userInfo").syscode
+            if(syscode == 'training'){
+              this.getCategoryTree();
+            }
           }
         });
     },
