@@ -282,9 +282,8 @@ export default {
             this.rmDataAuthForm.code = data[0].code || "";
             this.rmDataAuthForm.pageDatasourceId = data[0].id || "";
             this.rmDataAuthForm.pageDatasourceName = data[0].name || "";
-            console.log(this.modalSelected);
             // 如果当前选择是课堂.则加载课程数据
-            if(this.modalSelected.fieldType == 8){
+            if(this.rmDataAuthForm.code == 'training_course-001'){
               this.getCategoryTree()
             }
             // 根据id获取数据源列表
@@ -305,7 +304,7 @@ export default {
     },
     // 数据权限 选择模板
     modalSelChange(item) {
-      if(item.fieldType == 8){
+      if(item.code == 'training_course-001'){
         this.getCategoryTree()
       }
       // 清空form
