@@ -132,6 +132,10 @@ export default {
   getEmployeeInfo(params) {
     return Api.get(baseURL.bizSystemService + apiURL.getEmployeeInfo + params);
   },
+  // 获取用户详情
+  getEmployeeDetail(params) {
+    return Api.get(baseURL.bizSystemService + '/rmemployee/getUserDetail', params);
+  },
   delEmployee(params) {
     return Api.del(baseURL.bizSystemService + apiURL.delEmployee, params);
   },
@@ -253,20 +257,20 @@ export default {
    * 系统消息
    */
   // 定时任务获取未读消息数量
-  getNotReadMsg: function getNotReadMsg (params) {
+  getNotReadMsg(params) {
     return Api.get(baseURL.bizSystemService + '/message/getNotReadMsg', params)
   },
   // 查询消息列表
-  getMsgList: function getMsgList (params) {
+  getMsgList(params) {
     return Api.get(baseURL.bizSystemService + '/message/list', params)
   },
   // 发送系统消息
-  sendMsg: function sendMsg (params) {
+  sendMsg(params) {
     return Api.post(baseURL.bizSystemService + '/message/sendMsg', params)
   },
   // 读消息或者解决待办消息
-  updateMsg: function updateMsg (params) {
-    return Api.post(baseURL.bizSystemService + '/message/updateMsg', params)
+  updateMsg(params) {
+    return Api.post(baseURL.bizSystemService + '/message/updateMsg', params,{isShowMessage:false})
   },
   // 查询最近提醒接收人(最近的5个人)
   getRecentlyRemind(params) {
