@@ -291,6 +291,7 @@ export default {
             });
             // 加载树数据
             let syscode = this.$local.fetch("userInfo").syscode
+            // 小程序后台才调用这个接口
             if(syscode == 'training'){
               this.getCategoryTree();
             }
