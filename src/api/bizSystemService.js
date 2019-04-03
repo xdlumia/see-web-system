@@ -272,6 +272,10 @@ export default {
   updateMsg(params) {
     return Api.post(baseURL.bizSystemService + '/message/updateMsg', params,{isShowMessage:false})
   },
+  // 删除成功
+  delMsg(params) {
+    return Api.del(baseURL.bizSystemService + '/message/delete', params,)
+  },
   // 查询最近提醒接收人(最近的5个人)
   getRecentlyRemind(params) {
     return Api.get(baseURL.bizSystemService + '/message/getRecentlyRemind', params)
