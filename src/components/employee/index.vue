@@ -20,7 +20,7 @@
       api="bizSystemService.getDeptList"
       :params="{ type: 0 }"
       placeholder="请选择部门"
-      class="w240"></tree-select>
+      style="width:360px"></tree-select>
       <el-select
       v-model="queryForm.roleIdList"
       multiple
