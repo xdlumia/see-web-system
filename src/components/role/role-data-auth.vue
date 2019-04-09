@@ -352,13 +352,16 @@ export default {
     },
     // 获取数据权限列表
     rowSettingListChange() {
+      // 切换选中之前选中的数据
+      let rowSetList = this.rmDataAuthForm.rowSettingList
+
       this.rmDataAuthForm.rowSettingList = [];
       //通过多选的code 获取对应的数据
       let rsList = this.authFieldList.filter(item => {
         return this.rowSettingList.includes(item.fieldCode);
       });
       // 把选中的数据添加到form表单对应的字段里
-      rsList.forEach(item => {
+      rsList.forEach((item, index) => {
         let condType = "";
         if (item.fieldType == 2) {
           // 2=日期
@@ -387,6 +390,14 @@ export default {
           id: item.id,
           specifyDays: item.specifyDays
         });
+        // 回写上次选中的数据
+        for (let i = 0; i < rowSetList.length; i++) {
+          if (item.fieldCode == rowSetList[i].fieldCode) {
+            this.rmDataAuthForm.rowSettingList[index] = rowSetList[i]
+            // 获取上次已经选过的数据后跳出
+            break
+          }
+        }
       });
     },
     // 保存表单数据
