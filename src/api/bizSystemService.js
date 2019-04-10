@@ -272,6 +272,14 @@ export default {
   updateMsg(params) {
     return Api.post(baseURL.bizSystemService + '/message/updateMsg', params,{isShowMessage:false})
   },
+  // 转发消息
+  transmitMsg(params){
+    return Api.post(baseURL.bizSystemService + '/message/transmit', params);
+  },
+  // 清除消息
+  clearMsg(params){
+    return Api.get(baseURL.bizSystemService + '/message/clear', params);
+  },
   // 删除成功
   delMsg(params) {
     return Api.del(baseURL.bizSystemService + '/message/delete', params,)
