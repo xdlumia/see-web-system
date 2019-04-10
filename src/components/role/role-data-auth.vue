@@ -271,7 +271,9 @@ export default {
       }
       this.userArr = [];
       //  获取数据源模板
-      this.$api.resourceService.getDataSourceList({ companyCode: this.dialogMeta.data.companyCode })
+      let syscode = this.$local.fetch('userInfo').syscode
+      // this.$api.resourceService.getDataSourceList({ companyCode: this.dialogMeta.data.companyCode })
+      this.$api.resourceService.getDataSourceList({ syscode: syscode })
         .then(res => {
           if (res.code == 200) {
             // 数据源模板列表

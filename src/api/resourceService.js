@@ -12,10 +12,10 @@ export default {
   /**
   * @description 数据权限 数据源
   */
-  getDataSourceList: function getDataSourceList(params) {
-    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/list', params);
+  getDataSourceList(params) {
+    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/listBySyscode', params);
   },
-  getDataSourcePageList: function getDataSourcePageList(params) {
+  getDataSourcePageList(params) {
     return Api.get(baseURL.resourceService + '/dataauthPageDataSource/page', params);
   },
 
@@ -25,12 +25,12 @@ export default {
   */
 
   //获取数据权限字段源列表
-  getAuthFieldList: function getAuthFieldList(params) {
+  getAuthFieldList(params) {
     return Api.get(baseURL.resourceService + '/dataauthField/list', params);
   },
 
   //数据源权限字段分页列表
-  getAuthFieldPageList: function getAuthFieldPageList(params) {
+  getAuthFieldPageList(params) {
     return Api.get(baseURL.resourceService + '/dataauthField/page', params);
   },
 
