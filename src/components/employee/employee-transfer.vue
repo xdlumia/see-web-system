@@ -34,6 +34,26 @@
                 <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
+        <!-- <article v-if="managerTotal">
+            <h3 class="f14">出房人 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
+            <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
+                <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
+                <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
+                    <el-input size="mini" v-model="transferForm.houseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
+                </employees-chosen>
+                <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
+            </el-form-item>
+        </article>
+        <article v-if="managerTotal">
+            <h3 class="f14">收房人 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
+            <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
+                <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
+                <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
+                    <el-input size="mini" v-model="transferForm.houseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
+                </employees-chosen>
+                <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
+            </el-form-item>
+        </article> -->
       </el-form>
     <div class="ac mt5">
       <el-button size="small" @click="dialogMeta.visible = false">取 消</el-button>
