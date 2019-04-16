@@ -1,7 +1,7 @@
 <!--员工列表
 /**
 * 员工列表
-* @/components/attendance/ 员工列表
+* @/components/attendance/ 考勤
 * @author web-王晓冬
 * @date 2019年1月2日
 **/
@@ -30,13 +30,13 @@
       <el-table-column prop="deptName" align="center" label="所属部门" width="150" show-overflow-tooltip></el-table-column>
       <el-table-column prop="account" min-width="120" align="center" label="用户账号"></el-table-column>
       <el-table-column prop="employeeNo" min-width="120" align="center" label="员工编号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="loginTime" show-overflow-tooltip min-width="120" align="center" label="最近登录时间">
+      <el-table-column prop="loginTime" sortable show-overflow-tooltip min-width="120" align="center" label="最近登录时间">
         <template slot-scope="scope">
           <span> {{scope.row.loginTime | timeToStr}} </span>
         </template>
       </el-table-column>
-      <el-table-column prop="logNum" align="center" label="累计登陆天数(天)" width="140"></el-table-column>
-      <el-table-column prop="onlineDuration" align="center" label="累计登陆时长(分钟)" width="140"></el-table-column>
+      <el-table-column prop="logNum" sortable align="center" label="累计登陆天数(天)" width="140"></el-table-column>
+      <el-table-column prop="onlineDuration" sortable align="center" label="累计登陆时长(分钟)" width="160"></el-table-column>
     </d-table>
 
     <el-dialog :title="dialogMeta.title" :visible.sync="dialogMeta.visible" :width="dialogMeta.width" top="20px">
