@@ -12,7 +12,7 @@
           <el-input size="medium" v-model="filterOrgName" placeholder="请输入部门组织类型名称" style="width:240px"></el-input>
         </el-col>
         <el-col :span="12" class="ar">
-          <el-button type="primary" size="medium" icon="el-icon-plus"  @click="editOrAddHandle('add')">新增组织类型</el-button>
+          <el-button type="primary" v-if="authorityButtons.includes('sys_dept_type_1001')" size="medium" icon="el-icon-plus"  @click="editOrAddHandle('add')">新增组织类型</el-button>
         </el-col>
       </el-row>
       <div class="custom-tree-node title mt10">
@@ -40,8 +40,8 @@
                 <span class="d-elip w100">
                   
                   <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
-                  <el-button :disabled="node.data.parentId == 0" class="el-icon-edit f16" type="text" @click="() => editOrAddHandle(node,data)"></el-button>
-                  <el-button :disabled="node.data.parentId == 0 ||  node.data.isBuiltIn == 1" class="el-icon-delete f16" :class="node.data.parentId == 0 || node.data.isBuiltIn == 1?'':'d-text-red'" type="text" @click="() => delHandle(node, data)"></el-button>
+                  <el-button  v-if="authorityButtons.includes('sys_dept_type_1002')" :disabled="node.data.parentId == 0" class="el-icon-edit f16" type="text" @click="() => editOrAddHandle(node,data)"></el-button>
+                  <el-button  v-if="authorityButtons.includes('sys_dept_type_1003')" :disabled="node.data.parentId == 0 ||  node.data.isBuiltIn == 1" class="el-icon-delete f16" :class="node.data.parentId == 0 || node.data.isBuiltIn == 1?'':'d-text-red'" type="text" @click="() => delHandle(node, data)"></el-button>
                 </span>
               </div>
             </div>
