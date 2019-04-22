@@ -91,7 +91,7 @@
         <template slot-scope="scope">
           <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
 
-          <el-button size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
+          <el-button v-if="authorityBtn.includes('sys_employee_1007')" size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
           <el-button v-if="authorityBtn.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
           <!-- 人员调动功能仅α使用 -->
