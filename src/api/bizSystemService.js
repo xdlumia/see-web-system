@@ -64,7 +64,7 @@ export default {
   */
   // 获取用户详情
   getUserDetail(params) {
-    return Api.get(baseURL.bizSystemService + '/rmuserrole/getUserDetail', params);
+    return Api.get(baseURL.bizSystemService + '/rmuserrole/getUserDetail/'+ params);
   },
 
   // 获取用户权限
