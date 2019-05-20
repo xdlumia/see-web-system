@@ -14,7 +14,7 @@
         <div v-show="!responserTotal && !managerTotal">没有任何操作</div>
         <article v-if="responserTotal">
             <h3 class="f14">责任盘 <span class="d-text-blue ml10">{{responserTotal}}</span></h3>
-            <el-form-item prop="responseType" :rules="{required:true,message:'请选择类型'}">
+            <el-form-item prop="responseObj.responseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.responseObj.responseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.responseObj.responseType==0" v-model="selResponse" :multiple="false">
                     <el-input size="mini" v-model="transferForm.responseObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
@@ -36,7 +36,7 @@
         </article>
         <article v-if="collectTotal">
             <h3 class="f14">收房人 <span class="d-text-blue ml10">{{collectTotal}}</span></h3>
-            <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
+            <el-form-item prop="collectObj.collentHouseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.collectObj.collentHouseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.collectObj.collentHouseType==0" v-model="selCollectPerson" :multiple="false">
                     <el-input size="mini" v-model="transferForm.collectObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
