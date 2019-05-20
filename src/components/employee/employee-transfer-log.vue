@@ -41,6 +41,14 @@
                       </el-table-column>
                   </el-table>
                 </el-tab-pane>
+                <el-tab-pane label="收房人" name="collcet">
+                  <el-table :data="collcetList" border size="mini" height="320px">
+                      <el-table-column prop="communityName" align="left" label="楼盘名称" show-overflow-tooltip>
+                      </el-table-column>
+                      <el-table-column prop="houseCode" align="left" label="房源编号" show-overflow-tooltip>
+                      </el-table-column>
+                  </el-table>
+                </el-tab-pane>
             </el-tabs>
         </article>
    </div>
@@ -53,6 +61,7 @@ export default {
     return {
       responserList:[], //责任盘列表
       managerList:[], //房源管家列表
+      collcetList:[], //收房人列表
       queryForm:{userId:this.dialogMeta.data.userId},
       isTransfer:'log',
       activeName:'responser',
@@ -81,6 +90,7 @@ export default {
         let data = res.data || {}
         this.responserList = JSON.parse(data.responseDetail || '{}').info || []
         this.managerList = JSON.parse(data.houseDetail || '{}').communityEntityList || []
+        this.collcetList = JSON.parse(data.collectHouseDetail || '[]')
       })
     },
   }
