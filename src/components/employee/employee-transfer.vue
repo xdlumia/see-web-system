@@ -15,33 +15,33 @@
         <article v-if="responserTotal">
             <h3 class="f14">责任盘 <span class="d-text-blue ml10">{{responserTotal}}</span></h3>
             <el-form-item prop="responseType" :rules="{required:true,message:'请选择类型'}">
-                <el-radio v-model="transferForm.responseType" label="0">指定人员</el-radio>
-                <employees-chosen v-if="transferForm.responseType==0" v-model="selResponse" :multiple="false">
-                    <el-input size="mini" v-model="transferForm.responseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
+                <el-radio v-model="transferForm.responseObj.responseType" label="0">指定人员</el-radio>
+                <employees-chosen v-if="transferForm.responseObj.responseType==0" v-model="selResponse" :multiple="false">
+                    <el-input size="mini" v-model="transferForm.responseObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
                 </employees-chosen>
-                <el-radio v-model="transferForm.responseType" label="1">取消责任盘</el-radio>
-                <el-radio v-model="transferForm.responseType" label="2">不交接</el-radio>
+                <el-radio v-model="transferForm.responseObj.responseType" label="1">取消责任盘</el-radio>
+                <el-radio v-model="transferForm.responseObj.responseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
         <article v-if="managerTotal">
             <h3 class="f14">房源管家 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
-            <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
-                <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
-                <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
-                    <el-input size="mini" v-model="transferForm.houseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
+            <el-form-item prop="houhouseObj.houseTypeeType" :rules="{required:true,message:'请选择类型'}">
+                <el-radio v-model="transferForm.houseObj.houseType" label="0">指定人员</el-radio>
+                <employees-chosen v-if="transferForm.houseObj.houseType==0" v-model="selHousePerson" :multiple="false">
+                    <el-input size="mini" v-model="transferForm.houseObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
                 </employees-chosen>
-                <el-radio v-model="transferForm.houseType" label="1">取消房源管家</el-radio>
-                <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
+                <el-radio v-model="transferForm.houseObj.houseType" label="1">取消房源管家</el-radio>
+                <el-radio v-model="transferForm.houseObj.houseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
         <article v-if="collectTotal">
             <h3 class="f14">收房人 <span class="d-text-blue ml10">{{collectTotal}}</span></h3>
             <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
-                <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
-                <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
-                    <el-input size="mini" v-model="transferForm.houseName" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
+                <el-radio v-model="transferForm.collectObj.collentHouseType" label="0">指定人员</el-radio>
+                <employees-chosen v-if="transferForm.collectObj.collentHouseType==0" v-model="selCollectPerson" :multiple="false">
+                    <el-input size="mini" v-model="transferForm.collectObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
                 </employees-chosen>
-                <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
+                <el-radio v-model="transferForm.collectObj.collentHouseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
         <!-- 
@@ -77,13 +77,28 @@ export default {
       // 授权弹出内容
       transferForm: {
         ransferDeptId: '', // 转部门id
-        responseType: '', // 责任盘交接类型
-        responseName: '', // 责任盘交接员工名称
-        responsePersonId: '', // 责任盘交接人员id
-        houseType: '', //房源管家交接类型
-        housePersonId: '', // 房源管家交接人员id
-        houseName: '', // 房源管家交接人员名称
-        userId: '' // 当前用户id
+        // responseType: '', // 责任盘交接类型
+        // responseName: '', // 责任盘交接员工名称
+        // responsePersonId: '', // 责任盘交接人员id
+        // houseType: '', //房源管家交接类型
+        // housePersonId: '', // 房源管家交接人员id
+        // houseName: '', // 房源管家交接人员名称
+        userId: '', // 当前用户id
+        // 收房人
+        collectObj: {
+          collectHousePersonId: '',
+          collentHouseType: ''
+        },
+        // 房源管家
+        houseObj: {
+          housePersonId: '',
+          houseType: ''
+        },
+        // 责任盘交接
+        responseObj: {
+          responsePersonId: '',
+          responseType: ''
+        },
       },
     }
   },
@@ -103,8 +118,8 @@ export default {
           return user.userId
       },
       set (user) {
-          this.transferForm.responsePersonId = user.userId
-          this.transferForm.responseName = user.employeeName
+          this.transferForm.responseObj.responsePersonId = user.userId
+          this.transferForm.responseObj.name = user.employeeName
       }
     },
     // 楼盘管家人员选择
@@ -113,8 +128,18 @@ export default {
           return user.userId
       },
       set (user) {
-          this.transferForm.housePersonId = user.userId
-          this.transferForm.houseName = user.employeeName
+          this.transferForm.houseObj.housePersonId = user.userId
+          this.transferForm.houseObj.name = user.employeeName
+      }
+    },
+    // 收房人人员选择
+    selCollectPerson:{
+      get (user) {
+          return user.userId
+      },
+      set (user) {
+          this.transferForm.collectObj.collectHousePersonId = user.userId
+          this.transferForm.collectObj.name = user.employeeName
       }
     },
   },
@@ -146,12 +171,16 @@ export default {
     saveTransfer () {
       this.$refs.transferForm.validate((valid) => {
           if (valid) {
-            if(this.transferForm.responseType === '0' && !this.transferForm.responsePersonId){
+            if(this.transferForm.responseObj.responseType === '0' && !this.transferForm.responseObj.responsePersonId){
                this.$message.error('请选择指定责任人')
                return
             }
-            if(this.transferForm.houseType === '0' && !this.transferForm.housePersonId){
+            if(this.transferForm.houseObj.houseType === '0' && !this.transferForm.houseObj.housePersonId){
                this.$message.error('请选择指定人员')
+               return
+            }
+            if(this.transferForm.collectObj.collentHouseType === '0' && !this.transferForm.collectObj.collectHousePersonId){
+               this.$message.error('请选择收房人员')
                return
             }
             this.loading = true
