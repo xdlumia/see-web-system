@@ -34,8 +34,8 @@
                 <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
-        <!-- <article v-if="managerTotal">
-            <h3 class="f14">出房人 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
+        <article v-if="collectTotal">
+            <h3 class="f14">收房人 <span class="d-text-blue ml10">{{collectTotal}}</span></h3>
             <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.houseType==0" v-model="selHousePerson" :multiple="false">
@@ -44,7 +44,8 @@
                 <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
-        <article v-if="managerTotal">
+        <!-- 
+        <article v-if="collectTotal">
             <h3 class="f14">收房人 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
             <el-form-item prop="houseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.houseType" label="0">指定人员</el-radio>
@@ -53,7 +54,7 @@
                 </employees-chosen>
                 <el-radio v-model="transferForm.houseType" label="2">不交接</el-radio>
             </el-form-item>
-        </article> -->
+        </article>-->
       </el-form>
     <div class="ac mt5">
       <el-button size="small" @click="dialogMeta.visible = false">取 消</el-button>
@@ -72,6 +73,7 @@ export default {
       authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
       responserTotal:'', //责任盘总数
       managerTotal:'', //房源管家总数
+      collectTotal:'', //收房人总数
       // 授权弹出内容
       transferForm: {
         ransferDeptId: '', // 转部门id
@@ -89,6 +91,7 @@ export default {
     if(this.dialogMeta.data.userId){
       this.getBuildingInfoByResponserId()      
       this.getCommunityManagerTotal()
+      this.queryCollectHouseByUserId()
       this.transferForm.userId = this.dialogMeta.data.userId
       this.transferForm.ransferDeptId = this.dialogMeta.dept.id
     }
@@ -128,6 +131,14 @@ export default {
       this.$api.seeTenementService.getCommunityManagerTotal({userId:this.dialogMeta.data.userId})
       .then(res=>{
         this.managerTotal = res.data.totalCount || ''
+      })
+    },
+    // 查询收房人
+    queryCollectHouseByUserId(){
+      this.$api.seeTenementService.queryCollectHouseByUserId({userId:this.dialogMeta.data.userId})
+      .then(res=>{
+        let data = res.data || []
+        this.collectTotal = data.length
       })
     },
     
