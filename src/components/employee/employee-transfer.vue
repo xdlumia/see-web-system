@@ -77,27 +77,24 @@ export default {
       // 授权弹出内容
       transferForm: {
         ransferDeptId: '', // 转部门id
-        // responseType: '', // 责任盘交接类型
-        // responseName: '', // 责任盘交接员工名称
-        // responsePersonId: '', // 责任盘交接人员id
-        // houseType: '', //房源管家交接类型
-        // housePersonId: '', // 房源管家交接人员id
-        // houseName: '', // 房源管家交接人员名称
         userId: '', // 当前用户id
         // 收房人
         collectObj: {
           collectHousePersonId: '',
-          collentHouseType: ''
+          collentHouseType: '',
+          name:'',
         },
         // 房源管家
         houseObj: {
           housePersonId: '',
-          houseType: ''
+          houseType: '',
+          name:''
         },
         // 责任盘交接
         responseObj: {
           responsePersonId: '',
-          responseType: ''
+          responseType: '',
+          name:''
         },
       },
     }
