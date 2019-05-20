@@ -25,7 +25,7 @@
         </article>
         <article v-if="managerTotal">
             <h3 class="f14">房源管家 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
-            <el-form-item prop="houhouseObj.houseTypeeType" :rules="{required:true,message:'请选择类型'}">
+            <el-form-item prop="houseObj.houseType" :rules="{required:true,message:'请选择类型'}">
                 <el-radio v-model="transferForm.houseObj.houseType" label="0">指定人员</el-radio>
                 <employees-chosen v-if="transferForm.houseObj.houseType==0" v-model="selHousePerson" :multiple="false">
                     <el-input size="mini" v-model="transferForm.houseObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
