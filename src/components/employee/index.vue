@@ -64,7 +64,7 @@
       </el-table-column>
       <el-table-column prop="deptName" min-width="120" align="center" label="所属部门" show-overflow-tooltip>
         <template slot-scope="scope">
-          <span v-if="syscode == 'asystem'" class="d-text-blue d-pointer" @click="viewTransferLog(scope.row)"> {{scope.row.deptName}} </span>
+          <span v-if="syscode == 'asystem' && scope.row.ransferFlag==1" class="d-text-blue d-pointer" @click="viewTransferLog(scope.row)"> {{scope.row.deptName}} </span>
           <span v-else> {{scope.row.deptName}} </span>
         </template>
       </el-table-column>
