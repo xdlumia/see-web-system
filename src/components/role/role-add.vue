@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item
         label="角色类型"
-        class="mb10"
+        class="mb20"
         prop="roleTypeId"
         :rules="{ required: true, message: '请选择角色类型' }">
         <el-select v-model="addForm.roleTypeId">
