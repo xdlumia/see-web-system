@@ -13,18 +13,33 @@
         <el-tab-pane label="默认角色" name="resourceService.getDefaultRoleList"></el-tab-pane>
         <el-tab-pane label="自定义角色" name="bizSystemService.getRoleList"></el-tab-pane>
       </el-tabs>
-      <el-form :model="queryForm" size="medium" @submit.native.prevent>
+      <!-- 默认角色查询 -->
+      <el-form v-if="activeRole == 'resourceService.getDefaultRoleList'" :model="queryForm" size="medium" @submit.native.prevent>
         <el-form-item inline class="d-inline mr30 mb10" >
-          <el-input  v-if="authorityBtn.includes('sys_role_1004')" @keyup.native.13="$refs.roleTable.reload(1)" v-model.trim="queryForm.name" placeholder="请输入角色名称" class="w200"></el-input>
-          <div  v-if="authorityBtn.includes('sys_role_1004')" class="d-inline mt0">
+          <el-input  v-if="authorityButtons.includes('sys_role_1009')" @keyup.native.13="$refs.roleTable.reload(1)" v-model.trim="queryForm.name" placeholder="请输入角色名称" class="w200"></el-input>
+          <div  v-if="authorityButtons.includes('sys_role_1009')" class="d-inline mt0">
               <el-select v-model="queryForm.state" slot="prepend" placeholder="请选择" size="medium">
                 <el-option label="请选择" value=""></el-option>
                 <el-option label="启用" value="0"></el-option>
                 <el-option label="禁用" value="1"></el-option>
               </el-select>
           </div>
-          <el-button v-if="authorityBtn.includes('sys_role_1004')" type="primary" @click="$refs.roleTable.reload(1)" icon="el-icon-search">查询</el-button>
-          <el-button v-if="authorityBtn.includes('sys_role_1001') && activeRole=='bizSystemService.getRoleList'" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button>
+          <el-button v-if="authorityButtons.includes('sys_role_1009')" type="primary" @click="$refs.roleTable.reload(1)" icon="el-icon-search">查询</el-button>
+        </el-form-item>
+      </el-form>
+      <!-- 自定义角色查询 -->
+      <el-form v-if="activeRole == 'bizSystemService.getRoleList'" :model="queryForm" size="medium" @submit.native.prevent>
+        <el-form-item inline class="d-inline mr30 mb10" >
+          <el-input  v-if="authorityButtons.includes('sys_role_1004')" @keyup.native.13="$refs.roleTable.reload(1)" v-model.trim="queryForm.name" placeholder="请输入角色名称" class="w200"></el-input>
+          <div  v-if="authorityButtons.includes('sys_role_1004')" class="d-inline mt0">
+              <el-select v-model="queryForm.state" slot="prepend" placeholder="请选择" size="medium">
+                <el-option label="请选择" value=""></el-option>
+                <el-option label="启用" value="0"></el-option>
+                <el-option label="禁用" value="1"></el-option>
+              </el-select>
+          </div>
+          <el-button v-if="authorityButtons.includes('sys_role_1004')" type="primary" @click="$refs.roleTable.reload(1)" icon="el-icon-search">查询</el-button>
+          <el-button v-if="authorityButtons.includes('sys_role_1001') && activeRole=='bizSystemService.getRoleList'" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button>
         </el-form-item>
       </el-form>
     <!-- 表格数据 -->
@@ -72,10 +87,18 @@
         label="操作"
        min-width="360">
         <template slot-scope="scope">
-          <el-button v-if="authorityBtn.includes('sys_role_1005')" size="mini" type="warning" plain @click="roleHandle('fnAuth',scope.row)">功能授权</el-button>
-          <el-button v-if="authorityBtn.includes('sys_role_1006')" size="mini" type="warning" plain @click="roleHandle('dataAuth',scope.row)">数据授权</el-button>
-          <el-button v-if="authorityBtn.includes('sys_role_1002') && activeRole=='bizSystemService.getRoleList'" size="mini" type="primary" plain @click="roleHandle('update',scope.row)"  >修改</el-button>
-          <el-button v-if="authorityBtn.includes('sys_role_1003') && activeRole=='bizSystemService.getRoleList'" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)"  >删除</el-button>
+          <!-- 默认角色授权 -->
+          <div v-if="activeRole == 'resourceService.getDefaultRoleList'">
+            <el-button v-if="authorityButtons.includes('sys_role_1010')" size="mini" type="warning" plain @click="roleHandle('fnAuth',scope.row)">功能授权</el-button>
+            <el-button v-if="authorityButtons.includes('sys_role_1011')" size="mini" type="warning" plain @click="roleHandle('dataAuth',scope.row)">数据授权</el-button>
+          </div>
+          <!-- 自定义角色授权 -->
+          <div v-if="activeRole == 'bizSystemService.getRoleList'">
+            <el-button v-if="authorityButtons.includes('sys_role_1005')" size="mini" type="warning" plain @click="roleHandle('fnAuth',scope.row)">功能授权</el-button>
+            <el-button v-if="authorityButtons.includes('sys_role_1006')" size="mini" type="warning" plain @click="roleHandle('dataAuth',scope.row)">数据授权</el-button>
+            <el-button v-if="authorityButtons.includes('sys_role_1002') && activeRole=='bizSystemService.getRoleList'" size="mini" type="primary" plain @click="roleHandle('update',scope.row)"  >修改</el-button>
+            <el-button v-if="authorityButtons.includes('sys_role_1003') && activeRole=='bizSystemService.getRoleList'" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)"  >删除</el-button>
+          </div>
         </template>
       </el-table-column>
     </d-table>
@@ -97,7 +120,6 @@ export default {
   },
   data () {
     return {
-      authorityBtn: this.$local.fetch('authorityBtn').sys_role || [], // 权限码
       // dialog 弹出框操作
       dialogMeta:{
         title:'', //弹出框标题
