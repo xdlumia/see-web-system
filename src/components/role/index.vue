@@ -10,8 +10,8 @@
 <template>
     <div class="d-content main-content">
       <el-tabs v-model="activeRole" @tab-click="tabHandle">
-        <el-tab-pane label="默认角色" name="resourceService.getDefaultRoleList"></el-tab-pane>
-        <el-tab-pane label="自定义角色" name="bizSystemService.getRoleList"></el-tab-pane>
+        <el-tab-pane v-if="authorityButtons.includes('sys_role_1007')" label="默认角色" name="resourceService.getDefaultRoleList"></el-tab-pane>
+        <el-tab-pane v-if="authorityButtons.includes('sys_role_1008')" label="自定义角色" name="bizSystemService.getRoleList"></el-tab-pane>
       </el-tabs>
       <!-- 默认角色查询 -->
       <el-form v-if="activeRole == 'resourceService.getDefaultRoleList'" :model="queryForm" size="medium" @submit.native.prevent>
@@ -140,6 +140,10 @@ export default {
     }
   },
   created () {
+    // 如果没有默认角色默认显示自定义角色
+    if(!authorityButtons.includes('sys_role_1007')){
+      this.activeRole = 'bizSystemService.getRoleList'
+    }
   },
   methods: {
     // 角色数据操作
