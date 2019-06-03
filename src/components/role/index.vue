@@ -96,8 +96,8 @@
           <div v-if="activeRole == 'bizSystemService.getRoleList'">
             <el-button v-if="authorityButtons.includes('sys_role_1005')" size="mini" type="warning" plain @click="roleHandle('fnAuth',scope.row)">功能授权</el-button>
             <el-button v-if="authorityButtons.includes('sys_role_1006')" size="mini" type="warning" plain @click="roleHandle('dataAuth',scope.row)">数据授权</el-button>
-            <el-button v-if="authorityButtons.includes('sys_role_1002') && activeRole=='bizSystemService.getRoleList'" size="mini" type="primary" plain @click="roleHandle('update',scope.row)"  >修改</el-button>
-            <el-button v-if="authorityButtons.includes('sys_role_1003') && activeRole=='bizSystemService.getRoleList'" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)"  >删除</el-button>
+            <el-button v-if="authorityButtons.includes('sys_role_1002')" size="mini" type="primary" plain @click="roleHandle('update',scope.row)"  >修改</el-button>
+            <el-button v-if="authorityButtons.includes('sys_role_1003')" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)"  >删除</el-button>
           </div>
         </template>
       </el-table-column>
@@ -141,7 +141,7 @@ export default {
   },
   created () {
     // 如果没有默认角色默认显示自定义角色
-    if(!authorityButtons.includes('sys_role_1007')){
+    if(!this.authorityButtons.includes('sys_role_1007')){
       this.activeRole = 'bizSystemService.getRoleList'
     }
   },
