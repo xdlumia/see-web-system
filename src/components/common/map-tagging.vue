@@ -1,22 +1,20 @@
 <template>
     <div class='mapTagging'>
-            <div class="map-tag-close" @click="mapVisible.mapDialogVisible = false">
-                <i class="el-icon-close"></i>
-            </div>
-            <baidu-map class="map" :center="{lng:qucoordinates.split(',')[1],lat:qucoordinates.split(',')[0]}" :zoom="15" @click='letGet'>
-                <!-- <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT" ></bm-scale> -->
-                 <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" :enableGeolocation='true'></bm-navigation>
+        <div class="map-tag-close" @click="mapVisible.mapDialogVisible = false">
+            <i class="el-icon-close"></i>
+        </div>
+        <baidu-map class="map" :center="{lng:qucoordinates.split(',')[1],lat:qucoordinates.split(',')[0]}" :zoom="15" @click='letGet'>
+            <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" :enableGeolocation='true'></bm-navigation>
 
-                 <bm-polygon :path="polygonPath" stroke-color="blue"  :stroke-opacity="0.5" :stroke-weight="2" :editing="true" @lineupdate="updatePolygonPath"/>
-                   <bm-view class="map">   </bm-view>
-             </baidu-map>
-             <div class="wfull" style="margin-top: 30px;">
-             	<span slot="footer" class="ac" style="margin-left: 300px;">
-			      <el-button size="small" @click="mapVisible.mapDialogVisible = false">取 消</el-button>
-			      <el-button size="small" type="primary" @click="saveCor">确 定</el-button>
-		    	</span>
-             </div>
-
+            <bm-polygon :path="polygonPath" stroke-color="blue"  :stroke-opacity="0.5" :stroke-weight="2" :editing="true" @lineupdate="updatePolygonPath"/>
+            <bm-view class="map">   </bm-view>
+        </baidu-map>
+        <div class="wfull" style="margin-top: 30px;">
+            <span slot="footer" class="ac" style="margin-left: 300px;">
+                <el-button size="small" @click="mapVisible.mapDialogVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click="saveCor">确 定</el-button>
+            </span>
+        </div>
     </div>
 </template>
 <script>

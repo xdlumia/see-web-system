@@ -10,7 +10,7 @@
   <div v-if="authorityButtons.includes('asystem_assist_bizsetting_1002')" class="d-content"  style="padding:0">
     <div class="d-flex" style="overflow:auto" >
       <!-- 商圈分类 -->
-      <div style="width:240px" class="treeBox">
+      <div style="width:240px" class="p10">
         <h3 style="border-bottom:1px solid #efefef; padding-bottom:5px;" class="mb10">
           <el-row>
             <el-col :span="18" class="f16">

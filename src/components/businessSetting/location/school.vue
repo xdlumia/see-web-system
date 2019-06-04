@@ -10,7 +10,7 @@
   <div v-if="authorityButtons.includes('asystem_assist_bizsetting_1002')" class="d-content"  style="padding:0">
     <div class="d-flex" style="overflow:auto" >
       <!-- 学校分类 -->
-      <div style="width:240px" class="treeBox">
+      <div style="width:240px" class="p10">
         <h3 style="border-bottom:1px solid #efefef; padding-bottom:5px;" class="mb10">
           <el-row>
             <el-col :span="18" class="f16">
@@ -54,7 +54,6 @@
         </div>
 
         <d-table
-          v-if="queryForm.areaId"
           api="seeHouseConfigService.getSchool"
           :params="queryForm"
           @selection-change ="schoolSelectionChange"
@@ -223,6 +222,7 @@ export default {
       }
       else if (node.type == 2) {
         this.queryForm.areaId = node.id;
+        console.log(!!this.queryForm.areaId)
         this.addOrEditForm.areaName = node.name;
         this.addOrEditForm.areaId = node.id;
         this.$refs.schoolTable.reload(1)

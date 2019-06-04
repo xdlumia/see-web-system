@@ -17,10 +17,10 @@
           <div class="demo-input-suffix">
             <el-form ref="queryForm" :inline="true" size="small" :model="queryForm" label-width="80px">
               <el-form-item label="房间状态:">
-                <el-input v-model.trim="queryForm.name" size="medium" placeholder="请输入名称搜索" class="w240"></el-input>
+                <el-input v-model.trim="queryForm.name" placeholder="请输入名称搜索" class="w240"></el-input>
               </el-form-item>
-              <el-button type="primary" @click="handleSearch" icon="el-icon-search" size="medium">查询</el-button>
-              <el-button type="button" @click="handleReset" size="medium">重置</el-button>
+              <el-button type="primary" @click="handleSearch" icon="el-icon-search" size="small">查询</el-button>
+              <el-button type="button" @click="handleReset" size="small">重置</el-button>
               <!-- <el-button type="button" icon="el-icon-plus" @click="addEditHandle('add')" size="medium">新增</el-button> -->
             </el-form>
           </div>

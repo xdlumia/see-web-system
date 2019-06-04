@@ -97,5 +97,4 @@ export default {
 }
 </script>
 <style scoped>
-.d-treeBox{height: calc(100vh - 125px); overflow-y: auto;}
 </style>

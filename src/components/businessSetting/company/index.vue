@@ -33,7 +33,12 @@
   </div>
 </template>
 <script>
+import uploadFile from "../../common/upload-file"
+
 export default {
+  components:{
+      uploadFile,
+  },
   data() {
     return {
       loading: false, // 显隐Loading动画

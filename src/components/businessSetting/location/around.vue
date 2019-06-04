@@ -9,8 +9,8 @@
 <template>
   <div
     v-if="authorityButtons.includes('asystem_assist_bizsetting_1004')"
-    v-loading.fullscreen.lock="loading">
-    <el-container>
+    >
+    <el-container v-loading="loading">
       <!-- 商圈分类 -->
       <el-aside width="240px">
         <el-scrollbar class="pb10" style="height:calc(100vh - 163px);">
@@ -441,10 +441,6 @@ export default {
   },
   watch: {},
   computed: {
-    // 获取城市列表树高度
-    treeBoxH: function() {
-      return document.body.clientHeight - 200 + "px";
-    }
   },
   methods: {
     //请求楼盘列表信息
@@ -721,8 +717,17 @@ export default {
   }
 };
 </script>
-<style type="text/css">
-body {
-  margin: 0;
-}
+<style type="text/css" scoped>
+/*楼盘列表*/
+.resource-top {padding:2px 10px; height: 28px;  line-height: 28px; border-bottom: 1px dashed #dcdfe6  }
+.resource-center{padding:5px 10px;font-size: 12px; line-height: 20px; color: #777}
+.treeBox{ padding:10px; height:100%; box-sizing: border-box; border: 1px solid rgb(239, 239, 239);border-radius: 2px;transition: all .2s; overflow-y: auto; }
+.num-dian{width: 7px;height: 7px;background: #808080;}
+.task-check-bor{border: 1px solid #dcdfe6;border-radius:4px ;}
+.dic-guanbi{width: 40px;height: 40px;border-left: 1px solid rgba(228, 228, 228, 1);}
+.dic-guanbi:hover{background: rgba(153, 153, 153, 1);color: #fff;}
+.d-round-dic {
+		display: inline-block;
+		border-radius: 5px;
+	}
 </style>
