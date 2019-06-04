@@ -8,6 +8,8 @@ var CategoryManagement = () => import('./categoryManagement/index'); // 类目�
 var BusinessSetting = () => import('./businessSetting/index'); // 业务设置
 var Version = () => import('./version/index'); // 版本更新
 var Attendance = () => import('./attendance/index'); // 考勤管理
+var Ero404 = () => import('./common/404'); // 404
+var Ero403 = () => import('./common/403'); // 403
 
 
 export default {
@@ -90,6 +92,22 @@ export default {
     meta: {
       parent: '更多应用',
       title: '考勤管理'
+    }
+  },
+  Ero404: {
+    path: '/404', // 404
+    name: '/404',
+    component: Ero404,
+    meta: {
+      title: '抱歉，您访问的页面不存在'
+    }
+  },
+  Ero403: {
+    path: '/403', // 403
+    name: '/403',
+    component: Ero403,
+    meta: {
+      title: '抱歉，您访问的页面不存在'
     }
   }
 };
