@@ -8,7 +8,7 @@
 -->
 <template>
   <div
-    v-if="buttonsCode.includes('asystem_assist_bizsetting_1004')"
+    v-if="authorityButtons.includes('asystem_assist_bizsetting_1004')"
     v-loading.fullscreen.lock="loading">
     <el-container>
       <!-- 商圈分类 -->
@@ -297,7 +297,7 @@
             </el-form>-->
             <el-button
               type="primary"
-              v-if="buttonsCode.includes('asystem_assist_bizsetting_1005')"
+              v-if="authorityButtons.includes('asystem_assist_bizsetting_1005')"
               @click="syncStation"
               size="medium"
             >批量同步</el-button>
@@ -338,7 +338,6 @@ export default {
   props: [],
   data() {
     return {
-      buttonsCode:this.$local.fetch("authorityBtn").asystem_assist_bizsetting || [],
       builingList: [], //楼盘列表
       taskMoreText: "加载更多",
       buildingInfo: {}, //当前选中的楼盘的有关信息

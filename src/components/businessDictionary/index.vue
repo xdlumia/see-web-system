@@ -34,7 +34,7 @@
             class="ml10">查询
             </el-button>
             <el-button type="button" @click="resetForm">重置</el-button>
-            <el-button v-if="authorityBtn.includes('asystem_assist_dict_1001')" @click="addOrEditDic()" icon="el-icon-plus">新增</el-button>
+            <el-button v-if="authorityButtons.includes('asystem_assist_dict_1001')" @click="addOrEditDic()" icon="el-icon-plus">新增</el-button>
           </el-form-item>
         </el-form>
         <d-table
@@ -88,19 +88,19 @@
             <template slot-scope="scope">
               <!-- <el-button
                 size="mini"
-                v-if="authorityBtn.includes('asystem_assist_dict_1001')"
+                v-if="authorityButtons.includes('asystem_assist_dict_1001')"
                 @click="recoverHandle(scope.$index, scope.row)">恢复默认色
               </el-button> -->
               <el-button
                 size="mini"
                 :disabled="scope.row.isBuiltIn == 1"
-                v-if="authorityBtn.includes('asystem_assist_dict_1002')"
+                v-if="authorityButtons.includes('asystem_assist_dict_1002')"
                 @click="addOrEditDic(scope.row)">编辑
               </el-button>
               <el-button
                 size="mini"
                 type="danger"
-                v-if="authorityBtn.includes('asystem_assist_dict_1003')"
+                v-if="authorityButtons.includes('asystem_assist_dict_1003')"
                 @click="delDic(scope.$index, scope.row)">删除
               </el-button>
             </template>
@@ -195,7 +195,6 @@ export default {
         dicCode: "", //字典code
         updateColor: "" //修改颜色
       },
-      authorityBtn: this.$local.fetch("authorityBtn").asystem_assist_dict || [], //当前页面的权限码
     };
   },
   computed: {

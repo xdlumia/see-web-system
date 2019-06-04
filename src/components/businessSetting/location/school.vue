@@ -7,7 +7,7 @@
 **/
 -->
 <template>
-  <div v-if="buttonsCode.includes('asystem_assist_bizsetting_1002')" class="d-content"  style="padding:0">
+  <div v-if="authorityButtons.includes('asystem_assist_bizsetting_1002')" class="d-content"  style="padding:0">
     <div class="d-flex" style="overflow:auto" >
       <!-- 学校分类 -->
       <div style="width:240px" class="treeBox">
@@ -121,7 +121,7 @@
           <span slot="footer">
             <div class="ac">
             <el-button size="small"  @click="dialogVisible = false">取 消</el-button>
-            <el-button size="small" v-if="buttonsCode.includes('asystem_assist_bizsetting_1003')" type="primary" @click="saveHandle">保 存</el-button>
+            <el-button size="small" v-if="authorityButtons.includes('asystem_assist_bizsetting_1003')" type="primary" @click="saveHandle">保 存</el-button>
           </div>
         </span>
         </el-dialog>
@@ -137,7 +137,6 @@ export default {
   props: [],
   data() {
     return {
-      buttonsCode:this.$local.fetch("authorityBtn").asystem_assist_bizsetting || [],
       defaultExpandedKeys: [], //城市列表默认选中
       loadCityNum: 0, //tree懒加载次数
       businessIds: [], //学校表格选中的数据

@@ -9,9 +9,9 @@
 <template>
   <div class="d-content main-content">
     <div class="mb10">
-      <el-input v-if="authorityBtn.includes('sys_employee_1004')" size="medium" @keyup.native.13="$refs.employeeTable.reload()" v-model="queryForm.condition" placeholder="请输入姓名/电话/员工编号查询" class="w240"></el-input>
+      <el-input v-if="authorityButtons.includes('sys_employee_1004')" size="medium" @keyup.native.13="$refs.employeeTable.reload()" v-model="queryForm.condition" placeholder="请输入姓名/电话/员工编号查询" class="w240"></el-input>
       <tree-select 
-      v-if="authorityBtn.includes('sys_employee_1004')" size="medium" 
+      v-if="authorityButtons.includes('sys_employee_1004')" size="medium" 
       v-model="queryForm.deptIdList"
       multiple
       collapse-tags
@@ -41,8 +41,8 @@
 
     </el-select>
 
-      <el-button v-if="authorityBtn.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload(1)" icon="el-icon-search">查询</el-button>
-      <el-button v-if="authorityBtn.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button>
+      <el-button v-if="authorityButtons.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload(1)" icon="el-icon-search">查询</el-button>
+      <el-button v-if="authorityButtons.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button>
       <div class="fr mr10">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
@@ -89,19 +89,19 @@
       </el-table-column>
       <el-table-column prop="address" align="left" label="操作" width="580">
         <template slot-scope="scope">
-          <el-button size="mini" v-if="authorityBtn.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
+          <el-button size="mini" v-if="authorityButtons.includes('sys_employee_1009')" type="info" :disabled="scope.row.userId?true:false" plain @click="editOrAddHandle('sync',scope.row)">同步用户</el-button>
 
-          <el-button v-if="authorityBtn.includes('sys_employee_1007')" size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1007')" size="mini" type="warning" plain @click="employeeHandle('employeeAuth',scope.row)">授权</el-button>
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
-          <el-button v-if="authorityBtn.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
           <!-- 人员调动功能仅α使用 -->
-          <el-button v-if="authorityBtn.includes('sys_employee_1010') && syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
-          <el-button v-if="authorityBtn.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
-          <el-button v-if="authorityBtn.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1010') && syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
 
           <!--增加 锁定用户、解锁用户功能-->
-          <el-button v-if="authorityBtn.includes('sys_employee_1005') && scope.row.lockStatus==0 && scope.row.sourceFrom!=1" size="mini" type="warning" plain @click="lockUser('lock',scope.row)" title="锁定用户">锁定</el-button>
-          <el-button v-if="authorityBtn.includes('sys_employee_1006') && scope.row.lockStatus==1 && scope.row.sourceFrom!=1" size="mini" type="warning" plain @click="unLockUser('unlock',scope.row)" title="解锁用户">解锁</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1005') && scope.row.lockStatus==0 && scope.row.sourceFrom!=1" size="mini" type="warning" plain @click="lockUser('lock',scope.row)" title="锁定用户">锁定</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1006') && scope.row.lockStatus==1 && scope.row.sourceFrom!=1" size="mini" type="warning" plain @click="unLockUser('unlock',scope.row)" title="解锁用户">解锁</el-button>
           <!--end -->
 
         </template>
@@ -236,7 +236,7 @@ export default {
       syscode:this.$local.fetch('userInfo').syscode, //系统code
       roleLists:[], //所有角色列表
       currentRow:{}, //当前行数据
-      authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
+      authorityButtons: this.$local.fetch('authorityButtons').sys_employee || [], // 权限码
       // dialog弹出框信息
       loading:false,
       dialogMeta:{

@@ -32,7 +32,7 @@
 </template>
 <script>
 
-import { addZero } from '@/utils/tools'
+import { addZero } from '../utils/tools'
 
   export default {
     name: 'upload',

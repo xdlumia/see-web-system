@@ -60,7 +60,7 @@
     </el-aside>
     <!-- <components style="margin-left:110px; min-width: 1100px; position: relative;"> -->
     <el-main>
-      <components :buttonsCode="buttonsCode" :is="componentActive"></components>
+      <components :is="componentActive"></components>
     </el-main>
   </el-container>
 </template>
@@ -80,7 +80,6 @@ export default {
   data() {
     return {
       syscode:this.$local.fetch("userInfo").syscode,
-      buttonsCode:this.$local.fetch("authorityBtn").asystem_assist_bizsetting || [],
       componentActive: "location", // 业务设置当前选中
     };
   },

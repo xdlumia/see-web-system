@@ -15,7 +15,7 @@
         </el-col>
         <el-col :span="8" class="ar">
           <el-button size="small" style="margin-top: 20px;" @click="recoverCustomerDefault">恢复默认</el-button>
-          <el-button type="primary" v-if="buttonsCode.includes('asystem_assist_bizsetting_1016')" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
+          <el-button type="primary" v-if="authorityButtons.includes('asystem_assist_bizsetting_1016')" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
         </el-col>
       </div> 
       <fieldset class="d-fieldset mb20" v-for="(item,index) of customerForm.list" :key = "index">
@@ -59,7 +59,7 @@
 
 <script>
   export default {
-  	props: ['buttonsCode'],
+  	props: [],
     data() {
       return {
         customerForm:{list:[]},

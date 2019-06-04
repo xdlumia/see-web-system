@@ -56,7 +56,6 @@ export default {
   data () {
     return {
       single: employeeSingle, //用来判断员工授权是单选还是多选
-      authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
       // dialog弹出框信息
       loading:false,
       defaultRolesData: [], // 默认角色数据

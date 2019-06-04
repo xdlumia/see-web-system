@@ -76,7 +76,7 @@
             <el-button
               class="ml10"
               type="text"
-              v-if="buttonsCode.includes('asystem_assist_bizsetting_1018')"
+              v-if="authorityButtons.includes('asystem_assist_bizsetting_1018')"
               slot="reference"
             >重新设置</el-button>
           </el-popover>
@@ -90,7 +90,7 @@
 import axios from "axios";
 
 export default {
-  props: ["buttonsCode"],
+  props: [],
   name: "app",
   data() {
     return {

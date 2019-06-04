@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" v-if="buttonsCode.includes('asystem_assist_bizsetting_1009')" style="color:#666">
+  <div v-loading="loading" v-if="authorityButtons.includes('asystem_assist_bizsetting_1009')" style="color:#666">
     <div class="d-hidden">
       <el-col :span="16">
         <h3 class="mt10 d-text-gray">查看电话设置</h3>
@@ -7,7 +7,7 @@
       </el-col>
       <el-col :span="8" class="ar">
         <el-button size="small" style="margin-top: 20px;" @click="recoverHousesPhoneDefault">恢复默认</el-button>
-        <el-button v-if="buttonsCode.includes('asystem_assist_bizsetting_1010')" type="primary" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
+        <el-button v-if="authorityButtons.includes('asystem_assist_bizsetting_1010')" type="primary" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
       </el-col>
     </div>
     <fieldset class="customer mb20" v-for="(item,index) of phoneForm.list" :key="index">
@@ -34,7 +34,6 @@
   	props: [],
     data() {
       return {
-        buttonsCode:this.$local.fetch("authorityBtn").asystem_assist_bizsetting || [],
         phoneForm:{list:[]},
         loading:false,
       }

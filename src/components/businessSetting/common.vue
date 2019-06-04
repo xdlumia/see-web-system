@@ -15,7 +15,7 @@
       </el-col>
       <el-col :span="8" class="ar">
         <el-button size="small" style="margin-top: 20px;" @click="recoverHouseDefault">恢复默认</el-button>
-        <el-button v-if="buttonsCode.includes('asystem_assist_bizsetting_1012')" type="primary" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
+        <el-button v-if="authorityButtons.includes('asystem_assist_bizsetting_1012')" type="primary" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
       </el-col>
     </div>
     <fieldset class="d-fieldset mb20" v-for="(item,index) of houseData" :key="index" v-if="item.name!='杂费设置'">
@@ -108,13 +108,13 @@
   </div>
 </template>
 <script>
-  import uploadFile from "@/components/upload-file"
+  import uploadFile from "../common/upload-file"
 
   export default {
     components:{
       uploadFile,
       },
-  	props: ['buttonsCode'],
+  	props: [],
     data() {
       return {
         houseData:[],

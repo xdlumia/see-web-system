@@ -139,7 +139,7 @@
 </template>
 
 <script>
-  import uploadWatermark from '@/components/upload-watermark' //上传水印
+  import uploadWatermark from '../../common/upload-watermark' //上传水印
 
   export default {
     props:['form'],

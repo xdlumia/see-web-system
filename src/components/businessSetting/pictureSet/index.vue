@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="8" class="ar">
           <el-button size="small" style="margin-top: 20px;" @click="recoverPicDefault">恢复默认</el-button>
-          <el-button v-if="buttonsCode.includes('asystem_assist_bizsetting_1014')" type="primary" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
+          <el-button v-if="authorityButtons.includes('asystem_assist_bizsetting_1014')" type="primary" size="small" style="margin-top: 20px;" @click="saveHandle">保存</el-button>
         </el-col>
       </div>
       <el-form label-width="100px" size="mini" v-for="(item,index) of pictureForm.list" :key="index" ref="pictureForm">
@@ -41,7 +41,7 @@
 
   import watermark from './watermark'
   export default {
-  	props: ['buttonsCode'],
+  	props: [],
     data() {
       return {
         loading:false,

@@ -5,6 +5,7 @@ import Role from './role/index'; // 角色
 import Org from './org/index'; //组织类型
 var BusinessDictionary = () => import('./businessDictionary/index'); // 业务字典
 var CategoryManagement = () => import('./categoryManagement/index'); // 类目管理
+var BusinessSetting = () => import('./businessSetting/index'); // 业务设置
 var Version = () => import('./version/index'); // 版本更新
 var Attendance = () => import('./attendance/index'); // 考勤管理
 
@@ -61,6 +62,15 @@ export default {
     meta: {
       parent: '辅助管理',
       title: '物品类目'
+    }
+  },
+  BusinessSetting: {
+    path: '/asistant/businessSetting', // 业务设置
+    name: '/asistant/businessSetting',
+    component: BusinessSetting,
+    meta: {
+      parent: '辅助管理',
+      title: '业务设置'
     }
   },
   Version: {

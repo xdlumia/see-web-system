@@ -8,7 +8,7 @@
 **/
 -->
 <template>
-  <div v-if="buttonsCode.includes('asystem_assist_bizsetting_1007')" class="d-content">
+  <div v-if="authorityButtons.includes('asystem_assist_bizsetting_1007')" class="d-content">
     <div class="d-flex" style="overflow:auto">
       <!-- 右侧table列表 -->
       <div class="d-cell ml20" style="overflow-x:auto;">
@@ -47,7 +47,7 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button v-if="scope.row.edit && buttonsCode.includes('asystem_assist_bizsetting_1008')" size="mini" type="primary" @click="saveHandle(scope.$index, scope.row)">保存
+              <el-button v-if="scope.row.edit && authorityButtons.includes('asystem_assist_bizsetting_1008')" size="mini" type="primary" @click="saveHandle(scope.$index, scope.row)">保存
               </el-button>
               <el-button v-else size="mini" @click="addEditHandle(scope.$index, scope.row)">编辑
               </el-button>
@@ -74,7 +74,6 @@ export default {
   props: [],
   data() {
     return {
-      buttonsCode:this.$local.fetch("authorityBtn").asystem_assist_bizsetting || [],
       houseTableData: [],
       tableLoading: "",
       dialogVisible: false, //新增编辑弹出框
