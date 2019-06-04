@@ -73,7 +73,7 @@ export default {
                   picUrl:this.companyForm.picUrl,
                 }
                 this.$local.save('companyInfo',companyInfo)
-                this.$store.commit('companyInfo',companyInfo)
+                this.$store.commit('company/companyInfo',companyInfo)
               })
               .finally(() => {
                 this.loading = false;

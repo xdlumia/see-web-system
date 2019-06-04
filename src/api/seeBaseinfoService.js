@@ -18,4 +18,4 @@ export default {
   getCompanyLogo: {
     url: '/logo/getCompanyLogo/{sysCode}'
   }
-}
+};

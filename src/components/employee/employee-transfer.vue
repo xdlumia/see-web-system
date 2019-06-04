@@ -70,6 +70,7 @@ export default {
     return {
       loading:false,
       single: employeeSingle, //用来判断员工授权是单选还是多选
+      authorityBtn: this.$local.fetch('authorityBtn').sys_employee || [], // 权限码
       responserTotal:'', //责任盘总数
       managerTotal:'', //房源管家总数
       collectTotal:'', //收房人总数

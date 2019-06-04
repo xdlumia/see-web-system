@@ -15,5 +15,5 @@ apiConfig.registry({
 
 // 新的api使用方法
 apiConfig.registryConfig({
-    seeBaseinfoService
-})
+    seeBaseinfoService: seeBaseinfoService
+});

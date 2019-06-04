@@ -12,10 +12,10 @@ export default {
   /**
   * @description 数据权限 数据源
   */
-  getDataSourceList(params) {
+  getDataSourceList: function getDataSourceList(params) {
     return Api.get(baseURL.resourceService + '/dataauthPageDataSource/listBySyscode', params);
   },
-  getDataSourcePageList(params) {
+  getDataSourcePageList: function getDataSourcePageList(params) {
     return Api.get(baseURL.resourceService + '/dataauthPageDataSource/page', params);
   },
 
@@ -25,12 +25,13 @@ export default {
   */
 
   //获取数据权限字段源列表
-  getAuthFieldList(params) {
+  getAuthFieldList: function getAuthFieldList(params) {
     return Api.get(baseURL.resourceService + '/dataauthField/list', params);
   },
 
+
   //数据源权限字段分页列表
-  getAuthFieldPageList(params) {
+  getAuthFieldPageList: function getAuthFieldPageList(params) {
     return Api.get(baseURL.resourceService + '/dataauthField/page', params);
   },
 
@@ -40,11 +41,12 @@ export default {
    */
 
   //获取角色列表
-  getDefaultRoleList(params) {
+  getDefaultRoleList: function getDefaultRoleList(params) {
     return Api.get(baseURL.resourceService + '/rmdefaultrole/defaultRoleList', params);
   },
+
   //获取默认角色默认数据权限详情
-  getDefaultRoleInfo(params) {
+  getDefaultRoleInfo: function getDefaultRoleInfo(params) {
     return Api.get(baseURL.resourceService + '/rmdataauth/info', params);
   }
 };

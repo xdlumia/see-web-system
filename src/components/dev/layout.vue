@@ -113,6 +113,7 @@ export default {
   name: 'app',
   data () {
     return {
+      authorityBtn: {},
       activeIndex: '',
       userInfo: this.$local.fetch('userInfo'),
       token: '',
@@ -171,6 +172,11 @@ export default {
           const loginData = res.data.data || [{ url: '/' }]
           // 存储菜单
           localStorage.setItem('navData', JSON.stringify(loginData))
+          this.authorityBtn = {} // 按钮权限
+          this.authorityHandle(loginData)
+          // 存储功能权限
+          localStorage.setItem('authorityBtn', JSON.stringify(this.authorityBtn))
+          // this.$local.save('authorityBtn', this.authorityBtn)
 
           // 根据token查询用户信息
           this.$api.bizSystemService.getUserDetail().then(res => {
@@ -204,6 +210,18 @@ export default {
       this.$api.bizSystemService.getsyslist().then(res => {
         let syslist = res.data.data || []
         localStorage.setItem('syslist', JSON.stringify(syslist)) // 存储该用户拥有的平台权限
+      })
+    },
+    // 递归处理权限数据
+    authorityHandle (authorityData) {
+      authorityData.forEach((item, index) => {
+        if (item.code !== '') {
+          this.authorityBtn[item.code] = item.buttonsCode
+        }
+        // 存在children 递归
+        if (item.children && item.children[0]) {
+          this.authorityHandle(item.children)
+        }
       })
     },
     // 退出登录

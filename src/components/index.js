@@ -9,6 +9,7 @@ var BusinessSetting = () => import('./businessSetting/index'); // 业务设置
 var Version = () => import('./version/index'); // 版本更新
 var Attendance = () => import('./attendance/index'); // 考勤管理
 
+
 export default {
   BusinessDictionary: {
     path: '/system/businessDictionary', // 业务字典
@@ -70,7 +71,7 @@ export default {
     component: BusinessSetting,
     meta: {
       parent: '辅助管理',
-      title: '业务设置'
+      title: '物品类目'
     }
   },
   Version: {

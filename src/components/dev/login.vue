@@ -53,6 +53,7 @@ export default {
   name: 'login',
   data () {
     return {
+      authorityBtn: {},
       loading: false,
       loadingText: '立即登录',
       remember: true, // 是否记住密码
@@ -273,6 +274,12 @@ export default {
                     const loginData = res.data.data || [{url: '/'}]
                     localStorage.setItem('navData', JSON.stringify(loginData)) // 存储导航信息
 
+                    this.authorityBtn = {} // 按钮权限
+                    this.authorityHandle(loginData)
+                    localStorage.setItem(
+                      'authorityBtn',
+                      JSON.stringify(this.authorityBtn)
+                    )
                     this.$message({
                       type: 'success',
                       message: '登录成功',
@@ -315,6 +322,17 @@ export default {
           })
       })
     },
+    authorityHandle (authorityData) {
+      authorityData.forEach((item, index) => {
+        if (item.code !== '') {
+          this.authorityBtn[item.code] = item.buttonsCode
+        }
+        // 存在children 递归
+        if (item.children && item.children[0]) {
+          this.authorityHandle(item.children)
+        }
+      })
+    }
   }
 }
 </script>

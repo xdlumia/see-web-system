@@ -98,6 +98,7 @@
 export default {
   data() {
     return {
+    //   authorityBtn: this.$local.fetch("authorityBtn").sys_dept || [], // 权限码
       loading:false,
       dialogVisible: false, // 新增编辑弹出框
       organaDialogVisibleTree: false, // 组织类型
