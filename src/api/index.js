@@ -10,4 +10,9 @@ apiConfig.registry({
     systemService:systemService,
     resourceService: resourceService, 
     seeDictionaryService: seeDictionaryService 
-}, false);
+});
+
+// 新的api使用方法
+apiConfig.registryConfig({
+    seeBaseinfoService
+})

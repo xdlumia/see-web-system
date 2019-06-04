@@ -9,39 +9,43 @@
 <template>
   <!-- 授权内容 -->
   <div class="role-main" v-loading="loading">
-    <p>默认角色</p>
-    <div class="role-list">
-      <el-row :gutter="10">
-        <div v-if="!defaultRolesData.length" class="f12 ac" style="color:#999">暂无数据</div>
-        <component size="mini" :is="single ? 'el-radio-group' : 'el-checkbox-group'"
-            v-model="defaultRoleList">
-            <el-col class="d-elip" :title="item.roleName" :span="6" v-for="(item,index) of defaultRolesData"  :key="index">
-              <component
-              :title="item.roleName"
-              :is="single ? 'el-radio' : 'el-checkbox'" 
-              :label="item.id">
-                {{item.roleName}}
-              </component>
-            </el-col>
-        </component>
-      </el-row>
+    <div v-if="authorityButtons.includes('sys_role_1007')">
+      <p>默认角色</p>
+      <div class="role-list">
+        <el-row :gutter="10">
+          <div v-if="!defaultRolesData.length" class="f12 ac" style="color:#999">暂无数据</div>
+          <component size="mini" :is="single ? 'el-radio-group' : 'el-checkbox-group'"
+              v-model="defaultRoleList">
+              <el-col class="d-elip" :title="item.roleName" :span="6" v-for="(item,index) of defaultRolesData"  :key="index">
+                <component
+                :title="item.roleName"
+                :is="single ? 'el-radio' : 'el-checkbox'" 
+                :label="item.id">
+                  {{item.roleName}}
+                </component>
+              </el-col>
+          </component>
+        </el-row>
+      </div>
     </div>
-    <p>自定义角色</p>
-    <div class="role-list">
-      <el-row :gutter="10">
-        <div v-if="!customRolesData.length" class="f12 ac" style="color:#999">暂无数据</div>
-        <component size="mini" :is="single ? 'el-radio-group' : 'el-checkbox-group'"
-            v-model="customRoleList">
-            <el-col class="d-elip" :title="item.roleName" :span="6" v-for="(item,index) of customRolesData"  :key="index">
-              <component
-              :title="item.roleName"
-              :is="single ? 'el-radio' : 'el-checkbox'" 
-              :label="item.id">
-                {{item.roleName}}
-              </component>
-            </el-col>
-        </component>
-      </el-row>
+    <div v-if="authorityButtons.includes('sys_role_1008')">
+      <p>自定义角色</p>
+      <div class="role-list">
+        <el-row :gutter="10">
+          <div v-if="!customRolesData.length" class="f12 ac" style="color:#999">暂无数据</div>
+          <component size="mini" :is="single ? 'el-radio-group' : 'el-checkbox-group'"
+              v-model="customRoleList">
+              <el-col class="d-elip" :title="item.roleName" :span="6" v-for="(item,index) of customRolesData"  :key="index">
+                <component
+                :title="item.roleName"
+                :is="single ? 'el-radio' : 'el-checkbox'" 
+                :label="item.id">
+                  {{item.roleName}}
+                </component>
+              </el-col>
+          </component>
+        </el-row>
+      </div>
     </div>
     <div class="ac mt5">
       <el-button size="small" @click="dialogMeta.visible = false">取 消</el-button>
@@ -110,6 +114,9 @@ export default {
     },
     // 获取自定义角色
     getCustomRole () {
+      if(!this.authorityButtons.includes('sys_role_1008')){
+        return
+      }
       this.loading = true
       this.$api.bizSystemService.getRoleList({ limit: 999, page: 1, state: 0 })
       .then(res => {
@@ -121,6 +128,9 @@ export default {
     },
     // 获取默认角色
     getDefaultRoleList () {
+      if(!this.authorityButtons.includes('sys_role_1007')){
+        return
+      }
       this.loading = true
       let userInfo = this.$local.fetch('userInfo')
       let params = {
