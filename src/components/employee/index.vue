@@ -596,12 +596,18 @@ export default {
     },
     
     getDefaultRoleList(){
+      if(!this.authorityButtons.includes('sys_role_1007')){
+        return
+      }
       return this.$api.resourceService.getDefaultRoleList(this.queryRoleParams)
       .then(res=>{
         return res.data || []
       })
     },
     getRoleList(){
+      if(!this.authorityButtons.includes('sys_role_1008')){
+        return
+      }
       return this.$api.bizSystemService.getRoleList(this.queryRoleParams)
       .then(res=>{
           return res.data || []
