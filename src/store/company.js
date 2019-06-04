@@ -11,7 +11,6 @@ const store = {
   },
   mutations: {
     companyInfo(state,companyObj){
-      console.log(companyObj)
       state.companyInfo = companyObj
     },
   },
