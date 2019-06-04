@@ -4,6 +4,7 @@ import bizSystemService from './bizSystemService';
 import systemService from './systemService';
 import resourceService from './resourceService';
 import seeDictionaryService from './seeDictionaryService';
+import seeBaseinfoService from './seeBaseinfoService';
 
 apiConfig.registry({ 
     bizSystemService: bizSystemService,
