@@ -50,7 +50,13 @@
           label="产品"
           name="product"
         ></el-tab-pane>
-        <!--产品-->
+        <!-- 凯亚酒店 -->
+        <el-tab-pane
+          v-if="authorityButtons.includes('asystem_assist_hotel')"
+          label="酒店"
+          name="hotel"
+        ></el-tab-pane>
+        <!--企业-->
         <el-tab-pane
           v-if="authorityButtons.includes('asystem_assist_bizsetting_1017')"
           label="企业"
@@ -74,6 +80,7 @@ import customer from "./customer"; // 房态
 import defaultCity from "./defaultCity"; //城市
 import process from "./process"; // 流程
 import product from "./product/index"; // 产品
+import hotel from './hotel' // k酒店
 import company from "./company/index"; // 企业
 
 export default {
