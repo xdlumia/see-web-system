@@ -99,8 +99,8 @@ export default {
     defaultCity,
     process,
     product,
-    company
-    
+    company,
+    hotel
   },
   created() {
   },
