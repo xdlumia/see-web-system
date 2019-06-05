@@ -58,7 +58,7 @@
         ></el-tab-pane>
         <!--企业-->
         <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1017')"
+          v-if="authorityButtons.includes('asystem_assist_bizsetting_1024')"
           label="企业"
           name="company"
         ></el-tab-pane>
