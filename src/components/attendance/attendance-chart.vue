@@ -59,7 +59,7 @@ export default {
           onlineDuration:[], //登录时长/分钟
         }
         data.forEach(item => {
-          optionsData.xDate.push(item.timeQuantum)
+          optionsData.xDate.push(item.activeTimeQuantum)
           optionsData.logNum.push(item.logNum)
           optionsData.onlineDuration.push(item.onlineDuration)
         })
@@ -107,7 +107,13 @@ export default {
                   axisTick: {
                       alignWithLabel: true
                   },
-                  data: optionsData.xDate
+                  data: optionsData.xDate,
+                  axisLabel: {
+                      formatter: function (value, idx) {
+                          var date = value.split('(')[0]
+                          return date
+                      }
+                  },
               }
           ],
           yAxis: [
