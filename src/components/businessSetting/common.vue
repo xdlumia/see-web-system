@@ -22,7 +22,7 @@
       <legend><i class="d-round12 d-circle d-bg-blue"></i> {{item.name}} </legend>
       <el-form :model="item" class="" size="small" label-width="190px">
         <el-row class="mb10">
-          <el-col :span="subItem.type==6?24:12" v-for="(subItem,i) of item.values" :key="i">
+          <el-col :span="[6,7].includes(subItem.type)?24:12" v-for="(subItem,i) of item.values" :key="i">
             <!-- type==0开关 -->
             <el-form-item v-if="subItem.type==0" :label="subItem.name+':'" >
                 <el-switch active-value="1" inactive-value="0" v-model="subItem.actualValue"></el-switch>
@@ -44,15 +44,15 @@
             <el-form-item
             v-else-if="subItem.type==3"
             :label="subItem.name"
-            prop="actualValue"
+            :prop="'values.'+i+'.actualValue'"
             :rules= "[{ required: true, message: ' ', trigger: 'blur' }]">
-              <el-input v-model="subItem.actualValue" class="w200" placeholder="审批人"></el-input>
+              <el-input v-model="subItem.actualValue" class="w200" :placeholder="'请填写'+subItem.name"></el-input>
             </el-form-item>
             <!-- type == 4上传 -->
             <el-form-item
             v-else-if="subItem.type==4"
             :label="subItem.name"
-            prop="actualValue"
+            :prop="'values.'+i+'.actualValue'"
             :rules= "[{ required: true, message: ' ', trigger: 'blur' }]">
                <upload-file class="w120 fl" @click.native="uploadPicClick(subItem)"  @addPictureUrl="uploadPic" :limit="{type:['jpg','png']}" >
                   <div class="d-absolute" style="width:110px; height:110px; border:1px solid #efefef; line-height:110px;"><i class="el-icon-upload2"></i>   </div>
@@ -69,7 +69,7 @@
                   <el-checkbox label="4">谷</el-checkbox>
                 </el-checkbox-group>
             </el-form-item> -->
-            <!-- type==自定义 -->
+            <!-- type==6 自定义 -->
             <div v-if="subItem.type==6">
               <!-- <el-form-item class="state-form-label"> -->
                   <ul class="state-form-box" v-for="(valueItem,index) of subItem.actualValue" :key="index">
@@ -101,6 +101,8 @@
               <!-- 添加空置期限 -->
               <el-button size="mini" class="ml20 mt10" icon="el-icon-plus" @click="addVacancy(subItem.actualValue)">添加设置</el-button>
             </div>
+            <!-- type==7 这是多个对公账户编辑块 -->
+            <companyAccount v-if="subItem.type==7" v-model="subItem.actualValue"></companyAccount>
           </el-col>
         </el-row>
       </el-form>
@@ -109,10 +111,12 @@
 </template>
 <script>
   import uploadFile from "../common/upload-file"
+  import companyAccount from "./components/companyAccount"
 
   export default {
     components:{
       uploadFile,
+      companyAccount,
       },
   	props: [],
     data() {
