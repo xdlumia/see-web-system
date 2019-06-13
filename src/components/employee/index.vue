@@ -285,7 +285,8 @@ export default {
         phone: '',
         email: '',
         companyId: '',
-        companyCode: ''
+        companyCode: '',
+        sysCode:''
       },
 
       // 新增orEdit框内容
@@ -516,6 +517,7 @@ export default {
         this.syncForm.email = data.email
         this.syncForm.companyId = data.companyId
         this.syncForm.companyCode = data.companyCode
+        this.syncForm.sysCode = this.$local.fetch('userInfo').syscode
       }
     },
     // 重新加载列表数据
