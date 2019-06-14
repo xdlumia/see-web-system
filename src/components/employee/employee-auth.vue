@@ -158,6 +158,7 @@ export default {
       // 合并选中的默认角色和自定义角色
       this.authForm.userRoleList = defaultList.concat(customList)
       this.loading = true
+      this.authForm.subsysCode = this.$local.fetch('userInfo').syscode
       this.$api.bizSystemService.authEmployee(this.authForm)
       .then(res => {
         if (res.code == 200) {

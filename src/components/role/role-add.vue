@@ -118,6 +118,7 @@ export default {
             api = "updateRole";
           }
           this.loading = true
+          this.addForm.subsysCode = this.$local.fetch('userInfo').syscode
           this.$api.bizSystemService[api](this.addForm)
           .then(res => {
             if (res.code == 200) {
