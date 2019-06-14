@@ -66,7 +66,7 @@ export default {
           if (valid) {
             this.loading = true;
             this.companyForm.sysCode = this.$local.fetch("userInfo").syscode;
-            this.$api.seeBaseinfoService.saveCompanyLogo(this.companyForm)
+            this.$api.seeBaseinfoService.logoEditCompanyLogo(this.companyForm)
               .then(res => {
                 let companyInfo = {
                   picName:this.companyForm.picName,
