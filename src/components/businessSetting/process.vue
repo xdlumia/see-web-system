@@ -246,7 +246,8 @@
 			 * @return {[underfined]} [void]
 			 */
 			resetProcessDefinitionList() {
-				this.getProcessDefinitionList()
+			    let syscode = this.$local.fetch('userInfo').syscode;
+				this.getProcessDefinitionList({syscode:syscode})
 			},
 			// 获取当前流程设置
 			queryProcessSet(){
