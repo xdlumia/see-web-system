@@ -2,7 +2,7 @@
  * @author 吴森
  * @description resourceService的url
  * @date 2018/7/7
- * @host 8013
+ * @host 9013
  */
 
 import { Api } from 'see-web-basic';
@@ -12,11 +12,15 @@ export default {
   /**
   * @description 数据权限 数据源
   */
-  getDataSourceList: function getDataSourceList(params) {
+  getDataSourceList(params) {
     return Api.get(baseURL.resourceService + '/dataauthPageDataSource/listBySyscode', params);
   },
-  getDataSourcePageList: function getDataSourcePageList(params) {
+  getDataSourcePageList(params) {
     return Api.get(baseURL.resourceService + '/dataauthPageDataSource/page', params);
+  },
+  // 查看自定义数据权限详细信息
+  rmdataauthDataInfo (params) {
+    return Api.get(baseURL.bizSystemService + '/rmdataauth/dataInfo', params)
   },
 
 
@@ -25,13 +29,13 @@ export default {
   */
 
   //获取数据权限字段源列表
-  getAuthFieldList: function getAuthFieldList(params) {
+  getAuthFieldList(params) {
     return Api.get(baseURL.resourceService + '/dataauthField/list', params);
   },
 
 
   //数据源权限字段分页列表
-  getAuthFieldPageList: function getAuthFieldPageList(params) {
+  getAuthFieldPageList(params) {
     return Api.get(baseURL.resourceService + '/dataauthField/page', params);
   },
 
@@ -41,12 +45,12 @@ export default {
    */
 
   //获取角色列表
-  getDefaultRoleList: function getDefaultRoleList(params) {
+  getDefaultRoleList(params) {
     return Api.get(baseURL.resourceService + '/rmdefaultrole/defaultRoleList', params);
   },
 
   //获取默认角色默认数据权限详情
-  getDefaultRoleInfo: function getDefaultRoleInfo(params) {
+  getDefaultRoleInfo(params) {
     return Api.get(baseURL.resourceService + '/rmdataauth/info', params);
   }
 };

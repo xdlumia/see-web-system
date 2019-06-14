@@ -193,6 +193,14 @@ export default (_getUserDetail$getUse = {
   getEmpListByUserIds: function getEmpListByUserIds(params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/empList', params);
   },
+  // 批量保存数据权限
+  rmdataauthBatchSave (params) {
+    return Api.post(baseURL.bizSystemService + '/rmdataauth/batchSave', params)
+  },
+  // 查看自定义数据权限详细信息
+  rmdataauthDataInfo (params) {
+    return Api.get(baseURL.bizSystemService + '/rmdataauth/dataInfo', params)
+  },
 
 
   /**
