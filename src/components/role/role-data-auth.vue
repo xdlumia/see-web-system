@@ -8,8 +8,8 @@
 **/
 -->
 <template>
-  <div >
-    <el-form v-loading="loading" :model="addForm" ref="addForm" size="small" style="height:calc(100vh - 150px)" class="d-auto-y">
+  <div v-loading="loading" >
+    <el-form :model="addForm" ref="addForm" size="small" style="height:calc(100vh - 150px)" class="d-auto-y">
       <div class="d-fieldset p10 mb10" v-for="(item,index) of  templateAuthList" :key="index">
         <!-- 模板名称 -->
         <h4 class="mb5">{{item.name || '-'}}</h4>
