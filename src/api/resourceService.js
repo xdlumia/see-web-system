@@ -20,7 +20,7 @@ export default {
   },
   // 查看自定义数据权限详细信息
   rmdataauthDataInfo (params) {
-    return Api.get(baseURL.bizSystemService + '/rmdataauth/dataInfo', params)
+    return Api.get(baseURL.resourceService + '/rmdataauth/dataInfo', params)
   },
 
 

@@ -20,7 +20,7 @@
               v-for="(filedItem,i) of item.datasourceFieldList"
               :key="i"
               v-if="filedItem.isShowControl"
-              :label="filedItem.fieldCode"
+              :label="filedItem.fieldCode == 1"
               @change="colSettingChange(index)"
               name="type"
             >{{filedItem.fieldName}}</el-checkbox>
@@ -33,7 +33,7 @@
             <el-checkbox
               v-for="(dataItem,dataIndex) of item.datasourceFieldList"
               :label="dataItem.fieldCode"
-              v-if="filedItem.isDataFilter == 1"
+              v-if="dataItem.isDataFilter == 1"
               @change="rowSettingListChange(index)"
               :key="dataIndex"
             >{{dataItem.fieldName}}</el-checkbox>
@@ -385,6 +385,8 @@ export default {
             if(authDataInfo[item.code]){
               // 根据code 获取当前数据回写详情
               let dataInfo = authDataInfo[item.code]
+              item.cols = (dataInfo.colSetting || []).map(n=>n.fieldCode)
+              item.rows = (dataInfo.rowSettingList || []).map(n=>n.fieldCode)
               item.id = dataInfo.id
               item.colSetting = dataInfo.colSetting  || []
               // 处理一下行数据里值的类型
