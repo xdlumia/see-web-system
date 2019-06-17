@@ -52,5 +52,8 @@ export default {
   //获取默认角色默认数据权限详情
   getDefaultRoleInfo(params) {
     return Api.get(baseURL.resourceService + '/rmdataauth/info', params);
+  },
+  dataauthPageDataSourceListAndFieldsBySyscode (params) {
+    return Api.get(baseURL.resourceService + '/dataauthPageDataSource/listAndFieldsBySyscode', params)
   }
 };
