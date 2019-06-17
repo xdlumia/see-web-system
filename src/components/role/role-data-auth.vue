@@ -19,8 +19,8 @@
             <el-checkbox
               v-for="(filedItem,i) of item.datasourceFieldList"
               :key="i"
-              v-if="filedItem.isShowControl"
-              :label="filedItem.fieldCode == 1"
+              v-if="filedItem.isShowControl == 1"
+              :label="filedItem.fieldCode"
               @change="colSettingChange(index)"
               name="type"
             >{{filedItem.fieldName}}</el-checkbox>
