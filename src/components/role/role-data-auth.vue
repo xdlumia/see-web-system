@@ -33,6 +33,7 @@
             <el-checkbox
               v-for="(dataItem,dataIndex) of item.datasourceFieldList"
               :label="dataItem.fieldCode"
+              v-if="filedItem.isDataFilter == 1"
               @change="rowSettingListChange(index)"
               :key="dataIndex"
             >{{dataItem.fieldName}}</el-checkbox>
@@ -328,6 +329,8 @@ export default {
       //要对addForm数据类型进行区分更改.所以深拷贝参数
       let params  = JSON.parse(JSON.stringify(this.addForm))
       params.rmDataauthList.forEach(item => {
+        item.rows = (item.rowSettingList || []).map(t=>t.fieldCode)
+        item.cols = (item.colSetting || []).map(t=>t.fieldCode)
         item.rowSettingList.forEach(subItem=>{
           if(subItem.condType == 0){
             // condType ==0 是部门类型
