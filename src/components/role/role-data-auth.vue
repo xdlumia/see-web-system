@@ -10,11 +10,11 @@
 <template>
   <div v-loading="loading" >
     <el-form :model="addForm" ref="addForm" size="small" style="height:calc(100vh - 150px)" class="d-auto-y">
-      <div class="d-fieldset p10 mb10" v-for="(item,index) of  templateAuthList" :key="index">
+      <div class="d-fieldset data-auth-box p10 mb10" v-for="(item,index) of  templateAuthList" :key="index">
         <!-- 模板名称 -->
-        <h4 class="mb5">{{item.name || '-'}}</h4>
+        <h4 class="mb15">{{item.name || '-'}}</h4>
         <!-- 字段权限 -->
-        <el-form-item label="字段权限" class="bt">
+        <el-form-item label="字段权限" class="data-auth-item" v-show="getFieldAuth(templateAuthList[index].datasourceFieldList)">
           <el-checkbox-group v-model="addForm.rmDataauthList[index].cols">
             <el-checkbox
               v-for="(filedItem,i) of item.datasourceFieldList"
@@ -27,7 +27,7 @@
           </el-checkbox-group>
         </el-form-item>
 
-        <el-form-item label="数据权限" class="bt">
+        <el-form-item label="数据权限" class="data-auth-item" v-show="getDataAuth(templateAuthList[index].datasourceFieldList)">
           <!-- 数据权限 字段列表 -->
           <el-checkbox-group v-model="addForm.rmDataauthList[index].rows">
             <el-checkbox
@@ -362,6 +362,12 @@ export default {
           this.loading = false
         })
     },
+    getFieldAuth(col){
+      return col.some(item=>item.isShowControl == 1)
+    },
+    getDataAuth(row){
+      return row.some(item=>item.isDataFilter == 1)
+    },
     //  获取权限数据源详情
     getInfoRmDataAuth (params) {
       this.loading = true
@@ -432,4 +438,6 @@ export default {
 .el-form-item--small.el-form-item {
   margin-bottom: 5px;
 }
+.data-auth-box{border: 1px dashed #d3dce6}
+.data-auth-item{ border-top:1px dashed #efefef; padding-top:5px}
 </style>
