@@ -385,7 +385,11 @@ export default {
             if(authDataInfo[item.code]){
               // 根据code 获取当前数据回写详情
               let dataInfo = authDataInfo[item.code]
-              item.cols = (dataInfo.colSetting || []).map(n=>n.fieldCode)
+              item.cols = (dataInfo.colSetting || []).map(n=>{
+                if(n.type == 1){
+                  return n.fieldCode
+                }
+              })
               item.rows = (dataInfo.rowSettingList || []).map(n=>n.fieldCode)
               item.id = dataInfo.id
               item.colSetting = dataInfo.colSetting  || []
