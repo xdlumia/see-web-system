@@ -163,16 +163,17 @@
 					'asystem_contract_bargain_1030': 'icon-baohu',				// 商业集中-合同变更审核流程 运营总监审核
 					'asystem_contract_bargain_1032': 'icon-zhang',				// 商业集中-合同变更审核流程 行政专业审核
 
-					'asyshotel_house_long_rent_1001':'icon-ren', // 凯亚酒店-项目经理审核
-					'asyshotel_house_long_rent_1002':'icon-jine', // 凯亚酒店-财务审核
-					'asyshotel_house_long_extension_1001':'icon-ren',// 凯亚酒店-项目经理审核
-					'asyshotel_house_long_extension_1002':'icon-jine',// 凯亚酒店-财务审核
-					'asyshotel_house_long_change_1001':'icon-ren',// 凯亚酒店-项目经理审核
-					'asyshotel_house_long_change_1002':'icon-jine',// 凯亚酒店-财务审核
-					'asyshotel_house_owner_1001':'icon-ren',// 凯亚酒店-项目经理审核
-					'asyshotel_house_owner_1002':'icon-jine',// 凯亚酒店-财务审核
-					'asyshotel_house_long_surrender_1001':'icon-ren',// 凯亚酒店-项目经理审核
-					'asyshotel_house_long_surrender_1002':'icon-jine',// 凯亚酒店-财务审核
+					'asyshotel_rates_1001': 'icon-ren', // 酒店-房价设置审核-项目总经理审核
+					'asyshotel_house_long_rent_1001': 'icon-jine', // 酒店-长租签约审核流程-财务审核
+					'asyshotel_house_long_rent_1002': 'icon-ren', // 酒店-长租签约审核流程-项目总经理审核
+					'asyshotel_house_long_extension_1001': 'icon-jine', // 酒店-长租续约审核流程-财务审核
+					'asyshotel_house_long_extension_1002': 'icon-ren', // 酒店-长租续约审核流程-项目总经理审核
+					'asyshotel_house_long_change_1001': 'icon-jine', // 酒店-长租变更审核流程-财务审核
+					'asyshotel_house_long_change_1002': 'icon-ren', // 酒店-酒店-长租变更审核流程-项目总经理审核
+					'asyshotel_house_long_surrender_1001': 'icon-jine', // 酒店-长租退租审核流程-财务审核
+					'asyshotel_house_long_surrender_1002': 'icon-ren', // -酒店-长租退租审核流程-项目总经理审核
+					'asyshotel_house_long_cancellation_1001': 'icon-jine', // 酒店-酒店-长租作废审核流程-财务审核
+					'asyshotel_house_long_cancellation_1002': 'icon-ren'// -酒店-酒店-长租作废审核流程-项目总经理审核
 					
 				}
 			}
