@@ -119,7 +119,14 @@ export default {
         return
       }
       this.loading = true
-      this.$api.bizSystemService.getRoleList({ limit: 999, page: 1, state: 0 })
+      let userInfo = this.$local.fetch('userInfo')
+      let params = {
+        limit: 999,
+        page: 1,
+        state: 0,
+        subsysCode:userInfo.syscode, //子系统编码 自定义角色不传此参数
+      }
+      this.$api.bizSystemService.getRoleList(params)
       .then(res => {
           this.customRolesData  = res.data || []
           
