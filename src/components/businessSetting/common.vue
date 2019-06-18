@@ -102,7 +102,7 @@
               <el-button size="mini" class="ml20 mt10" icon="el-icon-plus" @click="addVacancy(subItem.actualValue)">添加设置</el-button>
             </div>
             <!-- type==7 这是多个对公账户编辑块 -->
-            <companyAccount v-if="subItem.type==7" v-model="subItem.actualValue"></companyAccount>
+            <companyAccount ref="accountForm" v-if="subItem.type==7" v-model="subItem.actualValue"></companyAccount>
           </el-col>
         </el-row>
       </el-form>
@@ -130,6 +130,7 @@
     created() {
       // 获取房源配置
       this.getHouseTypeConfig()
+      console.log(this)
     },
     computed:{
       rentRemind(){
@@ -227,7 +228,7 @@
         data[index+1].startDate = (Number(val) || 0)+1
       },
       // 图片保存
-      saveHandle(){
+      async saveHandle(){
         // 定义保存的参数
         let params = {list:[]}
         // 拷贝数据,防止更改数据类型导致错误
@@ -262,38 +263,22 @@
                 }
               }
               subItem.actualValue = JSON.stringify(subItem.actualValue)
-            }else if(subItem.type==7){
-              try {
-                let av = JSON.parse(subItem.actualValue);
-                av.some(data=>{
-                  if(!data.accountName){
-                    this.$message.warning('开户名称必填');
-                    isRequired=true;
-                    return true;
-                  }
-                  if(!data.bankName){
-                    this.$message.warning('开户银行（到支行）必填');
-                    isRequired=true;
-                    return true;
-                  }
-                  if(!data.phone){
-                    this.$message.warning('银行预留手机号必填');
-                    isRequired=true;
-                    return true;
-                  }
-                  if(!data.accountNumber){
-                    this.$message.warning('开户账号必填');
-                    isRequired=true;
-                    return true;
-                  }
-                }) 
-              } catch (error) {
-                console.log(error);
-              }
             }
             params.list.push(subItem)
           })
         })
+
+        // 对公账户校验
+        if(this.$refs.accountForm&&this.$refs.accountForm.length){
+          for(let i in this.$refs.accountForm){
+            try {
+              await this.$refs.accountForm[i].$refs.form.validate()
+            } catch (error) {
+              isRequired = true;
+              this.$message.warning('请检查公司收款渠道填写信息')
+            }
+          }
+        }
         // 如果空置期必填的数值没有填写不能保存
         if(isRequired){
           return
