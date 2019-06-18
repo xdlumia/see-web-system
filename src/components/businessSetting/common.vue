@@ -262,6 +262,34 @@
                 }
               }
               subItem.actualValue = JSON.stringify(subItem.actualValue)
+            }else if(subItem.type==7){
+              try {
+                let av = JSON.parse(subItem.actualValue);
+                av.some(data=>{
+                  if(!data.accountName){
+                    this.$message.warning('开户名称必填');
+                    isRequired=true;
+                    return true;
+                  }
+                  if(!data.bankName){
+                    this.$message.warning('开户银行（到支行）必填');
+                    isRequired=true;
+                    return true;
+                  }
+                  if(!data.phone){
+                    this.$message.warning('银行预留手机号必填');
+                    isRequired=true;
+                    return true;
+                  }
+                  if(!data.accountNumber){
+                    this.$message.warning('开户账号必填');
+                    isRequired=true;
+                    return true;
+                  }
+                }) 
+              } catch (error) {
+                console.log(error);
+              }
             }
             params.list.push(subItem)
           })
