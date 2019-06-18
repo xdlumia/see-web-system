@@ -1,8 +1,8 @@
 // // 系统设置
-import Employee from './employee/index'; // 员工
-import Dept from './dept/index'; // 部门
-import Role from './role/index'; // 角色
-import Org from './org/index'; //组织类型
+var Employee = () => import('./employee/index'); // 员工
+var Dept = () => import('./dept/index'); // 部门
+var Role = () => import('./role/index'); // 角色
+var Org = () => import('./org/index'); // 组织类型
 var BusinessDictionary = () => import('./businessDictionary/index'); // 业务字典
 var CategoryManagement = () => import('./categoryManagement/index'); // 类目管理
 var BusinessSetting = () => import('./businessSetting/index'); // 业务设置
