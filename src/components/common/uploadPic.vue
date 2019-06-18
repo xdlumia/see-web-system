@@ -125,6 +125,7 @@ import { addZero } from '@/utils/tools'
           accessKeySecret: this.OSS.accessKeySecret,
           stsToken: this.OSS.securityToken,
           bucket: this.OSS.bucket,
+          secure:true
         })
         this.percentage = 0;
         if (file) {
