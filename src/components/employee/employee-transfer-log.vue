@@ -53,8 +53,7 @@
         </article>
    </div>
 </template>
-<script>
-let employeeSingle  = window.g.employeeSingle           
+<script>    
 export default {
   props: ["dialogMeta"],
   data () {

@@ -53,7 +53,6 @@ export default {
   data () {
     return {
       syscode:this.$local.fetch('userInfo').syscode, //系统code
-      authorityBtn: this.$local.fetch('authorityBtn').sys_attendance || [], // 权限码
       // dialog弹出框信息
       dialogMeta:{
         title:'', //弹出框标题

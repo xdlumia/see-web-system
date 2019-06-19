@@ -6,7 +6,7 @@
           <el-input size="medium" autocomplete="off" v-model="filterDeptName" placeholder="请输入部门名称查询" style="width:240px"></el-input>
         </el-col>
         <el-col :span="12" class="ar">
-          <el-button v-if="authorityBtn.includes('sys_dept_1001')" type="primary" size="medium" icon="el-icon-plus"  @click="editOrAddHandle('add')">新增部门</el-button>
+          <el-button v-if="authorityButtons.includes('sys_dept_1001')" type="primary" size="medium" icon="el-icon-plus"  @click="editOrAddHandle('add')">新增部门</el-button>
           <el-button type="warning" size="medium"><router-link class="d-text-white" to="/system/org">组织类型设置</router-link></el-button>
         </el-col>
       </el-row>
@@ -35,8 +35,8 @@
                 <span class="d-elip w120"> {{node.data.createTime | timeToStr}}</span>
                 <span class="d-elip w100">
                   <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
-                  <el-button v-if="authorityBtn.includes('sys_dept_1002') && node.data.sourceFrom!=1" :disabled="node.data.parentId == 0" class="el-icon-edit f16" type="text" @click="() => editOrAddHandle(data)"></el-button>
-                  <el-button v-if="authorityBtn.includes('sys_dept_1003') && node.data.sourceFrom!=1" :disabled="node.data.parentId == 0" class="el-icon-delete f16" :class="node.data.parentId == 0?'':'d-text-red'" type="text" @click="() => delHandle(node, data)"></el-button>
+                  <el-button v-if="authorityButtons.includes('sys_dept_1002') && node.data.sourceFrom!=1" :disabled="node.data.parentId == 0" class="el-icon-edit f16" type="text" @click="() => editOrAddHandle(data)"></el-button>
+                  <el-button v-if="authorityButtons.includes('sys_dept_1003') && node.data.sourceFrom!=1" :disabled="node.data.parentId == 0" class="el-icon-delete f16" :class="node.data.parentId == 0?'':'d-text-red'" type="text" @click="() => delHandle(node, data)"></el-button>
                 </span>
               </div>
             </div>
@@ -99,7 +99,6 @@
 export default {
   data() {
     return {
-      authorityBtn: this.$local.fetch("authorityBtn").sys_dept || [], // 权限码
       loading:false,
       dialogVisible: false, // 新增编辑弹出框
       dialogVisibleTree: false, // 树部门弹出框
