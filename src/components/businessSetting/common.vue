@@ -130,7 +130,6 @@
     created() {
       // 获取房源配置
       this.getHouseTypeConfig()
-      console.log(this)
     },
     computed:{
       rentRemind(){

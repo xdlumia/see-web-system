@@ -4,63 +4,11 @@
     <el-aside width="110px">
       <el-tabs tab-position="left" v-model="componentActive">
         <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1001')"
-          label="位置"
-          name="location"
-        ></el-tab-pane>
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1006')"
-          label="楼盘"
-          name="building"
-        ></el-tab-pane>
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1011')"
-          label="公共"
-          name="common"
-        ></el-tab-pane>
-        <!-- 流程 -->
-        <!-- 这个地方name我用的是7，为了不该动其他的name属性 -->
-        <!-- 权限码暂时用1012 -->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1012')"
-          label="流程"
-          name="process"
-        ></el-tab-pane>
-        <!-- 图片 -->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1013')"
-          label="图片"
-          name="pictureSet"
-        ></el-tab-pane>
-        <!-- 客户 -->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1015')"
-          label="客户"
-          name="customer"
-        ></el-tab-pane>
-        <!--城市-->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1017')"
-          label="城市"
-          name="defaultCity"
-        ></el-tab-pane>
-        <!--产品-->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1021')"
-          label="产品"
-          name="product"
-        ></el-tab-pane>
-        <!-- 凯亚酒店 -->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_hotel')"
-          label="酒店"
-          name="hotel"
-        ></el-tab-pane>
-        <!--企业-->
-        <el-tab-pane
-          v-if="authorityButtons.includes('asystem_assist_bizsetting_1024')"
-          label="企业"
-          name="company"
+          v-for="(item,index) of components"
+          :key="index"
+          v-if="authorityButtons.includes(item.authorityCode)"
+          :label="item.label"
+          :name="item.component"
         ></el-tab-pane>
       </el-tabs>
     </el-aside>
@@ -82,12 +30,23 @@ import process from "./process"; // 流程
 import product from "./product/index"; // 产品
 import hotel from './hotel' // k酒店
 import company from "./company/index"; // 企业
-
 export default {
   data() {
     return {
       syscode:this.$local.fetch("userInfo").syscode,
       componentActive: "location", // 业务设置当前选中
+      components:[
+        {component:'location',label:'位置',authorityCode:'asystem_assist_bizsetting_1001'},
+        {component:'building',label:'楼盘',authorityCode:'asystem_assist_bizsetting_1006'},
+        {component:'common',label:'公共', authorityCode:'asystem_assist_bizsetting_1011'},
+        {component:'process',label:'流程', authorityCode:'asystem_assist_bizsetting_1019' },
+        {component:'pictureSet', label:'图片', authorityCode:'asystem_assist_bizsetting_1013'},
+        {component:'customer', label:'客户', authorityCode:'asystem_assist_bizsetting_1015'},
+        {component:'defaultCity', label:'城市', authorityCode:'asystem_assist_bizsetting_1017'},
+        {component:'product', label:'产品', authorityCode:'asystem_assist_bizsetting_1021'},
+        {component:'hotel', label:'酒店', authorityCode:'asystem_assist_hotel'},
+        {component:'company', label:'企业', authorityCode:'asystem_assist_bizsetting_1024'},
+      ],
     };
   },
   components: {
@@ -102,6 +61,29 @@ export default {
     company,
     hotel
   },
+  mounted(){
+    if(this.authorityButtons.includes('asystem_assist_bizsetting_1001')){
+      this.componentActive = "location"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1006')){
+      this.componentActive = "building"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1011')){
+      this.componentActive = "common"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1019')){
+      this.componentActive = "process"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1013')){
+      this.componentActive = "pictureSet"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1015')){
+      this.componentActive = "customer"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1017')){
+      this.componentActive = "defaultCity"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1021')){
+      this.componentActive = "product"
+    }else if(this.authorityButtons.includes('asystem_assist_hotel')){
+      this.componentActive = "hotel"
+    }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1024')){
+      this.componentActive = "company"
+    }
+  },
   created() {
   },
   methods: {
@@ -114,9 +96,3 @@ export default {
   text-align: center !important;
 }
 </style>
-
-
-
-
-
-
