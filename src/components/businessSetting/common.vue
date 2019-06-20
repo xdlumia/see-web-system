@@ -10,8 +10,8 @@
   <div style="color:#666" v-loading="loading">
     <div class="d-hidden">
       <el-col :span="16">
-        <h3 class="mt10 d-text-gray">房态设置</h3>
-        <p class="f12 pb10" style="color: #999">说明：房态说明</p>
+        <h3 class="mt10 d-text-gray">公共设置</h3>
+        <p class="f12 pb10" style="color: #999">说明：公共说明</p>
       </el-col>
       <el-col :span="8" class="ar">
         <el-button size="small" style="margin-top: 20px;" @click="recoverHouseDefault">恢复默认</el-button>
