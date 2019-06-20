@@ -4,11 +4,11 @@
     <el-aside width="110px">
       <el-tabs tab-position="left" v-model="componentActive">
         <el-tab-pane
-          v-for="(item,index) of components"
+          v-for="(item,index) of compArr"
           :key="index"
           v-if="authorityButtons.includes(item.authorityCode)"
           :label="item.label"
-          :name="item.component"
+          :name="item.componentName"
         ></el-tab-pane>
       </el-tabs>
     </el-aside>
@@ -35,18 +35,18 @@ export default {
     return {
       syscode:this.$local.fetch("userInfo").syscode,
       componentActive: "location", // 业务设置当前选中
-      components:[
-        {component:'location',label:'位置',authorityCode:'asystem_assist_bizsetting_1001'},
-        {component:'building',label:'楼盘',authorityCode:'asystem_assist_bizsetting_1006'},
-        {component:'common',label:'公共', authorityCode:'asystem_assist_bizsetting_1011'},
-        {component:'process',label:'流程', authorityCode:'asystem_assist_bizsetting_1019' },
-        {component:'pictureSet', label:'图片', authorityCode:'asystem_assist_bizsetting_1013'},
-        {component:'customer', label:'客户', authorityCode:'asystem_assist_bizsetting_1015'},
-        {component:'defaultCity', label:'城市', authorityCode:'asystem_assist_bizsetting_1017'},
-        {component:'product', label:'产品', authorityCode:'asystem_assist_bizsetting_1021'},
-        {component:'hotel', label:'酒店', authorityCode:'asystem_assist_hotel'},
-        {component:'company', label:'企业', authorityCode:'asystem_assist_bizsetting_1024'},
-      ],
+      compArr:[
+        {component: location,componentName:'location',label:'位置',authorityCode:'asystem_assist_bizsetting_1001'},
+        {component: building,componentName:'building',label:'楼盘',authorityCode:'asystem_assist_bizsetting_1006'},
+        {component: common,componentName:'common',label:'公共', authorityCode:'asystem_assist_bizsetting_1011'},
+        {component: process,componentName:'process',label:'流程', authorityCode:'asystem_assist_bizsetting_1019' },
+        {component: pictureSet,componentName:'pictureSet', label:'图片', authorityCode:'asystem_assist_bizsetting_1013'},
+        {component: customer,componentName:'customer', label:'客户', authorityCode:'asystem_assist_bizsetting_1015'},
+        {component: defaultCity,componentName:'defaultCity', label:'城市', authorityCode:'asystem_assist_bizsetting_1017'},
+        {component: product,componentName:'product', label:'产品', authorityCode:'asystem_assist_bizsetting_1021'},
+        {component: hotel,componentName:'hotel', label:'酒店', authorityCode:'asystem_assist_hotel'},
+        {component: company,componentName:'company', label:'企业', authorityCode:'asystem_assist_bizsetting_1024'},
+      ]
     };
   },
   components: {
@@ -60,8 +60,26 @@ export default {
     product,
     company,
     hotel
+    },
+  comp:[],
+  computed:{
   },
   mounted(){
+      let compsName = this.compArr.map(item=>item.componentName) //获取默认的组件名称
+      this.$options.comp.forEach((item)=>{
+        if(compsName.indexOf(item.componentName)!==-1){
+          this.compArr[compsName.indexOf(item.componentName)] = {...item,...this.compArr[compsName.indexOf(item.componentName)]}
+          this.$options.components[item.componentName] = item.component
+        }else{
+          if(!item.authorityCode || !item.label){
+            console.error(`businessSetting里${item.componentName}如果是新添加组件lable和authorityCode是必填`)
+          }
+          this.$options.components[item.componentName] = item.component
+          this.compArr.push(item)
+        }
+      })
+  },
+  created() {
     if(this.authorityButtons.includes('asystem_assist_bizsetting_1001')){
       this.componentActive = "location"
     }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1006')){
@@ -83,8 +101,6 @@ export default {
     }else if(this.authorityButtons.includes('asystem_assist_bizsetting_1024')){
       this.componentActive = "company"
     }
-  },
-  created() {
   },
   methods: {
   }
