@@ -326,7 +326,6 @@ export default {
     },
     // 保存表单数据
     saveHandle (formName) {
-      
       //要对addForm数据类型进行区分更改.所以深拷贝参数
       let params  = JSON.parse(JSON.stringify(this.addForm))
       for(let item of params.rmDataauthList){
@@ -371,8 +370,8 @@ export default {
             // condType ==4 是课程分类 fieldValue数组类型转换成字符串
             subItem.fieldValue = subItem.fieldValue.join(',')
           }else if(subItem.condType == 3){
-            // 如果是指定人fieldValue数组类型转换成字符串
-            if(!subItem.empCondType){
+            // 如果是指定人
+            if(String(subItem.empCondType) == 'undefined'){
               this.$message({
                 message:`${item.pageDatasourceName}下的${subItem.fieldName}类型没有选择`,
                 type:'warning',
@@ -380,7 +379,7 @@ export default {
               })
               return
             }
-            if(!subItem.fieldValue.length){
+            if(subItem.empCondType == 1 && !subItem.fieldValue.length){
               this.$message({
                 message:`${item.pageDatasourceName}下的${subItem.fieldName}指定人没有选择`,
                 type:'warning',
@@ -388,6 +387,7 @@ export default {
               })
               return
             }
+            // 如果是指定人fieldValue数组类型转换成字符串
             subItem.fieldValue = subItem.fieldValue.map(item => {return item.userId}).join(",");
           }
         }
