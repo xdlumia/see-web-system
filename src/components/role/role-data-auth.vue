@@ -326,15 +326,33 @@ export default {
     },
     // 保存表单数据
     saveHandle (formName) {
+      
       //要对addForm数据类型进行区分更改.所以深拷贝参数
       let params  = JSON.parse(JSON.stringify(this.addForm))
-      params.rmDataauthList.forEach(item => {
+      for(let item of params.rmDataauthList){
         item.rows = (item.rowSettingList || []).map(t=>t.fieldCode)
         item.cols = (item.colSetting || []).map(t=>t.fieldCode)
-        item.rowSettingList.forEach(subItem=>{
+        for(let subItem of item.rowSettingList){
           if(subItem.condType == 0){
             // condType ==0 是部门类型
+              if(!subItem.deptCondType){
+                this.$message({
+                  message:`${item.pageDatasourceName}下的${subItem.fieldName}类型没有选择`,
+                  type:'warning',
+                  showClose:true
+                })
+                return
+              }
             if(subItem.deptCondType == 4){
+              // 自定义部门验证
+              if(!subItem.fieldValue.length){
+                this.$message({
+                  message:`${item.pageDatasourceName}-数据权限-${subItem.fieldName}-自定义部门没有选择`,
+                  type:'warning',
+                  showClose:true
+                })
+                return
+              }
               // deptCondType ==4 是自定义部门fieldValue数组类型转换成字符串
               subItem.fieldValue = subItem.fieldValue.join(',')
             }else{
@@ -342,14 +360,38 @@ export default {
               subItem.fieldValue = ''
             }
           }else if(subItem.condType == 4){
+            if(!subItem.fieldValue.length){
+              this.$message({
+                message:`${item.pageDatasourceName}下的${subItem.fieldName}课程没有选择`,
+                type:'warning',
+                showClose:true
+              })
+              return
+            }
             // condType ==4 是课程分类 fieldValue数组类型转换成字符串
             subItem.fieldValue = subItem.fieldValue.join(',')
           }else if(subItem.condType == 3){
             // 如果是指定人fieldValue数组类型转换成字符串
+            if(!subItem.empCondType){
+              this.$message({
+                message:`${item.pageDatasourceName}下的${subItem.fieldName}类型没有选择`,
+                type:'warning',
+                showClose:true
+              })
+              return
+            }
+            if(!subItem.fieldValue.length){
+              this.$message({
+                message:`${item.pageDatasourceName}下的${subItem.fieldName}指定人没有选择`,
+                type:'warning',
+                showClose:true
+              })
+              return
+            }
             subItem.fieldValue = subItem.fieldValue.map(item => {return item.userId}).join(",");
           }
-        })
-      })
+        }
+      }
       this.loading = true
       this.$api.bizSystemService.rmdataauthBatchSave(params)
         .then(res => {
