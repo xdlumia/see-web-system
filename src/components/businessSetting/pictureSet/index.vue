@@ -13,15 +13,15 @@
       <el-form label-width="100px" size="mini" v-for="(item,index) of pictureForm.list" :key="index" ref="pictureForm">
         <fieldset class="d-fieldset mt15">
           <legend style="color: #666">{{item.title}}</legend>
-            <el-form-item label="上传数量：" v-if="item.picSetType != 5">
+            <el-form-item label="上传数量：" v-if="isShow(item.picSetType)">
               <el-input-number v-model="item.uploadNum" controls-position="right" :min="0" :max="item.title == '房间照片'?30:10"></el-input-number>
               <span class="fr d-text-red f12">上传数量：最多上传{{item.title == '房间照片'?30:10}}张</span>
             </el-form-item>
-            <el-form-item label="上传大小：" v-if="item.picSetType != 5">
+            <el-form-item label="上传大小：" v-if="isShow(item.picSetType)">
               <el-input-number v-model="item.uploadSize" controls-position="right" :min="0" :max="10"></el-input-number>
               <span class="fr d-text-red f12">上限说明：最大10M</span>
             </el-form-item>
-             <el-form-item label="图片格式：" v-if="item.picSetType != 5">
+             <el-form-item label="图片格式：" v-if="isShow(item.picSetType)">
                <el-checkbox-group v-model="item.picLayout">
                   <el-checkbox label="0">jpeg</el-checkbox>
                   <el-checkbox label="1">jpg</el-checkbox>
@@ -113,6 +113,25 @@
         .finally(()=>{
           this.loading = false
         })
+      },
+      // 根据picSetType 判断图片类型 
+      isShow(picSetType){
+        let show = {
+          0:true, //阿尔法楼盘相册
+          1:true, //阿尔法户型照片
+          2:true, //阿尔法房间照片
+          3:true, //阿尔法证件照片
+          4:true, // 产证照片
+          5:false, // 合同预览
+          6:false, // 铺脉动铺脉动首页
+          7:false, // 铺脉动最新铺源
+          8:false, // 铺脉动项目招商
+          9:false, // 铺脉动加盟项目
+          10:false, // 铺脉动项目竞标
+          11:false, //铺脉动发现
+        }
+        console.log(show[picSetType])
+        return show[picSetType]
       },
       // 恢复默认
       recoverPicDefault(){
