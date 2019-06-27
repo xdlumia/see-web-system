@@ -3,7 +3,7 @@
       <div class="login-content">
         <app2></app2>
         <div class="login-mian">
-          <div class="img403 fl"><img class="" src="@/assets/img/403.png" /></div>
+          <div class="img403 fl"><img class="" src="./img/403.png" /></div>
           <div class="text403 fr">
             <span>
               <div class="ero403">403</div>

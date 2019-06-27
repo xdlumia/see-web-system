@@ -2,7 +2,7 @@
   <div style="height:100%">
       <div class="login-content">
         <div class="login-mian">
-          <div class="img404 fl"><img class="" src="@/assets/img/404.png" /></div>
+          <div class="img404 fl"><img class="" src="./img/404.png" /></div>
           <div class="text404 fr">
             <span>
               <div class="ero404">404</div>
