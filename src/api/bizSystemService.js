@@ -172,25 +172,25 @@ export default (_getUserDetail$getUse = {
   unlockuser: function unlockuser(params) {
     return Api.get(baseURL.bizSystemService + apiURL.unlockuser, params);
   },
-  lockuser: function lockuser(params) {
+  lockuser (params) {
     return Api.get(baseURL.bizSystemService + apiURL.lockuser, params);
   },
-  updatePassword: function updatePassword(params) {
+  updatePassword (params) {
     return Api.post(baseURL.bizSystemService + apiURL.updatePassword, params);
   },
 
   //开放注册
-  openRegistration: function openRegistration(params) {
+  openRegistration (params) {
     return Api.post(baseURL.bizSystemService + '/rmemployee/openRegistration', params);
   },
 
   //查询开放注册
-  queryOpenRegistration: function queryOpenRegistration(params) {
+  queryOpenRegistration (params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/queryOpenRegistration', params);
   },
 
   // 根据一组用户ID查询用户信息
-  getEmpListByUserIds: function getEmpListByUserIds(params) {
+  getEmpListByUserIds (params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/empList', params);
   },
   // 批量保存数据权限
@@ -201,15 +201,32 @@ export default (_getUserDetail$getUse = {
   rmdataauthDataInfo (params) {
     return Api.get(baseURL.bizSystemService + '/rmdataauth/dataInfo', params)
   },
+  // 下载中心列表
+  downloadList (params) {
+    return Api.get(baseURL.bizSystemService + '/download/list', params)
+  },
+  // 下载中心删除
+  downloadDelete (params) {
+    return Api.del(baseURL.bizSystemService + '/download/delete', params)
+  },
+  // 下载中心编辑
+  downloadEdit (params) {
+    return Api.post(baseURL.bizSystemService + '/download/edit', params)
+  },
+  // 下载中心编辑
+  downloadDownloadFile (params) {
+    return Api.get(baseURL.bizSystemService + '/download/downloadFile'+ params)
+  },
 
 
   /**
   * @description  人员调动记录
   */
   // 保存人员调动记录
-  saveTransfer: function saveTransfer(params) {
+  saveTransfer(params) {
     return Api.post(baseURL.bizSystemService + '/rmemployeeransferrecord/save', params);
   }
+
 }, _defineProperty2(_getUserDetail$getUse, 'saveTransfer', function saveTransfer(params) {
   return Api.post(baseURL.bizSystemService + '/rmemployeeransferrecord/save', params);
 }), _defineProperty2(_getUserDetail$getUse, 'getTransferLog', function getTransferLog(params) {
