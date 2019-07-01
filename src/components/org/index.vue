@@ -84,7 +84,7 @@
        <el-dialog
         title="选择组织类型"
         :visible.sync="organaDialogVisibleTree"
-        width="300px">
+        width="400px">
         <div class="deptTreeBox">
             <el-tree :data="organaTypeData" default-expand-all :expand-on-click-node="false" :props="organaDefaultProps" @node-click="organeHandleNodeClick"></el-tree>
         </div>
@@ -190,7 +190,15 @@ export default {
         });
     },
     // 选择上级类型
-    organeHandleNodeClick(data) {
+    organeHandleNodeClick(data,node) {
+      if(node.level > 10){
+        this.$message({
+          message:'组织类型不能超过十级,此组织下不能再建组织',
+          type: 'warning',
+          showClose:true
+        })
+        return
+      }
       this.organaDialogVisibleTree = false; // 关闭弹出框
       this.dialogForm.parentId = data.id;
       this.dialogForm.parentTypeName = data.typeName;
