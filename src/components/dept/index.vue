@@ -74,7 +74,7 @@
       <el-dialog
         title="选择部门"
         :visible.sync="dialogVisibleTree"
-        width="300px">
+        width="400px">
         <div class="deptTreeBox">
             <el-tree :data="deptData" default-expand-all :expand-on-click-node="false" :props="{ children: 'children', label: 'deptName' }" @node-click="handleNodeClick"></el-tree>
         </div>
@@ -83,7 +83,7 @@
        <el-dialog
         title="选择组织类型"
         :visible.sync="organaDialogVisibleTree"
-        width="300px">
+        width="400px">
         <div class="deptTreeBox">
             <el-tree :data="organaData" default-expand-all :expand-on-click-node="false" :props="organaDefaultProps" @node-click="organeHandleNodeClick"></el-tree>
         </div>
@@ -234,7 +234,15 @@ export default {
         });
     },
     // 点击树节点回掉
-    handleNodeClick(data) {
+    handleNodeClick(data,node) {
+      if(node.level > 10){
+        this.$message({
+          message:'部门不能超过十级,此部门下不能再建部门',
+          type: 'warning',
+          showClose:true
+        })
+        return
+      }
       this.dialogVisibleTree = false; // 关闭弹出框
       this.dilogForm.parentId = data.id;
       this.parentName = data.deptName;
