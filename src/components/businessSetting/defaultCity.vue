@@ -142,10 +142,7 @@ export default {
       let defaultName = item.name
       this.$api.seeHouseConfigService.updateCityInfo(params) //保存城市
         .then(res => {
-          this.$message({
-            type: "success",
-            message: `切换 ${defaultName} 为默认城市成功！`
-          });
+          this.$local.save('cityInfo',this.cityInfo)
           this.isCityChange = false;
         });
     },

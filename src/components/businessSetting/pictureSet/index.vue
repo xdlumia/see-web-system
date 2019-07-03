@@ -130,7 +130,6 @@
           10:false, // 铺脉动项目竞标
           11:false, //铺脉动发现
         }
-        console.log(show[picSetType])
         return show[picSetType]
       },
       // 恢复默认
