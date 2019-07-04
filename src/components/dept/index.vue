@@ -221,7 +221,7 @@ export default {
               const parent = node.parent;
               const children = parent.data.children || parent.data;
               const index = children.findIndex(d => d.id === data.id);
-              children.splice(index, 1)
+              children.splice(index, 1) 
             }
           });
         })
