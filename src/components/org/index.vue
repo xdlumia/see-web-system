@@ -178,10 +178,6 @@ export default {
               const children = parent.data.children || parent.data;
               const index = children.findIndex(d => d.id === data.id);
               children.splice(index, 1);
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
             }
           });
         })
