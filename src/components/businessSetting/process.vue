@@ -173,7 +173,9 @@
 					'asyshotel_house_long_surrender_1001': 'icon-jine', // 酒店-长租退租审核流程-财务审核
 					'asyshotel_house_long_surrender_1002': 'icon-ren', // -酒店-长租退租审核流程-项目总经理审核
 					'asyshotel_house_long_cancellation_1001': 'icon-jine', // 酒店-酒店-长租作废审核流程-财务审核
-					'asyshotel_house_long_cancellation_1002': 'icon-ren'// -酒店-酒店-长租作废审核流程-项目总经理审核
+					'asyshotel_house_long_cancellation_1002': 'icon-ren',// -酒店-酒店-长租作废审核流程-项目总经理审核
+					'asyshotel_house_owner_1001': 'icon-jine', // 酒店-酒店-业主合同审核流程-财务审核 
+					'asyshotel_house_owner_1002': 'icon-ren'// -酒店-酒店-业主合同审核流程-项目总经理审核
 					
 				}
 			}
