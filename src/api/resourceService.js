@@ -23,6 +23,11 @@ export default {
     return Api.get(baseURL.resourceService + '/rmdataauth/dataInfo', params)
   },
 
+  //获取当前公司套餐内所有限制操作的最大值
+  getAllSourceMaxNum(params) {
+    return Api.get(baseURL.resourceService + '/set/getAllSourceMaxNum', params)
+  },
+
 
   /**
   * @description 数据权限 字段明细
