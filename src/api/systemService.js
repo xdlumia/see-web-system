@@ -53,5 +53,17 @@ export default {
     // 获取考勤统计
     getLoginStats: function getLoginStats(params) {
         return Api.get(baseURL.systemService + '/rmuserloginfo/count', params);
-    }
+    },
+    //获取公共token
+    getPublicToken(params) {
+        return Api.post(baseURL.systemService + '/ws/reqtoken', params, { isShowMessage: false });
+    },
+    //企业注册
+    companyRegister(params) {
+        return Api.post(baseURL.systemService + '/register/companyRegister', params);
+    },
+    //根据用户登录账号判断所在公司是否初始化
+    getJudgeUserIsInit(params) {
+        return Api.get(baseURL.systemService + '/register/judgeUserIsInit/'+ params);
+    },
 };
