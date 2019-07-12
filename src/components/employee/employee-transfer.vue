@@ -44,6 +44,16 @@
                 <el-radio v-model="transferForm.collectObj.collentHouseType" label="2">不交接</el-radio>
             </el-form-item>
         </article>
+        <article v-if="outHouseTotal">
+            <h3 class="f14">出房人 <span class="d-text-blue ml10">{{outHouseTotal}}</span></h3>
+            <el-form-item prop="outObj.outHouseType" :rules="{required:true,message:'请选择类型'}">
+                <el-radio v-model="transferForm.outObj.outHouseType" label="0">指定人员</el-radio>
+                <employees-chosen v-if="transferForm.outObj.outHouseType==0" v-model="outHousePerson" :multiple="false">
+                    <el-input size="mini" v-model="transferForm.outObj.name" class="d-inline w120" placeholder="请选择人员">分配管家</el-input>
+                </employees-chosen>
+                <el-radio v-model="transferForm.outObj.outHouseType" label="2">不交接</el-radio>
+            </el-form-item>
+        </article>
         <!-- 
         <article v-if="collectTotal">
             <h3 class="f14">收房人 <span class="d-text-blue ml10">{{managerTotal}}</span></h3>
@@ -73,6 +83,7 @@ export default {
       responserTotal:'', //责任盘总数
       managerTotal:'', //房源管家总数
       collectTotal:'', //收房人总数
+      outHouseTotal:'', //收房人总数
       // 授权弹出内容
       transferForm: {
         ransferDeptId: '', // 转部门id
@@ -95,6 +106,12 @@ export default {
           responseType: '',
           name:''
         },
+        // 出房人
+        outObj: {
+          outHousePersonId: "", 
+          outHouseType: "", 
+          name: ""
+        }
       },
     }
   },
@@ -103,6 +120,7 @@ export default {
       this.getBuildingInfoByResponserId()      
       this.getCommunityManagerTotal()
       this.queryCollectHouseByUserId()
+      this.queryHouseListByUserId()
       this.transferForm.userId = this.dialogMeta.data.userId
       this.transferForm.ransferDeptId = this.dialogMeta.dept.id
     }
@@ -138,6 +156,16 @@ export default {
           this.transferForm.collectObj.name = user.employeeName
       }
     },
+    // 出房人人员选择
+    outHousePerson:{
+      get (user) {
+          return user.userId
+      },
+      set (user) {
+          this.transferForm.outObj.outHousePersonId = user.userId
+          this.transferForm.outObj.name = user.employeeName
+      }
+    },
   },
   methods: {
     // 获取某责任人负责的栋座信息 责任盘
@@ -162,6 +190,14 @@ export default {
         this.collectTotal = data.length
       })
     },
+    // 查询出房人
+    queryHouseListByUserId(){
+      this.$api.seeTenementService.queryHouseListByUserId({userId:this.dialogMeta.data.userId})
+      .then(res=>{
+        let data = res.data || []
+        this.outHouseTotal = data.length
+      })
+    },
     
     // 保存人员调动
     saveTransfer () {
@@ -177,6 +213,10 @@ export default {
             }
             if(this.transferForm.collectObj.collentHouseType === '0' && !this.transferForm.collectObj.collectHousePersonId){
                this.$message.error('请选择收房人员')
+               return
+            }
+            if(this.transferForm.outObj.outHouseType === '0' && !this.transferForm.outObj.outHousePersonId){
+               this.$message.error('请选择出房人员')
                return
             }
             this.loading = true
