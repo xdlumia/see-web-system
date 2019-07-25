@@ -66,4 +66,21 @@ export default {
     getJudgeUserIsInit(params) {
         return Api.get(baseURL.systemService + '/register/judgeUserIsInit/'+ params);
     },
+    // 会员中心充值记录
+    rmpaymentrecordPayList(params) {
+        return Api.get(baseURL.systemService + '/rmpaymentrecord/payList/', params);
+    },
+    // 企业支付信息接口
+    companyGetCompanyResources(params) {
+        return Api.get(baseURL.systemService + '/company/getCompanyResources'+ params);
+    },
+    //获取意见反馈列表
+    getRmsuggestList(params) {
+        return Api.get(baseURL.systemService + '/rmsuggestfeedbacktype/list' + params);
+    },
+    
+    //保存反馈记录
+    rmsuggestFeedBackRecord(params) {
+        return Api.post(baseURL.systemService + '/rmsuggestfeedbackrecord/save', params);
+    },
 };
