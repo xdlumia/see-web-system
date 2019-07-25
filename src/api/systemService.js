@@ -72,8 +72,14 @@ export default {
     },
     // 企业支付信息接口
     companyGetCompanyResources(params) {
-        return Api.get(baseURL.systemService + '/company/getCompanyResources'+ params);
+        return Api.get(baseURL.systemService + '/company/getCompanyResources/'+ params);
     },
+    // 根据子系统编码查询充值套餐和套餐项目列表
+    rmpaysetPaySetList(params) {
+        return Api.get(baseURL.systemService + '/rmpayset/paySetList/'+ params);
+    },
+
+    
     //获取意见反馈列表
     getRmsuggestList(params) {
         return Api.get(baseURL.systemService + '/rmsuggestfeedbacktype/list' + params);
