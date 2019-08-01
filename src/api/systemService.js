@@ -78,6 +78,10 @@ export default {
     rmpaysetPaySetList(params) {
         return Api.get(baseURL.systemService + '/rmpayset/paySetList/'+ params);
     },
+    // 支付-for业务系统支付入口
+    rmpaymentrecordPay(params) {
+        return Api.post(baseURL.systemService + '/rmpaymentrecord/pay/', params);
+    },
 
     
     //获取意见反馈列表
@@ -88,5 +92,24 @@ export default {
     //保存反馈记录
     rmsuggestFeedBackRecord(params) {
         return Api.post(baseURL.systemService + '/rmsuggestfeedbackrecord/save', params);
+    },
+     //查看sass平台设置的各种图片  （login_type 登录/注册 vip_center 会员中心 auth_setting 权限设置 guide_setting 引导图）
+     getRmpicset(params) {
+        return Api.get(baseURL.systemService + '/rmpicset/list', params);
+    },
+    
+    //生成通讯签名
+    getCreateSignature(params) {
+        return Api.get(baseURL.systemService + '/rmmessage/createSignature', params);
+    },
+    
+    //判断该菜单权限的引导图是否第一次访问
+    getjudgeFirst(params) {
+        return Api.get(baseURL.systemService + '/rmguidepicrecord/judgeFirst', params);
+    },
+    
+    //重置引导图
+    getrmguidepicrecord(params) {
+        return Api.post(baseURL.systemService + '/rmguidepicrecord/reset', params);
     },
 };
