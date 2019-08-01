@@ -42,7 +42,15 @@
     </el-select>
 
       <el-button v-if="authorityButtons.includes('sys_employee_1004')" size="medium" type="primary" @click="$refs.employeeTable.reload(1)" icon="el-icon-search">查询</el-button>
-      <el-button v-if="authorityButtons.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button>
+      <!-- <el-button v-if="authorityButtons.includes('sys_employee_1001')" size="medium" icon="el-icon-plus" @click="editOrAddHandle('add')">新增用户</el-button> -->
+      <auth-button code='sys_employee_1001' size="medium" icon="el-icon-plus"  
+          ref="roleAuthBtn"
+          :noAuthIcon="true"
+          :auth-pic="$store.state.systemSettings.authSettingPic"
+          auth-link="/member"
+          @authClick="editOrAddHandle('add')"
+      >新增用户</auth-button>
+      <span class="d-inline ml5" v-if="isMarket&&$refs.employeeTable">员工上限{{$refs.employeeTable.tableCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
       <div class="fr mr10">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
@@ -329,6 +337,9 @@ export default {
         ]
       // this.roleLists = [...res[0],...res[1]]
     })
+    if(this.isMarket){
+        this.$store.dispatch('systemSettings/getAuthSettingPic')
+    }
   },
   methods: {
     // 员工操作
@@ -464,6 +475,14 @@ export default {
       this.dialogVisible = true
       this.dialogType = type
       if (type == 'add') {
+        if(type=='add'&&this.isMarket){
+          let totalNum = this.getSourceMaxNum('sys_employee_1001')
+          if(typeof totalNum=="number"){
+            if((totalNum>0&&(this.$refs.roleTable.tableCount||0)/totalNum>=1)||!totalNum){
+              return this.$refs.roleAuthBtn.showAuthDialog()
+            }
+          }
+        }
         this.dialogWidth = '420px';
         this.dialogTitle = '新增用户'
         this.chooseIsShow = true

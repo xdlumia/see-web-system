@@ -474,7 +474,7 @@ export default {
 <style scoped>
 .label-left {
   float: left;
-  width: 70px;
+  width: 95px;
 }
 .el-form-item--mini.el-form-item,
 .el-form-item--small.el-form-item {
