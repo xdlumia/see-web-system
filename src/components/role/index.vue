@@ -153,7 +153,6 @@ export default {
     if(!this.authorityButtons.includes('sys_role_1007')){
       this.activeRole = 'bizSystemService.getRoleList'
     }
-    console.log(this)
     if(this.isMarket){
         this.$store.dispatch('systemSettings/getAuthSettingPic')
     }
