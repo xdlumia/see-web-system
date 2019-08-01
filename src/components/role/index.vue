@@ -39,7 +39,16 @@
               </el-select>
           </div>
           <el-button v-if="authorityButtons.includes('sys_role_1004')" type="primary" @click="$refs.roleTable.reload(1)" icon="el-icon-search">查询</el-button>
-          <el-button v-if="authorityButtons.includes('sys_role_1001') && activeRole=='bizSystemService.getRoleList'" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button>
+          <!-- <el-button v-if="authorityButtons.includes('sys_role_1001') && activeRole=='bizSystemService.getRoleList'" size="medium" icon="el-icon-plus" @click="roleHandle('add',{})"  >新增角色</el-button> -->
+          <auth-button code='sys_role_1001' size="medium" icon="el-icon-plus"  
+              v-if="activeRole=='bizSystemService.getRoleList'"
+              ref="roleAuthBtn"
+              :noAuthIcon="true"
+              :auth-pic="$store.state.systemSettings.authSettingPic"
+              auth-link="/member"
+              @authClick="roleHandle('add',{})"
+          >新增角色</auth-button>
+          <span class="d-inline ml5" v-if="isMarket&&$refs.roleTable">角色上限{{$refs.roleTable.tableCount||0}}/{{getSourceMaxNum('sys_role_1001')}}</span>
         </el-form-item>
       </el-form>
     <!-- 表格数据 -->
@@ -144,6 +153,10 @@ export default {
     if(!this.authorityButtons.includes('sys_role_1007')){
       this.activeRole = 'bizSystemService.getRoleList'
     }
+    console.log(this)
+    if(this.isMarket){
+        this.$store.dispatch('systemSettings/getAuthSettingPic')
+    }
   },
   methods: {
     // 角色数据操作
@@ -153,6 +166,14 @@ export default {
         update:{ title:'编辑角色:' + row.roleName, width:'460px', component:'roleAdd' }, 
         fnAuth:{ title:'功能授权-当前角色:' + row.roleName, width:'460px', component:'roleFnauth' },
         dataAuth:{ title:'数据授权-当前角色:' + row.roleName, width:'1220px', component:'roleDataAuth' },
+      }
+      if(type=='add'&&this.isMarket){
+        let totalNum = this.getSourceMaxNum('sys_role_1001')
+        if(typeof totalNum=="number"){
+          if((totalNum>0&&(this.$refs.roleTable.tableCount||0)/totalNum>=1)||!totalNum){
+            return this.$refs.roleAuthBtn.showAuthDialog()
+          }
+        }
       }
       this.dialogMeta.visible = true
       this.dialogMeta.type = type

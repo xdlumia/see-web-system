@@ -89,4 +89,8 @@ export default {
     rmsuggestFeedBackRecord(params) {
         return Api.post(baseURL.systemService + '/rmsuggestfeedbackrecord/save', params);
     },
+    //查看sass平台设置的各种图片  （login_type 登录/注册 vip_center 会员中心 auth_setting 权限设置 guide_setting 引导图）
+    getRmpicset(params) {
+        return Api.get(baseURL.systemService + '/rmpicset/list', params);
+    },
 };
