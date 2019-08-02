@@ -48,7 +48,7 @@
               auth-link="/member"
               @authClick="roleHandle('add',{})"
           >新增角色</auth-button>
-          <span class="d-inline ml5" v-if="isMarket&&$refs.roleTable">角色上限{{$refs.roleTable.tableCount||0}}/{{getSourceMaxNum('sys_role_1001')}}</span>
+          <span class="d-inline ml5" v-if="isInMarket&&$refs.roleTable">角色上限{{$refs.roleTable.tableCount||0}}/{{getSourceMaxNum('sys_role_1001')}}</span>
         </el-form-item>
       </el-form>
     <!-- 表格数据 -->
@@ -146,6 +146,11 @@ export default {
         companyCode:this.$local.fetch('userInfo').companyCode, //公司编码  自定义角色不传此参数
         subsysCode:this.$local.fetch('userInfo').syscode, //子系统编码 自定义角色不传此参数
       },
+    }
+  },
+  computed:{
+    isInMarket(){
+      return this.isMarket?true:false
     }
   },
   created () {

@@ -50,7 +50,7 @@
           auth-link="/member"
           @authClick="editOrAddHandle('add')"
       >新增用户</auth-button>
-      <span class="d-inline ml5" v-if="isMarket&&$refs.employeeTable">员工上限{{$refs.employeeTable.tableCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
+      <span class="d-inline ml5" v-if="isInMarket&&$refs.employeeTable">员工上限{{$refs.employeeTable.tableCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
       <div class="fr mr10">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
@@ -328,6 +328,11 @@ export default {
       }
     }
   },
+  computed:{
+    isInMarket(){
+      return this.isMarket?true:false
+    }
+  },
   created () {
     this.queryOpenRegistration()
     Promise.all([this.getDefaultRoleList(), this.getRoleList(),]).then((res) => {
@@ -475,7 +480,7 @@ export default {
       this.dialogVisible = true
       this.dialogType = type
       if (type == 'add') {
-        if(type=='add'&&this.isMarket){
+        if(this.isMarket){
           let totalNum = this.getSourceMaxNum('sys_employee_1001')
           if(typeof totalNum=="number"){
             if((totalNum>0&&(this.$refs.roleTable.tableCount||0)/totalNum>=1)||!totalNum){
