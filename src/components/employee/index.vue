@@ -476,18 +476,20 @@ export default {
     },
     // 编辑和新增用户
     editOrAddHandle (type, data) {
-      this.rowData = data
-      this.dialogVisible = true
-      this.dialogType = type
-      if (type == 'add') {
+      if(type=='add'){
         if(this.isMarket){
           let totalNum = this.getSourceMaxNum('sys_employee_1001')
           if(typeof totalNum=="number"){
-            if((totalNum>0&&(this.$refs.roleTable.tableCount||0)/totalNum>=1)||!totalNum){
+            if((totalNum>0&&(this.$refs.employeeTable.tableCount||0)/totalNum>=1)||!totalNum){
               return this.$refs.roleAuthBtn.showAuthDialog()
             }
           }
         }
+      }
+      this.rowData = data
+      this.dialogVisible = true
+      this.dialogType = type
+      if (type == 'add') {
         this.dialogWidth = '420px';
         this.dialogTitle = '新增用户'
         this.chooseIsShow = true
