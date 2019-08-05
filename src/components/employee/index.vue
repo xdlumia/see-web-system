@@ -46,7 +46,7 @@
       <auth-button code='sys_employee_1001' size="medium" icon="el-icon-plus"  
           ref="roleAuthBtn"
           :noAuthIcon="true"
-          :auth-pic="$store.state.systemSettings.authSettingPic"
+          :auth-pic="$store.state.systemSettings&&$store.state.systemSettings.authSettingPic"
           auth-link="/member"
           @authClick="editOrAddHandle('add')"
       >新增用户</auth-button>

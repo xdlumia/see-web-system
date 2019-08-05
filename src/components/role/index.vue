@@ -44,7 +44,7 @@
               v-if="activeRole=='bizSystemService.getRoleList'"
               ref="roleAuthBtn"
               :noAuthIcon="true"
-              :auth-pic="$store.state.systemSettings.authSettingPic"
+              :auth-pic="$store.state.systemSettings&&$store.state.systemSettings.authSettingPic"
               auth-link="/member"
               @authClick="roleHandle('add',{})"
           >新增角色</auth-button>
