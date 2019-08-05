@@ -112,4 +112,8 @@ export default {
     getrmguidepicrecord(params) {
         return Api.post(baseURL.systemService + '/rmguidepicrecord/reset', params);
     },
+    //获取sass所有客服
+    getAdminList(params) {
+        return Api.get(baseURL.systemService + '/admin/customerList', params);
+    }
 };
