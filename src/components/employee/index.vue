@@ -50,7 +50,7 @@
           auth-link="/member"
           @authClick="editOrAddHandle('add')"
       >新增用户</auth-button>
-      <span class="d-inline ml5" v-if="isInMarket&&$refs.employeeTable">员工上限{{$refs.employeeTable.tableCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
+      <span class="d-inline ml5" v-if="isInMarket&&$refs.employeeTable">员工上限{{totalEmployeeCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
       <div class="fr mr10">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
@@ -325,7 +325,8 @@ export default {
       lockform: {
         id: '', // 用户id
         lockReason: '' // 锁定原因
-      }
+      },
+      totalEmployeeCount:0// 员工总数
     }
   },
   computed:{
@@ -344,6 +345,7 @@ export default {
     })
     if(this.isMarket){
         this.$store.dispatch('systemSettings/getAuthSettingPic')
+        this.getEmployeeTotalCount();
     }
   },
   methods: {
@@ -474,13 +476,22 @@ export default {
           }
         })
     },
+    async getEmployeeTotalCount(){
+      let {count} = await this.$api.bizSystemService.getEmployeeList({
+        page:1,
+        limit:1
+      })
+      this.totalEmployeeCount = count;
+      return this.totalEmployeeCount;
+    },
     // 编辑和新增用户
-    editOrAddHandle (type, data) {
+    async editOrAddHandle (type, data) {
       if(type=='add'){
         if(this.isMarket){
           let totalNum = this.getSourceMaxNum('sys_employee_1001')
           if(typeof totalNum=="number"){
-            if((totalNum>0&&(this.$refs.employeeTable.tableCount||0)/totalNum>=1)||!totalNum){
+            await this.getEmployeeTotalCount();
+            if((totalNum>0&&(this.totalEmployeeCount||0)/totalNum>=1)||!totalNum){
               return this.$refs.roleAuthBtn.showAuthDialog()
             }
           }
@@ -680,6 +691,7 @@ export default {
               this.$refs.employeeTable.reload()
               // 关闭弹出框
               this.dialogVisible = false
+              this.getEmployeeTotalCount();
               // 已经存在的数据 是否要恢复
             }
           })

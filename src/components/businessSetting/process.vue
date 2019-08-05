@@ -175,12 +175,17 @@
 					'asyshotel_house_long_cancellation_1001': 'icon-jine', // 酒店-酒店-长租作废审核流程-财务审核
 					'asyshotel_house_long_cancellation_1002': 'icon-ren',// -酒店-酒店-长租作废审核流程-项目总经理审核
 					'asyshotel_house_owner_1001': 'icon-jine', // 酒店-酒店-业主合同审核流程-财务审核 
-					'asyshotel_house_owner_1002': 'icon-ren'// -酒店-酒店-业主合同审核流程-项目总经理审核
+					'asyshotel_house_owner_1002': 'icon-ren',// -酒店-酒店-业主合同审核流程-项目总经理审核
+					'asyshotel_house_long_rent_1003':'icon-anquan',
+					'asyshotel_house_long_extension_1003':'icon-anquan',
+					'asyshotel_house_long_change_1003':'icon-anquan',
+					'asyshotel_house_long_surrender_1003':'icon-anquan',
 					
 				}
 			}
 		},
 		mounted() {
+			console.log(this)
 			let syscode = this.$local.fetch('userInfo').syscode
 			this.getProcessDefinitionList({syscode:syscode})
 			// 获取当前流程设置
@@ -215,6 +220,22 @@
 			 * @return {[underfined]} [void]
 			 */
 			saveProcessDefinition() {
+				if(this.dataList.some((item)=>{
+					let processAtLeast = !item.content.mainTask.subTasks.reduce((total,{taskStatus})=>{
+						if(taskStatus=='enable'){
+							total++
+						}
+						return total;
+					},0)
+					if(processAtLeast){
+						this.$message.error({
+							message:`${item.content.processName}的流程设置需至少启用一个`
+						})
+						return true;
+					}
+				})){
+					return;
+				}
 				this.showLoading = true
 				let processDefinitionUpdateVos = this.dataList.map(function(element, index) {
 					let { ..._element } = element

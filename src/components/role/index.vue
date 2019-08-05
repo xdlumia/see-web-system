@@ -48,7 +48,7 @@
               auth-link="/member"
               @authClick="roleHandle('add',{})"
           >新增角色</auth-button>
-          <span class="d-inline ml5" v-if="isInMarket&&$refs.roleTable">角色上限{{$refs.roleTable.tableCount||0}}/{{getSourceMaxNum('sys_role_1001')}}</span>
+          <span class="d-inline ml5" v-if="isInMarket&&$refs.roleTable">角色上限{{totalRoleCount||0}}/{{getSourceMaxNum('sys_role_1001')}}</span>
         </el-form-item>
       </el-form>
     <!-- 表格数据 -->
@@ -146,6 +146,7 @@ export default {
         companyCode:this.$local.fetch('userInfo').companyCode, //公司编码  自定义角色不传此参数
         subsysCode:this.$local.fetch('userInfo').syscode, //子系统编码 自定义角色不传此参数
       },
+      totalRoleCount:0,// 自定义角色总数
     }
   },
   computed:{
@@ -160,11 +161,22 @@ export default {
     }
     if(this.isMarket){
         this.$store.dispatch('systemSettings/getAuthSettingPic')
+        this.getRoleTotalCount();
     }
   },
   methods: {
+    async getRoleTotalCount(){
+      let {count} = await this.$api.bizSystemService.getRoleList({
+        page:1,
+        limit:1,
+        companyCode:this.$local.fetch('userInfo').companyCode,
+        subsysCode:this.$local.fetch('userInfo').syscode,
+      })
+      this.totalRoleCount = count;
+      return this.totalRoleCount;
+    },
     // 角色数据操作
-    roleHandle(type,row){
+    async roleHandle(type,row){
       let title = {
         add:{ title:'新增角色', width:'460px', component:'roleAdd' },
         update:{ title:'编辑角色:' + row.roleName, width:'460px', component:'roleAdd' }, 
@@ -174,7 +186,8 @@ export default {
       if(type=='add'&&this.isMarket){
         let totalNum = this.getSourceMaxNum('sys_role_1001')
         if(typeof totalNum=="number"){
-          if((totalNum>0&&(this.$refs.roleTable.tableCount||0)/totalNum>=1)||!totalNum){
+          await this.getRoleTotalCount();
+          if((totalNum>0&&(this.totalRoleCount||0)/totalNum>=1)||!totalNum){
             return this.$refs.roleAuthBtn.showAuthDialog()
           }
         }
@@ -194,6 +207,7 @@ export default {
     // 重新加载表格数据
     tableReload: function () {
       this.$refs.roleTable.reload()
+      this.getRoleTotalCount()
     },
     // 删除部门
     delHandle (node, data) {
