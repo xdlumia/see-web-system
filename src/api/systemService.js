@@ -109,7 +109,7 @@ export default {
     },
     
     //重置引导图
-    getrmguidepicrecord(params) {
+    rmguidepicrecordReset(params) {
         return Api.post(baseURL.systemService + '/rmguidepicrecord/reset', params);
     },
     //获取sass所有客服
