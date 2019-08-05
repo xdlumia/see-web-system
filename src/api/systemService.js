@@ -86,7 +86,7 @@ export default {
     
     //获取意见反馈列表
     getRmsuggestList(params) {
-        return Api.get(baseURL.systemService + '/rmsuggestfeedbacktype/list' + params);
+        return Api.get(baseURL.systemService + '/rmsuggestfeedbacktype/list/' + params);
     },
     
     //保存反馈记录
@@ -115,5 +115,9 @@ export default {
     //获取sass所有客服
     getAdminList(params) {
         return Api.get(baseURL.systemService + '/admin/customerList', params);
+    },
+    //获取支付成功信息
+    rmpaymentsuccessinfoInfo(params) {
+        return Api.get(baseURL.systemService + '/rmpaymentsuccessinfo/info/' + params);
     }
 };
