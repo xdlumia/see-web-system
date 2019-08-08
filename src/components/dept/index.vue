@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="12" class="ar">
           <el-button v-if="authorityButtons.includes('sys_dept_1001')" type="primary" size="medium" icon="el-icon-plus"  @click="editOrAddHandle('add')">新增部门</el-button>
-          <el-button type="warning" size="medium"><router-link class="d-text-white" to="/system/org">组织类型设置</router-link></el-button>
+          <el-button type="warning" size="medium" v-if="authorityButtons.includes('sys_dept_1005')"><router-link class="d-text-white" to="/system/org">组织类型设置</router-link></el-button>
         </el-col>
       </el-row>
       

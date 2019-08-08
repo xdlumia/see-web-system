@@ -51,7 +51,7 @@
           @authClick="editOrAddHandle('add')"
       >新增用户</auth-button>
       <span class="d-inline ml5 d-text-gray" v-if="isInMarket&&$refs.employeeTable">员工上限{{totalEmployeeCount||0}}/{{getSourceMaxNum('sys_employee_1001')||'∞'}}</span>
-      <div class="fr mr10">
+      <div class="fr mr10" v-if="authorityButtons.includes('sys_employee_1011')">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
 				  @change="openRegistration"
