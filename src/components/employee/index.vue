@@ -50,7 +50,7 @@
           auth-link="/member"
           @authClick="editOrAddHandle('add')"
       >新增用户</auth-button>
-      <span class="d-inline ml5" v-if="isInMarket&&$refs.employeeTable">员工上限{{totalEmployeeCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
+      <span class="d-inline ml5 d-text-gray" v-if="isInMarket&&$refs.employeeTable">员工上限{{totalEmployeeCount||0}}/{{getSourceMaxNum('sys_employee_1001')||'∞'}}</span>
       <div class="fr mr10">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
@@ -489,7 +489,7 @@ export default {
       if(type=='add'){
         if(this.isMarket){
           let totalNum = this.getSourceMaxNum('sys_employee_1001')
-          if(typeof totalNum=="number"){
+          if(typeof totalNum=="number"&&totalNum!==0){
             await this.getEmployeeTotalCount();
             if((totalNum>0&&(this.totalEmployeeCount||0)/totalNum>=1)||!totalNum){
               return this.$refs.roleAuthBtn.showAuthDialog()

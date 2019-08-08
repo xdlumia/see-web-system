@@ -48,7 +48,7 @@
               auth-link="/member"
               @authClick="roleHandle('add',{})"
           >新增角色</auth-button>
-          <span class="d-inline ml5" v-if="isInMarket&&$refs.roleTable">角色上限{{totalRoleCount||0}}/{{getSourceMaxNum('sys_role_1001')}}</span>
+          <span class="d-inline ml5 d-text-gray" v-if="isInMarket&&$refs.roleTable">角色上限{{totalRoleCount||0}}/{{getSourceMaxNum('sys_role_1001')||'∞'}}</span>
         </el-form-item>
       </el-form>
     <!-- 表格数据 -->
@@ -185,7 +185,7 @@ export default {
       }
       if(type=='add'&&this.isMarket){
         let totalNum = this.getSourceMaxNum('sys_role_1001')
-        if(typeof totalNum=="number"){
+        if(typeof totalNum=="number"&&totalNum!==0){
           await this.getRoleTotalCount();
           if((totalNum>0&&(this.totalRoleCount||0)/totalNum>=1)||!totalNum){
             return this.$refs.roleAuthBtn.showAuthDialog()
