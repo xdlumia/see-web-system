@@ -103,7 +103,7 @@
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
           <el-button v-if="authorityButtons.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
           <!-- 人员调动功能仅α使用 -->
-          <el-button v-if="authorityButtons.includes('sys_employee_1010') && syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
+          <el-button v-loading="isTransfering" v-if="authorityButtons.includes('sys_employee_1010') && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
           <el-button v-if="authorityButtons.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
           <el-button v-if="authorityButtons.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
 
@@ -326,7 +326,8 @@ export default {
         id: '', // 用户id
         lockReason: '' // 锁定原因
       },
-      totalEmployeeCount:0// 员工总数
+      totalEmployeeCount:0,// 员工总数
+      isTransfering:false,
     }
   },
   computed:{
@@ -593,10 +594,37 @@ export default {
       this.fnLoadDept() // 加载部门数据
     },
     // 点击树节点回掉
-    handleNodeClick (data) {
+    async handleNodeClick (data) {
       this.dialogVisibleTree = false // 关闭弹出框
       // 如果当前是人员调动部门选择
       if(this.dialogType == 'transfer'){
+        if(this.syscode!='asystem'){
+          await this.$confirm(`是否确定将${this.currentRow.employeeName}调动至${data.deptName}`, {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          })
+          this.isTransfering = true
+          this.$api.bizSystemService.saveTransfer({
+            ransferDeptId: data.id, // 转部门id
+            userId: this.currentRow.userId, // 当前用户id
+          })
+          .then(res => {
+            if (res.code == 200) {
+              this.tableReload();
+            }
+            this.$message({
+              type:res.code==200?'success':'error',
+              message:res.code==200?'人员调动成功':(res.message||'人员调动失败'),
+              showClose:true,
+            })
+          })
+          .finally(()=>{
+            this.isTransfering = false
+          })
+          return
+        }
         this.dialogMeta.visible = true
         this.dialogMeta.dept = data
         this.dialogMeta.width = "720px"
