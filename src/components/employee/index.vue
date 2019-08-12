@@ -66,6 +66,13 @@
       </el-table-column>
       <el-table-column prop="employeeName" align="center" label="姓名" width="120">
       </el-table-column>
+      <el-table-column prop="nickName" align="center" label="昵称" width="120">
+      </el-table-column>
+      <el-table-column prop="avatarUrl" align="center" label="头像" width="120">
+        <template slot-scope="{row}">
+           <img style="width: 80px; height: 80px" :src="row.avatarUrl" v-if="row.avatarUrl" />
+        </template>
+      </el-table-column>
       <el-table-column prop="email" align="center" label="邮箱" width="150" show-overflow-tooltip>
       </el-table-column>
       <el-table-column prop="phone" min-width="120" align="center" label="电话">
@@ -131,6 +138,10 @@
                   <el-input v-model="dialogForm.employeeName" placeholder="请输入姓名" :maxlength="25" class="w200"></el-input>
                 </el-form-item>
 
+                <el-form-item label="昵称" prop="nickName" >
+                  <el-input v-model="dialogForm.nickName" placeholder="请输入昵称" :maxlength="25" class="w200"></el-input>
+                </el-form-item>
+
                 <el-form-item label="员工编号" prop="employeeNo" 
                 :rules="[{required: true, message: '请输入员工编号'},{min: 1, max: 25, message: '不能超过25个字符' }]">
                   <el-input v-model.trim="dialogForm.employeeNo" placeholder="请输入员工编号" maxlength="25" class="w200"></el-input>
@@ -166,6 +177,13 @@
                 
                 <el-form-item label="备注" prop="remark">
                   <el-input :maxlength='140' type="textarea" v-model="dialogForm.remark" class="w200" placeholder="请输入备注"></el-input>
+                </el-form-item>
+
+                <el-form-item label="头像" prop="avatarUrl">
+                  <upload-file :limit="{size:'5M',type:['png','jpg','gif','bmp']}" @addPictureUrl="setAvatar">
+                    <img style="width: 80px; height: 80px" :src="dialogForm.avatarUrl" v-if="dialogForm.avatarUrl" />
+                    <el-button size="mini" icon="el-icon-upload2" v-else>上传图片</el-button>
+                  </upload-file>
                 </el-form-item>
             </div>
           </el-form>
@@ -232,11 +250,13 @@ import { Base64 } from 'js-base64'; //base 64加密
 import employeeAuth from "./employee-auth"; //授权  
 import employeeTransfer from "./employee-transfer"; //人员调动
 import employeeTransferLog from "./employee-transfer-log"; //人员调动记录
+import uploadFile from './../common/upload-file';
 export default {
   components: {
     employeeAuth,
     employeeTransfer,
-    employeeTransferLog
+    employeeTransferLog,
+    uploadFile
   },
   data () {
     return {
@@ -309,6 +329,8 @@ export default {
         deptName: '', //部门名称
         userAccount:'', //用户帐号
         remark:'',
+        avatarUrl:'',
+        nickName:'',
       },
 
       asyncType: 'password', // 默认type是密码
@@ -350,6 +372,9 @@ export default {
     }
   },
   methods: {
+    setAvatar({url}){
+      this.dialogForm.avatarUrl=url;
+    },
     // 员工操作
     employeeHandle(component,row){
       let title = {

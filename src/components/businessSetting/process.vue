@@ -180,6 +180,7 @@
 					'asyshotel_house_long_extension_1003':'icon-anquan',
 					'asyshotel_house_long_change_1003':'icon-anquan',
 					'asyshotel_house_long_surrender_1003':'icon-anquan',
+					'asyshotel_house_owner_1003':'icon-anquan',
 					
 				}
 			}
