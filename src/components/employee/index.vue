@@ -70,7 +70,7 @@
       </el-table-column>
       <el-table-column prop="avatarUrl" align="center" label="头像" width="120">
         <template slot-scope="{row}">
-           <img style="width: 80px; height: 80px" :src="row.avatarUrl" v-if="row.avatarUrl" />
+           <img style="width: 40px; height: 40px" :src="row.avatarUrl" v-if="row.avatarUrl" />
         </template>
       </el-table-column>
       <el-table-column prop="email" align="center" label="邮箱" width="150" show-overflow-tooltip>
