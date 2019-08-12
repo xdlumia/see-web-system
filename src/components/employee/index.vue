@@ -639,11 +639,6 @@ export default {
             if (res.code == 200) {
               this.tableReload();
             }
-            this.$message({
-              type:res.code==200?'success':'error',
-              message:res.code==200?'人员调动成功':(res.message||'人员调动失败'),
-              showClose:true,
-            })
           })
           .finally(()=>{
             this.isTransfering = false
