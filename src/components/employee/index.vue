@@ -523,6 +523,8 @@ export default {
           }
         }
       }
+      Object.keys(this.dialogForm).map(key=>this.dialogForm[key]='')
+      this.dialogForm.lockStatus='0'
       this.rowData = data
       this.dialogVisible = true
       this.dialogType = type
@@ -546,6 +548,7 @@ export default {
         this.dialogTitle = '编辑：' + data.employeeName
         this.dialogWidth = '390px'
         this.$api.bizSystemService.getEmployeeInfo(data.id).then(res=>{
+          if(this.dialogTitle!=`编辑：`+data.employeeName)return;
           let resData = res.data || {}
           for(let key in this.dialogForm){
             this.dialogForm[key] = resData[key]
