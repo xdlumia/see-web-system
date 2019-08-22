@@ -5,16 +5,16 @@
  */ -->
 <template>
     <div>
-        <el-form ref="form" class="" size="small" label-width="190px" :model="list">
+        <el-form ref="form" class="" size="small" label-width="190px" :model="form">
             <div class="d-relative">
-                <el-row class="mb10 pt10 d-bg-gray br5" v-for="(item,index) of list" :key="index">
+                <el-row class="mb10 pt10 d-bg-gray br5" v-for="(item,index) of form.list" :key="index">
                     <el-col :span="12">
-                        <el-form-item label="开户名称" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' }]" :prop="index+'.accountName'">
+                        <el-form-item label="开户名称" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' }]" :prop="'list.'+index+'.accountName'">
                             <el-input class="w200" v-model.trim="item.accountName" placeholder="请填写开户名称" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
-                        <el-form-item label="开户银行（到支行）" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' }]" :prop="index+'.bankName'">
+                        <el-form-item label="开户银行（到支行）" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' }]" :prop="'list.'+index+'.bankName'">
                             <el-input class="w200" v-model.trim="item.bankName" placeholder="请填写开户银行（到支行）" />
                         </el-form-item>
                     </el-col>
@@ -22,12 +22,12 @@
                         <el-button size="mini" @click="add(index)">添加</el-button>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="银行预留手机号" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' },{type:'phone'}]" :prop="index+'.phone'">
+                        <el-form-item label="银行预留手机号" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' },{type:'phone'}]" :prop="'list.'+index+'.phone'">
                             <el-input class="w200" v-model.trim="item.phone" placeholder="请填写银行预留手机号" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
-                        <el-form-item label="开户账号" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' },{type:'bankCard'}]" :prop="index+'.accountNumber'">
+                        <el-form-item label="开户账号" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' },{type:'bankCard'}]" :prop="'list.'+index+'.accountNumber'">
                             <el-input class="w200" v-model.trim="item.accountNumber" placeholder="请填写开户账号" />
                         </el-form-item>
                     </el-col>
@@ -49,14 +49,16 @@ export default {
     props: ['value'],
     data() {
         return {
-            list: []
+            form:{
+                list:[],
+            }
         };
     },
     mounted() {
         this.init();
     },
     watch: {
-        list: {
+        form: {
             deep: true,
             handler: function() {
                 this.update();
@@ -75,7 +77,7 @@ export default {
                 list = JSON.parse(this.value);
             }
             if (!list.length) list = [this.getDefault()];
-            this.list = list;
+            this.form.list = list;
         },
         getDefault() {
             return {
@@ -86,14 +88,14 @@ export default {
             };
         },
         add(index) {
-            this.list.splice(index + 1, 0, this.getDefault());
+            this.form.list.splice(index + 1, 0, this.getDefault());
         },
         remove(index) {
-            this.list.splice(index, 1);
+            this.form.list.splice(index, 1);
         },
         update() {
-            if (this.list.length) {
-                this.$emit('input', JSON.stringify(this.list));
+            if (this.form.list.length) {
+                this.$emit('input', JSON.stringify(this.form.list));
             }
         }
     }
