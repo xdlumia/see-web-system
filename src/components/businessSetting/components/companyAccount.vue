@@ -9,12 +9,12 @@
             <div class="d-relative">
                 <el-row class="mb10 pt10 d-bg-gray br5" v-for="(item,index) of list" :key="index">
                     <el-col :span="12">
-                        <el-form-item label="开户名称" :rules="[{ required: true, message: '必填项', trigger: 'blur' }]" :prop="index+'.accountName'">
+                        <el-form-item label="开户名称" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' }]" :prop="index+'.accountName'">
                             <el-input class="w200" v-model.trim="item.accountName" placeholder="请填写开户名称" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
-                        <el-form-item label="开户银行（到支行）" :rules="[{ required: true, message: '必填项', trigger: 'blur' }]" :prop="index+'.bankName'">
+                        <el-form-item label="开户银行（到支行）" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' }]" :prop="index+'.bankName'">
                             <el-input class="w200" v-model.trim="item.bankName" placeholder="请填写开户银行（到支行）" />
                         </el-form-item>
                     </el-col>
@@ -22,12 +22,12 @@
                         <el-button size="mini" @click="add(index)">添加</el-button>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="银行预留手机号" :rules="[{ required: true, message: '必填项', trigger: 'blur' },{type:'phone'}]" :prop="index+'.phone'">
+                        <el-form-item label="银行预留手机号" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' },{type:'phone'}]" :prop="index+'.phone'">
                             <el-input class="w200" v-model.trim="item.phone" placeholder="请填写银行预留手机号" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
-                        <el-form-item label="开户账号" :rules="[{ required: true, message: '必填项', trigger: 'blur' },{type:'bankCard'}]" :prop="index+'.accountNumber'">
+                        <el-form-item label="开户账号" :rules="[{ required: isInMarket?false:true, message: '必填项', trigger: 'blur' },{type:'bankCard'}]" :prop="index+'.accountNumber'">
                             <el-input class="w200" v-model.trim="item.accountNumber" placeholder="请填写开户账号" />
                         </el-form-item>
                     </el-col>
@@ -61,6 +61,11 @@ export default {
             handler: function() {
                 this.update();
             }
+        }
+    },
+    computed: {
+        isInMarket() {
+            return this.isMarket ? true : false;
         }
     },
     methods: {
