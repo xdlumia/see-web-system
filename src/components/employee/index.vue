@@ -61,7 +61,7 @@
       </div>
     </div>
     <!-- 表格数据 -->
-    <d-table v-loading="isTransfering" api="bizSystemService.getEmployeeList" :params="queryForm" ref="employeeTable"  style="height:calc(100% - 40px)">
+    <d-table v-loading="isTransfering" api="bizSystemService.getEmployeeList" :params="queryForm" v-if="queryForm.sysCode" ref="employeeTable"  style="height:calc(100% - 40px)">
       <el-table-column type="index" align="center" label="序号" width="50">
       </el-table-column>
       <el-table-column prop="employeeName" align="center" label="姓名" width="120">
@@ -293,6 +293,7 @@ export default {
         limit:15,
         deptIdList:[],
         roleIdList:[],
+        sysCode: this.$local.fetch('userInfo').syscode,
       },
       queryRoleParams: {
         limit:999,
@@ -370,6 +371,9 @@ export default {
         this.$store.dispatch('systemSettings/getAuthSettingPic')
         this.getEmployeeTotalCount();
     }
+  },
+  mounted(){
+    this.queryForm.sysCode = this.$local.fetch('userInfo').syscode
   },
   methods: {
     setAvatar({url}){
