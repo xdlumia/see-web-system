@@ -50,8 +50,8 @@
           auth-link="/member"
           @authClick="editOrAddHandle('add')"
       >新增用户</auth-button>
-      <span class="d-inline ml5" v-if="isInMarket&&$refs.employeeTable">员工上限{{totalEmployeeCount||0}}/{{getSourceMaxNum('sys_employee_1001')}}</span>
-      <div class="fr mr10">
+      <span class="d-inline ml5 d-text-gray" v-if="isInMarket&&$refs.employeeTable">员工上限{{totalEmployeeCount||0}}/{{getSourceMaxNum('sys_employee_1001')||'∞'}}</span>
+      <div class="fr mr10" v-if="authorityButtons.includes('sys_employee_1011')">
       	<span class="d-text-gray">开放注册</span>
       	<el-switch
 				  @change="openRegistration"
@@ -61,10 +61,17 @@
       </div>
     </div>
     <!-- 表格数据 -->
-    <d-table api="bizSystemService.getEmployeeList" :params="queryForm" ref="employeeTable"  style="height:calc(100% - 40px)">
+    <d-table v-loading="isTransfering" api="bizSystemService.getEmployeeList" :params="queryForm" v-if="queryForm.sysCode" ref="employeeTable"  style="height:calc(100% - 40px)">
       <el-table-column type="index" align="center" label="序号" width="50">
       </el-table-column>
       <el-table-column prop="employeeName" align="center" label="姓名" width="120">
+      </el-table-column>
+      <el-table-column prop="nickName" align="center" label="昵称" width="120">
+      </el-table-column>
+      <el-table-column prop="avatarUrl" align="center" label="头像" width="120">
+        <template slot-scope="{row}">
+           <img style="width: 40px; height: 40px" :src="row.avatarUrl" v-if="row.avatarUrl" />
+        </template>
       </el-table-column>
       <el-table-column prop="email" align="center" label="邮箱" width="150" show-overflow-tooltip>
       </el-table-column>
@@ -103,7 +110,7 @@
           <!-- sourceFrom:   数据来源(0 A系统用户默认方式 1 同步房脉动) -->
           <el-button v-if="authorityButtons.includes('sys_employee_1002') && scope.row.sourceFrom!=1" size="mini" type="primary" plain @click="editOrAddHandle('edit',scope.row)">修改</el-button>
           <!-- 人员调动功能仅α使用 -->
-          <el-button v-if="authorityButtons.includes('sys_employee_1010') && syscode=='asystem' && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
+          <el-button v-if="authorityButtons.includes('sys_employee_1010') && scope.row.userId" size="mini" type="primary" plain @click="employeeTransfer(scope.row)">人员调动</el-button>
           <el-button v-if="authorityButtons.includes('sys_employee_1003') && scope.row.sourceFrom!=1" size="mini" type="danger" @click="delHandle(scope.$index, scope.row)">删除</el-button>
           <el-button v-if="authorityButtons.includes('sys_employee_1008') && scope.row.sourceFrom!=1" size="mini" type="info" plain @click="editPassWord('password',scope.row)">修改密码</el-button>
 
@@ -129,6 +136,10 @@
                 prop="employeeName" 
                 :rules="[{required: true, message: '请输入姓名'},{min: 1, max: 25, message: '不能超过25个字符' }]">
                   <el-input v-model="dialogForm.employeeName" placeholder="请输入姓名" :maxlength="25" class="w200"></el-input>
+                </el-form-item>
+
+                <el-form-item label="昵称" prop="nickName" >
+                  <el-input v-model="dialogForm.nickName" placeholder="请输入昵称" :maxlength="25" class="w200"></el-input>
                 </el-form-item>
 
                 <el-form-item label="员工编号" prop="employeeNo" 
@@ -166,6 +177,13 @@
                 
                 <el-form-item label="备注" prop="remark">
                   <el-input :maxlength='140' type="textarea" v-model="dialogForm.remark" class="w200" placeholder="请输入备注"></el-input>
+                </el-form-item>
+
+                <el-form-item label="头像" prop="avatarUrl">
+                  <upload-file :limit="{size:'5M',type:['png','jpg','gif','bmp']}" @addPictureUrl="setAvatar">
+                    <img style="width: 80px; height: 80px" :src="dialogForm.avatarUrl" v-if="dialogForm.avatarUrl" />
+                    <el-button size="mini" icon="el-icon-upload2" v-else>上传图片</el-button>
+                  </upload-file>
                 </el-form-item>
             </div>
           </el-form>
@@ -232,11 +250,13 @@ import { Base64 } from 'js-base64'; //base 64加密
 import employeeAuth from "./employee-auth"; //授权  
 import employeeTransfer from "./employee-transfer"; //人员调动
 import employeeTransferLog from "./employee-transfer-log"; //人员调动记录
+import uploadFile from './../common/upload-file';
 export default {
   components: {
     employeeAuth,
     employeeTransfer,
-    employeeTransferLog
+    employeeTransferLog,
+    uploadFile
   },
   data () {
     return {
@@ -273,6 +293,7 @@ export default {
         limit:15,
         deptIdList:[],
         roleIdList:[],
+        sysCode: this.$local.fetch('userInfo').syscode,
       },
       queryRoleParams: {
         limit:999,
@@ -309,6 +330,8 @@ export default {
         deptName: '', //部门名称
         userAccount:'', //用户帐号
         remark:'',
+        avatarUrl:'',
+        nickName:'',
       },
 
       asyncType: 'password', // 默认type是密码
@@ -326,7 +349,8 @@ export default {
         id: '', // 用户id
         lockReason: '' // 锁定原因
       },
-      totalEmployeeCount:0// 员工总数
+      totalEmployeeCount:0,// 员工总数
+      isTransfering:false,
     }
   },
   computed:{
@@ -348,7 +372,13 @@ export default {
         this.getEmployeeTotalCount();
     }
   },
+  mounted(){
+    this.queryForm.sysCode = this.$local.fetch('userInfo').syscode
+  },
   methods: {
+    setAvatar({url}){
+      this.dialogForm.avatarUrl=url;
+    },
     // 员工操作
     employeeHandle(component,row){
       let title = {
@@ -489,7 +519,7 @@ export default {
       if(type=='add'){
         if(this.isMarket){
           let totalNum = this.getSourceMaxNum('sys_employee_1001')
-          if(typeof totalNum=="number"){
+          if(typeof totalNum=="number"&&totalNum!==0){
             await this.getEmployeeTotalCount();
             if((totalNum>0&&(this.totalEmployeeCount||0)/totalNum>=1)||!totalNum){
               return this.$refs.roleAuthBtn.showAuthDialog()
@@ -497,6 +527,8 @@ export default {
           }
         }
       }
+      Object.keys(this.dialogForm).map(key=>this.dialogForm[key]='')
+      this.dialogForm.lockStatus='0'
       this.rowData = data
       this.dialogVisible = true
       this.dialogType = type
@@ -520,6 +552,7 @@ export default {
         this.dialogTitle = '编辑：' + data.employeeName
         this.dialogWidth = '390px'
         this.$api.bizSystemService.getEmployeeInfo(data.id).then(res=>{
+          if(this.dialogTitle!=`编辑：`+data.employeeName)return;
           let resData = res.data || {}
           for(let key in this.dialogForm){
             this.dialogForm[key] = resData[key]
@@ -593,10 +626,32 @@ export default {
       this.fnLoadDept() // 加载部门数据
     },
     // 点击树节点回掉
-    handleNodeClick (data) {
+    async handleNodeClick (data) {
       this.dialogVisibleTree = false // 关闭弹出框
       // 如果当前是人员调动部门选择
       if(this.dialogType == 'transfer'){
+        if(this.syscode!='asystem'){
+          await this.$confirm(`是否确定将${this.currentRow.employeeName}调动至${data.deptName}`, {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          })
+          this.isTransfering = true
+          this.$api.bizSystemService.saveTransfer({
+            ransferDeptId: data.id, // 转部门id
+            userId: this.currentRow.userId, // 当前用户id
+          })
+          .then(res => {
+            if (res.code == 200) {
+              this.tableReload();
+            }
+          })
+          .finally(()=>{
+            this.isTransfering = false
+          })
+          return
+        }
         this.dialogMeta.visible = true
         this.dialogMeta.dept = data
         this.dialogMeta.width = "720px"

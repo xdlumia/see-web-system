@@ -128,5 +128,12 @@ export default {
     //获取支付成功信息
     rmpaymentsuccessinfoInfo(params) {
         return Api.get(baseURL.systemService + '/rmpaymentsuccessinfo/info/' + params);
-    }
+    },
+    /**
+     * @tag 用户登录
+     * @description 刷新用户token
+     */
+    loginRefreshToken() {
+        return Api.post(`${baseURL.systemService}/login/refreshToken`, null ,{isShowMessage:false})
+    },
 };

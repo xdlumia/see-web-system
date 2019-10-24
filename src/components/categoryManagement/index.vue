@@ -50,7 +50,7 @@
             <span>{{ node.label }}</span>
             <div class="tree-node">
               <span class="d-elip" style="width:300px;display:inline-block;">
-                <span>{{node.data.createTime | timeToStr('YYYY-MM-DD HH:MM:SS')}}</span>
+                <span>{{node.data.createTime | timeToStr('YYYY-MM-DD HH:mm:ss')}}</span>
               </span>
               <span
                 v-if="authorityButtons.includes('decorate_goods_classmgr_1006')"
