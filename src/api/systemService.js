@@ -2,12 +2,13 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-05 15:49:47
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-10-24 17:59:03
+ * @LastEditTime: 2019-10-24 18:52:53
  * @Description: 9011
  */
 
 import { Api } from 'see-web-basic';
 let baseURL = window.g && window.g.ApiUrl?window.g.ApiUrl : {}
+
 if(!baseURL.systemService){
     try{
         baseURL.systemService = apisUrl + 'system-service'
