@@ -1,5 +1,20 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-05-14 18:07:48
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-10-24 17:58:19
+ * @Description: file content
+ */
 import { Api } from 'see-web-basic';
-var baseURL = window.g.ApiUrl;
+let baseURL = window.g && window.g.ApiUrl?window.g.ApiUrl : {}
+if(!baseURL.seeDataDictionaryService){
+    try{
+        baseURL.seeDataDictionaryService = apisUrl + 'see-data-dictionary-service'
+    }
+    catch(err){
+        baseURL.seeDataDictionaryService = '/apis/' + 'see-data-dictionary-service'
+    }
+}
 
 var apiURL = {
   /**

@@ -1,18 +1,28 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-06-28 11:00:24
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-10-24 17:55:44
+ * @Description: 8011
+ */
 import _defineProperty2 from 'babel-runtime/helpers/defineProperty';
 
 var _getUserDetail$getUse;
 
 import _defineProperty from 'babel-runtime/helpers/defineProperty';
 
-/**
- * @author 吴森
- * @description bizSystemService的url
- * @date 2018/7/7
- * @host 8011
- */
 import { Api } from 'see-web-basic';
 // import { baseURL } from '../../static/IPconfig'
-var baseURL = window.g.ApiUrl;
+let baseURL = window.g && window.g.ApiUrl?window.g.ApiUrl : {}
+if(!baseURL.bizSystemService){
+    try{
+        baseURL.bizSystemService = apisUrl + 'biz-system-service'
+    }
+    catch(err){
+        baseURL.bizSystemService = '/apis/' + 'biz-system-service'
+    }
+}
+
 var apiURL = {
 
   /**

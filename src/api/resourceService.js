@@ -1,12 +1,20 @@
-/**
- * @author 吴森
- * @description resourceService的url
- * @date 2018/7/7
- * @host 9013
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-07-12 15:26:00
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-10-24 17:56:11
+ * @Description: 9013
  */
-
 import { Api } from 'see-web-basic';
-var baseURL = window.g.ApiUrl;
+let baseURL = window.g && window.g.ApiUrl?window.g.ApiUrl : {}
+if(!baseURL.resourceService){
+    try{
+        baseURL.resourceService = apisUrl + 'resource-service'
+    }
+    catch(err){
+        baseURL.resourceService = '/apis/' + 'resource-service'
+    }
+}
 
 export default {
   /**

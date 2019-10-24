@@ -1,12 +1,21 @@
-/**
- * @author 王晓冬
- * @description systemService的url
- * @date 2019/1/11
- * @host 9011
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-05 15:49:47
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-10-24 17:59:03
+ * @Description: 9011
  */
 
 import { Api } from 'see-web-basic';
-var baseURL = window.g.ApiUrl;
+let baseURL = window.g && window.g.ApiUrl?window.g.ApiUrl : {}
+if(!baseURL.systemService){
+    try{
+        baseURL.systemService = apisUrl + 'system-service'
+    }
+    catch(err){
+        baseURL.systemService = '/apis/' + 'system-service'
+    }
+}
 
 export default {
     /**
