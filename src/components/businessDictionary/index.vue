@@ -42,7 +42,7 @@
           ref="table"
           size="mini"
           row-key="code"
-          api="seeDictionaryService.getDictionaryValueTreeList"
+          :api="activeDict&&activeDict.kind==1?'seeDictionaryService.getDictionaryValueTreeList':'seeDictionaryService.getDictionaryValueList'"
           :params="queryForm"
           style="height:calc(100% - 100px)">
           <el-table-column
