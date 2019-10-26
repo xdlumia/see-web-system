@@ -41,14 +41,14 @@
           v-if="queryForm.dicCode"
           ref="table"
           size="mini"
-          api="seeDictionaryService.getDictionaryValueList"
+          row-key="code"
+          :api="activeDict&&activeDict.kind==1?'seeDictionaryService.getDictionaryValueTreeList':'seeDictionaryService.getDictionaryValueList'"
           :params="queryForm"
           style="height:calc(100% - 100px)">
           <el-table-column
             label="数据项名称"
             width="180"
-            prop="content">
-          </el-table-column>
+            prop="content"></el-table-column>
           <el-table-column
             label="编码"
             width="240"
@@ -93,6 +93,11 @@
               </el-button> -->
               <el-button
                 size="mini"
+                v-if="authorityButtons.includes('asystem_assist_dict_1001')&&!scope.row.parentCode&&activeDict&&activeDict.kind==1"
+                @click="addChild(scope.row)">+新增子类
+              </el-button>
+              <el-button
+                size="mini"
                 :disabled="scope.row.isBuiltIn == 1"
                 v-if="authorityButtons.includes('asystem_assist_dict_1002')"
                 @click="addOrEditDic(scope.row)">编辑
@@ -119,6 +124,19 @@
             :model="addOrEditForm"
             label-width="100px">
           <el-form-item
+          v-if="addOrEditForm.parentCode"
+          label="父级:"
+          prop="parentCode" :rules="[{required:true,message:'请选择父级' }]">
+             <el-select v-model="addOrEditForm.parentCode"  :disabled="addOrEditForm.code?true:false" placeholder="请选择">
+              <el-option
+                v-for="item in parentList"
+                :key="item.code"
+                :label="item.content"
+                :value="item.code">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
           label="数据项名称:"
           prop="content" :rules="[{required:true,message:'请输入数据项名称'},{ min: 1, max: 7, message: '不能超过7个字符' }]">
             <el-input :maxlength="8" class="w320" placeholder="请输入数据项" v-model.trim="addOrEditForm.content"></el-input>
@@ -133,7 +151,6 @@
               </el-switch>
           </el-form-item> -->
           <el-form-item label="颜色">
-            <template slot-scope="scope">
               <div class="block">
                 <span class="demonstration"></span>
                 <el-color-picker
@@ -142,7 +159,6 @@
                 color-format="hex"
                 :show-alpha="false"></el-color-picker>
               </div>
-            </template>
           </el-form-item>
         </el-form>
         <div slot="footer" class="ac">
@@ -165,6 +181,7 @@ export default {
       loading: false, //字典管理loading
       addLoading:false, //数据项弹出框loading
       activeName: "", // 当前选中项的名字
+      activeDict:null,
       dicData: [],
       dicDialogVisible: false,
       predefineColors: [
@@ -193,6 +210,7 @@ export default {
         content: "", //字典内容
         isEnable: 1,
         dicCode: "", //字典code
+        parentCode:'',// 父级code
         updateColor: "" //修改颜色
       },
     };
@@ -202,6 +220,13 @@ export default {
       return this.dicData.filter(item => {
         return item.name.indexOf(this.searchText) !== -1;
       });
+    },
+    parentList(){
+      if(this.$refs.table){
+        return (this.$refs.table.tableData||[]).filter(item=>{
+          return !item.parentCode
+        })
+      }else return [];
     }
   },
   created() {
@@ -236,6 +261,7 @@ export default {
           this.addOrEditForm.isEnable = 1
           this.addOrEditForm.code = ''
           this.addOrEditForm.content = ''
+          this.addOrEditForm.parentCode = '';
         })
       }
     },
@@ -272,6 +298,7 @@ export default {
     // 获取字典项详情
     getDetailList(data,index) {
       this.activeIndex = index
+      this.activeDict = data;
       this.activeName = data.name;
       this.addOrEditForm.dicCode = data.code;
       this.queryForm.dicCode = data.code;
@@ -279,6 +306,23 @@ export default {
       this.$nextTick(()=>{
         this.$refs.table.reload(1)
       })
+    },
+    // 改变启用禁用状态
+    changeEnable(data){
+      // 因为和颜色保存数据类似，调用颜色的吧，如果后面有特殊需求再分开
+      this.changeColor(data)
+    },
+    // 添加子分类
+    addChild(data){// 
+      this.dicDialogVisible = true; 
+      // 回写弹出框编辑的值
+      this.$nextTick(()=>{
+        this.$refs.addOrEditForm.resetFields();
+        this.addOrEditForm.isEnable = 1
+        this.addOrEditForm.code = ''
+        this.addOrEditForm.content = ''
+        this.addOrEditForm.parentCode = data.code;
+      }) 
     },
     // 改变颜色
     changeColor(data) {
