@@ -65,5 +65,8 @@ export default {
   },
   getDicCommonValueList: function getDicCommonValueList(params) {
     return Api.get(baseURL.seeDataDictionaryService + apiURL.getDicCommonValueList + params);
-  }
+  },
+  getDictionaryValueTreeList: function(params) {
+    return Api.get(baseURL.seeDataDictionaryService + '/dictionary/valueTreeList' , params);
+  },
 };
