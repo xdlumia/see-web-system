@@ -22,7 +22,7 @@
 <script>
 import location from "./location/index"; // 位置
 import building from "./building/index"; // 楼盘设置
-import common from "./common"; // 公共
+import common from "./common/index"; // 公共
 import pictureSet from "./pictureSet/index"; // 图片
 import customer from "./customer"; // 房态
 import defaultCity from "./defaultCity"; //城市

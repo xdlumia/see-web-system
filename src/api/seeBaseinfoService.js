@@ -130,6 +130,91 @@ export default {
   // 获取用户权限
   getCompanyLogo: {
     url: '/logo/getCompanyLogo/{sysCode}'
-  }
+  },
   /* =============文件压缩下载（日志和配置文件）end=========== */
+  
+
+  /* =============公司设置表start=========== */
+  // 删除
+  commoncorporationDelete: {
+    'url': '/commoncorporation/delete',
+    'mock': _isMock,
+    'methods': 'delete'
+  },
+
+  // 查看详细信息
+  commoncorporationInfo: {
+    'url': '/commoncorporation/info/{id}',
+    'mock': _isMock
+  },
+
+  // 获取列表
+  commoncorporationList: {
+    'url': '/commoncorporation/list',
+    'mock': _isMock
+  },
+
+  // 逻辑删除
+  commoncorporationLogicDelete: {
+    'url': '/commoncorporation/logicDelete',
+    'mock': _isMock,
+    'methods': 'delete'
+  },
+
+  // 保存
+  commoncorporationSave: {
+    'url': '/commoncorporation/save',
+    'mock': _isMock,
+    'methods': 'post'
+  },
+
+  // 修改
+  commoncorporationUpdate: {
+    'url': '/commoncorporation/update',
+    'mock': _isMock,
+    'methods': 'post'
+  },
+  /* =============公司设置表end=========== */
+
+  /* =============公司账户设置表start=========== */
+  // 删除
+  commoncorporationaccountDelete: {
+    'url': '/commoncorporationaccount/delete',
+    'mock': _isMock,
+    'methods': 'delete'
+  },
+
+  // 查看详细信息
+  commoncorporationaccountInfo: {
+    'url': '/commoncorporationaccount/info/{id}',
+    'mock': _isMock
+  },
+
+  // 获取列表
+  commoncorporationaccountList: {
+    'url': '/commoncorporationaccount/list',
+    'mock': _isMock
+  },
+
+  // 逻辑删除
+  commoncorporationaccountLogicDelete: {
+    'url': '/commoncorporationaccount/logicDelete',
+    'mock': _isMock,
+    'methods': 'delete'
+  },
+
+  // 保存
+  commoncorporationaccountSave: {
+    'url': '/commoncorporationaccount/save',
+    'mock': _isMock,
+    'methods': 'post'
+  },
+
+  // 修改
+  commoncorporationaccountUpdate: {
+    'url': '/commoncorporationaccount/update',
+    'mock': _isMock,
+    'methods': 'post'
+  },
+  /* =============公司账户设置表end=========== */
 }

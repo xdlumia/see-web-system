@@ -110,8 +110,8 @@
   </div>
 </template>
 <script>
-  import uploadFile from "../common/upload-file"
-  import companyAccount from "./components/companyAccount"
+  import uploadFile from "../../common/upload-file"
+  import companyAccount from "../components/companyAccount"
 
   export default {
     components:{
