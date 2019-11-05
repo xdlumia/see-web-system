@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-11-05 17:30:22
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-11-05 17:31:00
+ * @Description: file content
+ */
 /**
  * @author 王晓冬
  * @description seeBaseinfoService的url
@@ -132,7 +139,7 @@ export default {
     url: '/logo/getCompanyLogo/{sysCode}'
   },
   /* =============文件压缩下载（日志和配置文件）end=========== */
-  
+
 
   /* =============公司设置表start=========== */
   // 删除
@@ -216,5 +223,9 @@ export default {
     'mock': _isMock,
     'methods': 'post'
   },
+  // 获取公司账号
+  getCompanyAccountList: {
+    url: "/commoncorporation/select"
+  }
   /* =============公司账户设置表end=========== */
 }
