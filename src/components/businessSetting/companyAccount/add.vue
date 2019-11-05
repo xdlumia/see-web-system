@@ -84,7 +84,7 @@
               :prop="'commonCorporationAccountEntities.' + index + '.accountType'"
               :rules="commonCorporationAccountEntitiesRules.accountType"
             >
-              <d-select class="wfull" v-model="item.accountType" dicCode="PSI_GSSZ_ZHLX"></d-select>
+              <d-select class="wfull" v-model="item.accountType" dicCode="PSI_GSSZ_ZHLX" :disabled="index==0"></d-select>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if="accountType(index) !== 3">
@@ -171,6 +171,7 @@
           <el-button
             style="position:absolute;padding:0;right:20px;top:-5px;border:none;"
             @click="companyForm.commonCorporationAccountEntities.splice(index, 1)"
+            v-if="index>0"
           >
             <i style="font-size:20px;" class="el-icon-remove"></i>
           </el-button>
@@ -197,12 +198,12 @@ export default {
         jinvoiceTaxRate: '',
         minLimitNum: '',
         commonCorporationAccountEntities: [{
-          accountType: '',
+          accountType: 'PSI_GSSZ_ZHLX-3',
           accountName: '',
           accountBank: '',
           phone: '',
           account: '',
-          state: '',
+          state: 1,
           qrCode: ''
         }]
       },
@@ -260,6 +261,8 @@ export default {
       this.$api.seeBaseinfoService.commoncorporationInfo(null, id).then(res => {
         Object.keys(this.companyForm).forEach(key => {
           this.companyForm[key] = res.data[key] || this.companyForm[key]
+          this.companyForm.account = this.companyForm.commonCorporationAccountEntities[0].account;
+          this.companyForm.accountBank = this.companyForm.commonCorporationAccountEntities[0].accountBank;
         })
       }).finally(() => {
         this.loading = false
@@ -271,6 +274,8 @@ export default {
         if (valid) {
           this.loading = true
           const port = this.isEdit ? 'commoncorporationUpdate' : 'commoncorporationSave'
+          this.companyForm.commonCorporationAccountEntities[0].account = this.companyForm.account
+          this.companyForm.commonCorporationAccountEntities[0].accountBank = this.companyForm.accountBank
           this.$api.seeBaseinfoService[port](this.companyForm).then(res => {
             this.$emit('refresh')
           }).finally(() => {

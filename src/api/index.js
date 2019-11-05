@@ -1,3 +1,10 @@
+/*
+ * @Author: 赵伦
+ * @Date: 2019-06-06 10:39:49
+ * @LastEditors: 赵伦
+ * @LastEditTime: 2019-11-05 16:01:28
+ * @Description: file content
+ */
 import { apiConfig } from 'see-web-basic';
 
 import bizSystemService from './bizSystemService';
