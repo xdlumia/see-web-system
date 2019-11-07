@@ -104,6 +104,7 @@
               </el-button>
               <el-button
                 size="mini"
+                :disabled="scope.row.isBuiltIn == 1"
                 type="danger"
                 v-if="authorityButtons.includes('asystem_assist_dict_1003')"
                 @click="delDic(scope.$index, scope.row)">删除
