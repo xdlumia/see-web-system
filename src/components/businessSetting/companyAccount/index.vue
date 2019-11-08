@@ -12,7 +12,7 @@
         <h3 class="mt10 d-text-gray b">公司设置</h3>
       </el-col>
       <el-col :span="8" class="ar">
-        <el-button type="primary" size="small" style="margin-top: 20px;" @click="visible=true,editId=null">+新增公司</el-button>
+        <el-button type="primary" size="small" style="margin-top: 20px;" @click="visible=true,editId=null" v-if="authorityButtons.includes('assist_biz_com_2001')">+新增公司</el-button>
       </el-col>
     </div>
     <fieldset class="d-fieldset mb20">
@@ -34,20 +34,21 @@
         <el-table-column label="开户行账号" prop="account"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="edit(scope.row.id)">编辑</el-button>
+            <el-button type="text" size="small" @click="edit(scope.row.id)" v-if="authorityButtons.includes('assist_biz_com_2002')">编辑</el-button>
             <el-button
               type="text"
               size="small"
               @click="commoncorporationLogicDelete(scope.row.id)"
+              v-if="authorityButtons.includes('assist_biz_com_2003')"
             >删除</el-button>
             <el-button
-              v-if="scope.row.state"
+              v-if="scope.row.state&&authorityButtons.includes('assist_biz_com_2004')"
               type="text"
               size="small"
               @click="commoncorporationUpdate(scope.row.id, 0)"
             >启用</el-button>
             <el-button
-              v-else
+              v-else-if="authorityButtons.includes('assist_biz_com_2004')"
               type="text"
               size="small"
               @click="commoncorporationUpdate(scope.row.id, 1)"
