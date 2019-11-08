@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-11-05 17:30:22
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-11-05 17:31:00
+ * @LastEditTime: 2019-11-08 09:30:13
  * @Description: file content
  */
 /**
@@ -180,6 +180,18 @@ export default {
     'url': '/commoncorporation/update',
     'mock': _isMock,
     'methods': 'post'
+  },
+  // 选择公司账号
+  commoncorporationSelect: {
+    'url': '/commoncorporation/select',
+    'mock': _isMock,
+    'methods': 'get'
+  },
+  // 选择公司发票账户和结算账户
+  commoncorporationSelectForJxc: {
+    'url': '/commoncorporation/selectForJxc',
+    'mock': _isMock,
+    'methods': 'get'
   },
   /* =============公司设置表end=========== */
 
