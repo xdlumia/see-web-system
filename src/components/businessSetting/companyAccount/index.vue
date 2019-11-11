@@ -12,7 +12,7 @@
         <h3 class="mt10 d-text-gray b">公司设置</h3>
       </el-col>
       <el-col :span="8" class="ar">
-        <el-button type="primary" size="small" style="margin-top: 20px;" @click="visible=true,editId=null" v-if="authorityButtons.includes('assist_biz_com_2001')">+新增公司</el-button>
+        <el-button type="primary" size="small" style="margin-top: 20px;" @click="visible=true,editId=null,isEdit=false" v-if="authorityButtons.includes('assist_biz_com_2001')">+新增公司</el-button>
       </el-col>
     </el-row>
     <fieldset class="d-fieldset mb20">
