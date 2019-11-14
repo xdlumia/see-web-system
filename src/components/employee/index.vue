@@ -332,6 +332,7 @@ export default {
         remark:'',
         avatarUrl:'',
         nickName:'',
+        sysCode: this.$local.fetch('userInfo').syscode
       },
 
       asyncType: 'password', // 默认type是密码
@@ -719,6 +720,7 @@ export default {
           // 新增保存
           if (this.dialogType == 'add') {
             paramsForm = this.dialogForm
+            paramsForm.sysCode = this.$local.fetch('userInfo').syscode
             requestMeth = this.$api.bizSystemService.addEmployee(paramsForm)
             requestMeth.then(res => {
             if(res.data == 'recover'){
@@ -753,6 +755,7 @@ export default {
           // 编辑保存
           } else if (this.dialogType == 'edit') {
             paramsForm = this.dialogForm
+            paramsForm.sysCode = this.$local.fetch('userInfo').syscode
             requestMeth = this.$api.bizSystemService.updateEmployee(paramsForm)
           // 同步保存
           } else if (this.dialogType == 'sync') {
