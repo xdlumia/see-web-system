@@ -73,7 +73,7 @@
             <div v-if="subItem.type==6">
               <!-- <el-form-item class="state-form-label"> -->
                   <ul class="state-form-box" v-for="(valueItem,index) of subItem.actualValue" :key="index">
-                    <li>
+                    <li v-if="getTypeSixStatus(subItem.actualValue).title">
                       <p v-if="valueItem.default" size="mini" class="w120">{{valueItem.title}}</p>
                       <el-input v-else size="mini" class="w120" maxlength="5" placeholder="标题" v-model.trim="valueItem.title"></el-input>
                     </li>
@@ -84,8 +84,9 @@
                       <el-input v-if="(subItem.actualValue.length-1) == index" class="w100" disabled v-model="valueItem.endDate" size="mini"></el-input>
                       <el-input-number :precision="0" v-else v-model="valueItem.endDate" @change="actualEndDateChange(valueItem.endDate,index,subItem.actualValue)" size="mini" class="w100" :min="0" :max="9999" :step="1" controls-position="right" ></el-input-number>
                     </li>
-                    <li>简称:<el-input size="mini"  v-model.trim="valueItem.simpleTitle" class="w60" maxlength="1"></el-input></li>
-                    <li>首页显示
+                    <li v-if="getTypeSixStatus(subItem.actualValue).simpleTitle">
+                      简称:<el-input size="mini"  v-model.trim="valueItem.simpleTitle" class="w60" maxlength="1"></el-input></li>
+                    <li  v-if="getTypeSixStatus(subItem.actualValue).visible">首页显示
                       <el-switch
                         v-model="valueItem.visible"
                         :active-value="1"
@@ -139,6 +140,18 @@
       }
     },
     methods: {
+      getTypeSixStatus(data){
+        if(Array.isArray(data)){
+          let item = data[0]
+          return {
+            title: typeof item.title!="undefined",
+            simpleTitle: typeof item.simpleTitle!="undefined",
+            visible: typeof item.visible!="undefined",
+          }
+        }else{
+          return { }
+        }
+      },
       // 获取房源配置
       getHouseTypeConfig(){
         this.loading = true
@@ -196,13 +209,14 @@
           // 新增的空置期开始天数取上一次数据的结束天数并+1]
           startDate = Number(endItem.endDate)+1
         }
+        let status = this.getTypeSixStatus(actualValue)
         actualValue.push({
           default:0, //是否默认
-          title:'', //标题
-          simpleTitle:'', //简称
+          title:status.title?'':undefined, //标题
+          simpleTitle:status.title?'':undefined, //简称
           startDate:startDate, //开始天数
           endDate:'不限', //结束天数
-          visible:0, //首页是否显示
+          visible:status.title?0:undefined, //首页是否显示
         })
       },
       // 删除空置期
@@ -244,8 +258,9 @@
             }
             else if(subItem.type==6){
               // 检查空置期必填项
+              let status = this.getTypeSixStatus(subItem.actualValue)
               for(item of subItem.actualValue){
-                if(!item.title){
+                if(!item.title&&status.title){
                   this.$message.warning('空置期设置标题不能为空')
                   isRequired = true
                   break
@@ -255,7 +270,12 @@
                   isRequired = true
                   break
                 }
-                if(!item.simpleTitle){
+                if(item.startDate>item.endDate){
+                  this.$message.warning('空置期设置<开始天数大于结束天数')
+                  isRequired = true
+                  break
+                }
+                if(!item.simpleTitle&&status.title){
                   this.$message.warning('空置期设置简写名称不能为空')
                   isRequired = true
                   break
