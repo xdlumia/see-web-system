@@ -1,6 +1,6 @@
 const MOCK_ADDRESS = '/mock/5d02f94b167fff36ccf077c6/seeBaseinfoService'
 
-// 8301
+// 8301 
 export default {
   __mockAddress: MOCK_ADDRESS,
   /* =============个人或者公司的默认城市设置start=========== */
