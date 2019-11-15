@@ -1,4 +1,4 @@
-const MOCK_ADDRESS = '/mock/5d02f94b167fff36ccf077c6/seeBaseinfoService'
+const MOCK_ADDRESS = ''
 
 // 8301 
 export default {
