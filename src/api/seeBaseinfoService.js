@@ -114,6 +114,15 @@ export default {
     'mock': false,
     'methods': 'post'
   },
+  /**
+   * @tag 公司账号设置
+   * @description 启用禁用
+   */
+  commoncorporationUpdateState: {
+      url: '/commoncorporation/updateState',
+      methods: 'post',
+      mock: false
+  },
   /* =============公司账号设置end=========== */
 
   /* =============客户管理对外接口提供start=========== */

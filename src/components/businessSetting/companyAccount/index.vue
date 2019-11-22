@@ -133,7 +133,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$api.seeBaseinfoService.commoncorporationUpdate(
+        this.$api.seeBaseinfoService.commoncorporationUpdateState(
           { id, state }).then(res => {
           this.$refs.companyTable.reload(1);
         })
