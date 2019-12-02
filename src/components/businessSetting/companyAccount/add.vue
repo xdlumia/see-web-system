@@ -55,6 +55,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
+            <el-switch :active-value="1" :inactive-value="0" class="limit-switch" v-model="companyForm.minLimitState"></el-switch>
             <el-form-item label="下限预警数量" prop="minLimitNum">
               <el-input v-model.trim="companyForm.minLimitNum"></el-input>
             </el-form-item>
@@ -199,6 +200,7 @@ export default {
         invoiceSum: '',
         jinvoiceTaxRate: '',
         minLimitNum: '',
+        minLimitState: 1,
         commonCorporationAccountEntities: [
           {
             accountType: 'PSI_GSSZ_ZHLX-3',
@@ -226,7 +228,21 @@ export default {
         ],
         invoiceSum: { required: true, message: '请选择', trigger: 'change' },
         jinvoiceTaxRate: { required: true, message: '请输入', trigger: 'blur' },
-        minLimitNum: { required: true, message: '请输入', trigger: 'blur' }
+        minLimitNum: [
+          { required: true, message: '请输入', trigger: 'blur' },
+          { type: 'number', trigger: 'blur' },
+          { type: 'positiveNum', trigger: 'blur' },
+          {
+            validator: (rule, value, cb) => {
+              if (String(value).length > 3) {
+                cb(new Error('最高999'));
+              } else {
+                cb();
+              }
+            },
+            trigger: 'blur'
+          }
+        ]
       },
       commonCorporationAccountEntitiesRules: {
         accountType: { required: true, message: '请选择', trigger: 'change' },
@@ -275,7 +291,7 @@ export default {
         .commoncorporationInfo(null, id)
         .then(res => {
           Object.keys(this.companyForm).forEach(key => {
-            this.companyForm[key] = res.data[key] || this.companyForm[key];
+            this.companyForm[key] = res.data[key];
             this.companyForm.account = this.companyForm.commonCorporationAccountEntities[0].account;
             this.companyForm.accountBank = this.companyForm.commonCorporationAccountEntities[0].accountBank;
           });
@@ -357,5 +373,11 @@ export default {
   align-items: center;
   border-radius: 2px;
   overflow: hidden;
+}
+.limit-switch {
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  z-index: 1;
 }
 </style>
