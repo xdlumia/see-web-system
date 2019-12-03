@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓冬
  * @Date: 2019-11-05 17:30:22
- * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-11-29 10:43:55
+ * @LastEditors: 赵伦
+ * @LastEditTime: 2019-12-03 17:29:39
  * @Description: file content
  */
 /**
@@ -227,6 +227,15 @@ export default {
     'url': '/commoncorporationaccount/save',
     'mock': _isMock,
     'methods': 'post'
+  },
+  /**
+   * @tag 公司账号设置
+   * @description 启用禁用
+   */
+  commoncorporationUpdateState: {
+      url: '/commoncorporation/updateState',
+      methods: 'post',
+      mock: false
   },
 
   // 修改

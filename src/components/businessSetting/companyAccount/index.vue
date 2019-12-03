@@ -46,13 +46,13 @@
               type="text"
               size="small"
               @click="commoncorporationUpdate(scope.row.id, 0)"
-            >启用</el-button>
+            >停用</el-button>
             <el-button
               v-else-if="authorityButtons.includes('assist_biz_com_2004')"
               type="text"
               size="small"
               @click="commoncorporationUpdate(scope.row.id, 1)"
-            >停用</el-button>
+            >启用</el-button>
           </template>
         </el-table-column>
       </d-table>
@@ -128,7 +128,7 @@ export default {
       });
     },
     commoncorporationUpdate(id, state) {
-      this.$confirm(`是否${state ? '停用' : '启用'}`, '提示', {
+      this.$confirm(`是否${state ? '启用' : '停用'}`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -138,10 +138,10 @@ export default {
           this.$refs.companyTable.reload(1);
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
+        // this.$message({
+        //   type: 'info',
+        //   message: '已取消删除'
+        // });
       });
     }
   }
