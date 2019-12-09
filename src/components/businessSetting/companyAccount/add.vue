@@ -22,7 +22,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="银行账号" prop="account">
-              <el-input v-model.trim.number="companyForm.account"></el-input>
+              <el-input v-model.trim="companyForm.account"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -214,14 +214,26 @@ export default {
         ]
       },
       companyFormRules: {
-        corporationName: { required: true, message: '请输入', trigger: 'blur' },
-        accountBank: { required: true, message: '请输入', trigger: 'blur' },
+        corporationName: [
+          { required: true, message: '请输入', trigger: 'blur' },
+          { max: 20, message:'字数不超过20个字' }
+        ],
+        accountBank: [
+          { required: true, message: '请输入', trigger: 'blur' },
+          { max: 30, message:'字数不超过30个字' }
+        ],
         account: [
           { required: true, message: '请输入', trigger: 'blur' },
           { type: 'bankCard', message: '请输入正确的银行账号', trigger: 'blur' }
         ],
-        taxpayersNum: { required: true, message: '请输入', trigger: 'blur' },
-        address: { required: true, message: '请输入', trigger: 'blur' },
+        taxpayersNum: [
+          { required: true, message: '请输入', trigger: 'blur' },
+          { max: 30, message:'字数不超过30个字' }
+        ],
+        address: [
+          { required: true, message: '请输入', trigger: 'blur' },
+          { max: 100, message:'字数不超过100个字' }
+        ],
         phone: [
           { required: true, message: '请输入', trigger: 'blur' },
           { type: 'phone', message: '请输入正确的手机号', trigger: 'blur' }
@@ -246,8 +258,14 @@ export default {
       },
       commonCorporationAccountEntitiesRules: {
         accountType: { required: true, message: '请选择', trigger: 'change' },
-        accountName: { required: true, message: '请输入', trigger: 'blur' },
-        accountBank: { required: true, message: '请输入', trigger: 'blur' },
+        accountName: [
+          { required: true, message: '请输入', trigger: 'blur' },
+          { max: 30, message:'字数不超过30个字' }
+        ],
+        accountBank: [
+          { required: true, message: '请输入', trigger: 'blur' },,
+          { max: 30, message:'字数不超过30个字' }
+        ],
         phone: [
           { required: true, message: '请输入', trigger: 'blur' },
           { type: 'phone', message: '请输入正确的手机号', trigger: 'blur' }
