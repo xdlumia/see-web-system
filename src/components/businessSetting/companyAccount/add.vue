@@ -12,12 +12,12 @@
         <el-row :gutter="40">
           <el-col :span="8">
             <el-form-item label="公司名称" prop="corporationName">
-              <el-input v-model.trim="companyForm.corporationName"></el-input>
+              <el-input v-model.trim="companyForm.corporationName" maxlength="20"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="开户银行" prop="accountBank">
-              <el-input v-model.trim="companyForm.accountBank"></el-input>
+              <el-input v-model.trim="companyForm.accountBank" maxlength="30"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -27,12 +27,12 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="纳税人识别号" prop="taxpayersNum">
-              <el-input v-model.trim="companyForm.taxpayersNum"></el-input>
+              <el-input v-model.trim="companyForm.taxpayersNum" maxlength="30"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="地址" prop="address">
-              <el-input v-model.trim="companyForm.address"></el-input>
+              <el-input v-model.trim="companyForm.address" maxlength="100"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -96,7 +96,7 @@
               :prop="'commonCorporationAccountEntities.' + index + '.accountName'"
               :rules="commonCorporationAccountEntitiesRules.accountName"
             >
-              <el-input v-model.trim="item.accountName"></el-input>
+              <el-input v-model.trim="item.accountName" maxlength="30"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if="accountType(index) === 5">
@@ -105,7 +105,7 @@
               :rules="commonCorporationAccountEntitiesRules.accountBank"
               label="开户银行（到支行）"
             >
-              <el-input v-model.trim="item.accountBank"></el-input>
+              <el-input v-model.trim="item.accountBank" maxlength="30"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if="accountType(index) === 5">
