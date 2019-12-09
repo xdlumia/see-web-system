@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓冬
  * @Date: 2019-06-28 11:00:24
- * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-10-24 17:55:44
+ * @LastEditors: 赵伦
+ * @LastEditTime: 2019-12-09 09:11:34
  * @Description: 8011
  */
 import _defineProperty2 from 'babel-runtime/helpers/defineProperty';
@@ -78,6 +78,9 @@ export default (_getUserDetail$getUse = {
   // 获取用户详情
   getUserDetail: function getUserDetail(params) {
     return Api.get(baseURL.bizSystemService + '/rmuserrole/getUserDetail', params);
+  },
+  rmemployeeInfo: function rmemployeeInfo(id) {
+    return Api.get(baseURL.bizSystemService + '/rmemployee/empinfo/'+id);
   },
 
 
