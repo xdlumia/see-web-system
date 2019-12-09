@@ -1,7 +1,7 @@
 {
   "name": "see-web-system",
   "description": "see-web-system project",
-  "version": "1.4.15",
+  "version": "1.4.16",
   "author": "xd",
   "license": "MIT",
   "main": "dist/index.js",
