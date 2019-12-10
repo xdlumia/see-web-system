@@ -9,8 +9,8 @@
 <template>
   <div class="d-content main-content">
     <div class="mb10">
-      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名/员工编号" class="w240"></el-input>
-      <tree-select 
+      <el-input size="medium" @keyup.native.13="$refs.attendanceTable.reload()" v-model="queryForm.userName" placeholder="请输入人员姓名" class="w240"></el-input>
+      <tree-select
       size="medium"
       defaultExpandAll
       v-model="queryForm.deptId"
