@@ -138,13 +138,15 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="8" v-if="accountType(index) == 3">
+          <el-col :span="8">
             <el-form-item
               label="期初余额"
               :prop="'commonCorporationAccountEntities.' + index + '.initAmount'"
               :rules="commonCorporationAccountEntitiesRules.initAmount"
             >
-              <el-input v-model.trim="item.initAmount" min="0"></el-input>
+              <el-input v-model.trim="item.initAmount" min="0">
+                <template slot="append">元</template>
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="accountType(index) === 1 || accountType(index) === 2">
@@ -330,7 +332,7 @@ export default {
             this.companyForm[key] = res.data[key];
             this.companyForm.account = this.companyForm.commonCorporationAccountEntities[0].account;
             this.companyForm.accountBank = this.companyForm.commonCorporationAccountEntities[0].accountBank;
-            this.companyForm.commonCorporationAccountEntities[0].initAmount = this.companyForm.commonCorporationAccountEntities[0].initAmount||0
+            (this.companyForm.commonCorporationAccountEntities||[]).map(item=>item.initAmount=item.initAmount||0);
           });
         })
         .finally(() => {
@@ -366,7 +368,8 @@ export default {
         phone: '',
         account: '',
         state: '',
-        qrCode: ''
+        qrCode: '',
+        initAmount: 0 
       });
     },
     // 获取账户类型
