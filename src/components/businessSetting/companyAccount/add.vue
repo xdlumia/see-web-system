@@ -138,7 +138,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <!-- <el-col :span="8">
             <el-form-item
               label="期初余额"
               :prop="'commonCorporationAccountEntities.' + index + '.initAmount'"
@@ -148,7 +148,7 @@
                 <template slot="append">元</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="24" v-if="accountType(index) === 1 || accountType(index) === 2">
             <el-form-item
               :label="accountType(index) === 1 ? '支付宝收款二维码' : '微信收款二维码'"
