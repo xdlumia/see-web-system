@@ -138,6 +138,15 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="8" v-if="accountType(index) == 3">
+            <el-form-item
+              label="期初余额"
+              :prop="'commonCorporationAccountEntities.' + index + '.initAmount'"
+              :rules="commonCorporationAccountEntitiesRules.initAmount"
+            >
+              <el-input v-model.trim="item.initAmount" min="0"></el-input>
+            </el-form-item>
+          </el-col>
           <el-col :span="24" v-if="accountType(index) === 1 || accountType(index) === 2">
             <el-form-item
               :label="accountType(index) === 1 ? '支付宝收款二维码' : '微信收款二维码'"
@@ -206,6 +215,7 @@ export default {
             accountType: 'PSI_GSSZ_ZHLX-3',
             accountName: '',
             accountBank: '',
+            initAmount: 0,
             phone: '',
             account: '',
             state: 1,
@@ -266,6 +276,14 @@ export default {
           { required: true, message: '请输入', trigger: 'blur' },,
           { max: 30, message:'字数不超过30个字' }
         ],
+        initAmount: [
+          { type:'price' },
+          {validator:(rule,value,cb)=>{
+            if(value>=0){
+              cb()
+            }else cb(new Error('金额需大于0'))
+          }}
+        ],
         phone: [
           { required: true, message: '请输入', trigger: 'blur' },
           { type: 'phone', message: '请输入正确的手机号', trigger: 'blur' }
@@ -312,6 +330,7 @@ export default {
             this.companyForm[key] = res.data[key];
             this.companyForm.account = this.companyForm.commonCorporationAccountEntities[0].account;
             this.companyForm.accountBank = this.companyForm.commonCorporationAccountEntities[0].accountBank;
+            this.companyForm.commonCorporationAccountEntities[0].initAmount = this.companyForm.commonCorporationAccountEntities[0].initAmount||0
           });
         })
         .finally(() => {
