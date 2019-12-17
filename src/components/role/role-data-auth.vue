@@ -9,8 +9,9 @@
 -->
 <template>
   <div v-loading="loading" >
-    <el-form :model="addForm" ref="addForm" size="small" style="height:calc(100vh - 150px)" class="d-auto-y">
-      <div class="d-fieldset data-auth-box p10 mb10" v-for="(item,index) of  templateAuthList" :key="index">
+    <el-input v-model="searchName" style="width:300px;margin-bottom:10px;" placeholder="输入关键字搜索"></el-input>
+    <el-form :model="addForm" ref="addForm" size="small" style="height:calc(100vh - 180px)" class="d-auto-y">
+      <div class="d-fieldset data-auth-box p10 mb10" v-for="(item,index) of  templateAuthList" :key="index" v-show="String(item.name||'').match(searchName)">
         <!-- 模板名称 -->
         <h4 class="mb15">{{item.name || '-'}}</h4>
         <!-- 字段权限 -->
@@ -140,6 +141,7 @@ export default {
   components: {},
   data () {
     return {
+      searchName: '',
       loading: false, // loading动画
       templateAuthList: [], // 模板权限列表
       deptData: [], // 部门数据
