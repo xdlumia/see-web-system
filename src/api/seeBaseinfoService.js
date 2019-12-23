@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓冬
  * @Date: 2019-11-05 17:30:22
- * @LastEditors: 赵伦
- * @LastEditTime: 2019-12-03 17:49:50
+ * @LastEditors  : 赵伦
+ * @LastEditTime : 2019-12-23 17:30:48
  * @Description: file content
  */
 /**
@@ -192,6 +192,15 @@ export default {
     'url': '/commoncorporation/selectForJxc',
     'mock': _isMock,
     'methods': 'get'
+  },
+  /**
+   * @tag 公司账号明细设置
+   * @description 逻辑删除账号信息
+   */
+  accLogicDelete: {
+      url: '/commoncorporation/acc/logicDelete',
+      methods: 'delete',
+      mock: _isMock
   },
   /* =============公司设置表end=========== */
 

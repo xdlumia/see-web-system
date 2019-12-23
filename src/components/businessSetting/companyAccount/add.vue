@@ -183,7 +183,7 @@
             </el-form-item>
           </el-col>
           <el-button
-            @click="companyForm.commonCorporationAccountEntities.splice(index, 1)"
+            @click="deleteAccount(index)"
             style="position:absolute;padding:0;right:20px;top:-5px;border:none;"
             v-if="index>0"
           >
@@ -398,6 +398,19 @@ export default {
           break;
       }
       return name + '名称';
+    },
+    async deleteAccount(i){
+      let item = this.companyForm.commonCorporationAccountEntities[i]
+      if(item.id){
+        this.loading = true
+        try {
+          let {data} = await this.$api.seeBaseinfoService.accLogicDelete({id:item.id})
+          this.companyForm.commonCorporationAccountEntities.splice(i, 1)
+        } catch (error) { }
+        this.loading = false
+      }else{
+        this.companyForm.commonCorporationAccountEntities.splice(i, 1)
+      }
     }
   }
 };
