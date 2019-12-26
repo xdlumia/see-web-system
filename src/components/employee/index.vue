@@ -130,7 +130,7 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :width="dialogWidth">
       <div v-loading="loading">
           <!-- 新增 / 编辑 -->
-          <el-form label-width="80px" :model="dialogForm" ref="dialogForm" size="small">
+          <el-form class="d-auto-y" style="height: calc(100vh - 140px)" label-width="80px" :model="dialogForm" ref="dialogForm" size="small">
             <div v-if="dialogType=='add' || dialogType=='edit'" >
                 <el-form-item label="姓名" 
                 prop="employeeName" 
