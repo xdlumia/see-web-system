@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓冬
  * @Date: 2019-06-28 11:00:24
- * @LastEditors: 赵伦
- * @LastEditTime: 2019-12-09 09:11:34
+ * @LastEditors  : web.王晓冬
+ * @LastEditTime : 2019-12-27 18:09:08
  * @Description: 8011
  */
 import _defineProperty2 from 'babel-runtime/helpers/defineProperty';
@@ -13,14 +13,14 @@ import _defineProperty from 'babel-runtime/helpers/defineProperty';
 
 import { Api } from 'see-web-basic';
 // import { baseURL } from '../../static/IPconfig'
-let baseURL = window.g && window.g.ApiUrl?window.g.ApiUrl : {}
-if(!baseURL.bizSystemService){
-    try{
-        baseURL.bizSystemService = apisUrl + 'biz-system-service'
-    }
-    catch(err){
-        baseURL.bizSystemService = '/apis/' + 'biz-system-service'
-    }
+let baseURL = window.g && window.g.ApiUrl ? window.g.ApiUrl : {}
+if (!baseURL.bizSystemService) {
+  try {
+    baseURL.bizSystemService = apisUrl + 'biz-system-service'
+  }
+  catch (err) {
+    baseURL.bizSystemService = '/apis/' + 'biz-system-service'
+  }
 }
 
 var apiURL = {
@@ -80,7 +80,7 @@ export default (_getUserDetail$getUse = {
     return Api.get(baseURL.bizSystemService + '/rmuserrole/getUserDetail', params);
   },
   rmemployeeInfo: function rmemployeeInfo(id) {
-    return Api.get(baseURL.bizSystemService + '/rmemployee/empinfo/'+id);
+    return Api.get(baseURL.bizSystemService + '/rmemployee/empinfo/' + id);
   },
 
 
@@ -185,50 +185,54 @@ export default (_getUserDetail$getUse = {
   unlockuser: function unlockuser(params) {
     return Api.get(baseURL.bizSystemService + apiURL.unlockuser, params);
   },
-  lockuser (params) {
+  lockuser(params) {
     return Api.get(baseURL.bizSystemService + apiURL.lockuser, params);
   },
-  updatePassword (params) {
+  updatePassword(params) {
     return Api.post(baseURL.bizSystemService + apiURL.updatePassword, params);
+  },
+  // 修改用户头像
+  rmemployeeUpdateAvatar(params) {
+    return Api.post(baseURL.bizSystemService + '/rmemployee/updateAvatar', params);
   },
 
   //开放注册
-  openRegistration (params) {
+  openRegistration(params) {
     return Api.post(baseURL.bizSystemService + '/rmemployee/openRegistration', params);
   },
 
   //查询开放注册
-  queryOpenRegistration (params) {
+  queryOpenRegistration(params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/queryOpenRegistration', params);
   },
 
   // 根据一组用户ID查询用户信息
-  getEmpListByUserIds (params) {
+  getEmpListByUserIds(params) {
     return Api.get(baseURL.bizSystemService + '/rmemployee/empList', params);
   },
   // 批量保存数据权限
-  rmdataauthBatchSave (params) {
+  rmdataauthBatchSave(params) {
     return Api.post(baseURL.bizSystemService + '/rmdataauth/batchSave', params)
   },
   // 查看自定义数据权限详细信息
-  rmdataauthDataInfo (params) {
+  rmdataauthDataInfo(params) {
     return Api.get(baseURL.bizSystemService + '/rmdataauth/dataInfo', params)
   },
   // 下载中心列表
-  downloadList (params) {
+  downloadList(params) {
     return Api.get(baseURL.bizSystemService + '/download/list', params)
   },
   // 下载中心删除
-  downloadDelete (params) {
+  downloadDelete(params) {
     return Api.del(baseURL.bizSystemService + '/download/delete', params)
   },
   // 下载中心编辑
-  downloadEdit (params) {
+  downloadEdit(params) {
     return Api.post(baseURL.bizSystemService + '/download/edit', params)
   },
   // 下载中心编辑
-  downloadDownloadFile (params) {
-    return Api.get(baseURL.bizSystemService + '/download/downloadFile'+ params)
+  downloadDownloadFile(params) {
+    return Api.get(baseURL.bizSystemService + '/download/downloadFile' + params)
   },
 
 
