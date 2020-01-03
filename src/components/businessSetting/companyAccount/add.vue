@@ -144,7 +144,7 @@
               :prop="'commonCorporationAccountEntities.' + index + '.initAmount'"
               :rules="commonCorporationAccountEntitiesRules.initAmount"
             >
-              <el-input v-model.trim="item.initAmount" min="0">
+              <el-input v-model.trim="item.initAmount" min="0" :disabled="!canEditInitAmount">
                 <template slot="append">元</template>
               </el-input>
             </el-form-item>
@@ -199,6 +199,7 @@
 export default {
   data() {
     return {
+      canEditInitAmount:true,
       loading: false,
       companyForm: {
         id: '',
@@ -314,6 +315,7 @@ export default {
     if (this.editId && this.isEdit) {
       this.commoncorporationInfo(this.editId);
     }
+    this.checkInitAmountEditable()
   },
   methods: {
     // 移除图片上传校验
@@ -410,6 +412,18 @@ export default {
         this.loading = false
       }else{
         this.companyForm.commonCorporationAccountEntities.splice(i, 1)
+      }
+    },
+    // 进销存这边加一个开账功能校验
+    async checkInitAmountEditable(){
+      try {
+        if(JSON.parse(localStorage.userInfo).syscode=='psi'){
+          let {data:{configJson}} = await this.$api.seePsiCommonService.commonsystemconfigInfo(null,4)
+          configJson = JSON.parse(configJson)
+          this.canEditInitAmount = (configJson.accountState||0)?true:false
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
