@@ -18,8 +18,8 @@
               <span class="fr d-text-red f12">上传数量：最多上传{{item.title == '房间照片'?30:10}}张</span>
             </el-form-item>
             <el-form-item label="上传大小：" v-if="isShow(item.picSetType)">
-              <el-input-number v-model="item.uploadSize" controls-position="right" :min="0" :max="10"></el-input-number>
-              <span class="fr d-text-red f12">上限说明：最大10M</span>
+              <el-input-number v-model="item.uploadSize" controls-position="right" :min="0" :max="15"></el-input-number>
+              <span class="fr d-text-red f12">上限说明：最大15M</span>
             </el-form-item>
              <el-form-item label="图片格式：" v-if="isShow(item.picSetType)">
                <el-checkbox-group v-model="item.picLayout">
