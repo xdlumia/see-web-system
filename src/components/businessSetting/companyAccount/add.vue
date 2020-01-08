@@ -420,7 +420,7 @@ export default {
         if(JSON.parse(localStorage.userInfo).syscode=='psi'){
           let {data:{configJson}} = await this.$api.seePsiCommonService.commonsystemconfigInfo(null,4)
           configJson = JSON.parse(configJson)
-          this.canEditInitAmount = (configJson.accountState||0)?true:false
+          this.canEditInitAmount = (!(configJson.accountState||0))?true:false
         }
       } catch (error) {
         console.error(error)
